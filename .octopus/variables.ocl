@@ -1,0 +1,7 @@
+variable "ImagePullSecretName" {
+    value "regcred" {}
+}
+
+variable "Namespace" {
+    value "aide" {}
+}
