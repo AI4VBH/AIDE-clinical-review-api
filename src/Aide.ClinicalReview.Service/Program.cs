@@ -1,25 +1,100 @@
-var builder = WebApplication.CreateBuilder(args);
+﻿using Aide.ClinicalReview.Contracts.Messages;
+using Aide.ClinicalReview.Database.Interfaces;
+using Aide.ClinicalReview.Database.Options;
+using Aide.ClinicalReview.Database.Repository;
+using Aide.ClinicalReview.Service.Handler;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Monai.Deploy.Messaging;
+using Monai.Deploy.Messaging.Configuration;
+using MongoDB.Driver;
+using NLog;
+using NLog.LayoutRenderers;
+using NLog.Web;
+using System.Reflection;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+namespace Aide.ClinicalReview.Service
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public sealed class Program
+    {
+        private Program()
+        { }
+
+        private static void Main(string[] args)
+        {
+            var version = typeof(Program).Assembly;
+            var assemblyVersionNumber = version.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "0.0.1";
+
+            var logger = ConfigureNLog(assemblyVersionNumber);
+            logger.Info($"Initializing {ClincalReviewService.ServiceName} v{assemblyVersionNumber}");
+
+            var host = CreateHostBuilder(args).Build();
+            host.Run();
+            logger.Info($"{ClincalReviewService.ServiceName} shutting down.");
+
+            NLog.LogManager.Shutdown();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureHostConfiguration(configHost =>
+                {
+                    configHost.SetBasePath(Directory.GetCurrentDirectory());
+                    configHost.AddCommandLine(args);
+                })
+                .ConfigureAppConfiguration((builderContext, config) =>
+                {
+                    var env = builderContext.HostingEnvironment;
+                    config
+                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                        .AddEnvironmentVariables();
+                })
+                .ConfigureLogging((builderContext, configureLogging) =>
+                {
+                    configureLogging.ClearProviders();
+                    configureLogging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    ConfigureServices(hostContext, services);
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.CaptureStartupErrors(true);
+                    //webBuilder.UseStartup<Startup>();
+                })
+                .UseNLog();
+
+        private static void ConfigureServices(HostBuilderContext hostContext, IServiceCollection services)
+        {
+            services.AddMonaiDeployMessageBrokerPublisherService(hostContext.Configuration.GetSection("AideClinicalReviewService:messaging:publisherServiceAssemblyName").Value);
+            services.AddMonaiDeployMessageBrokerSubscriberService(hostContext.Configuration.GetSection("AideClinicalReviewService:messaging:subscriberServiceAssemblyName").Value);
+
+            services.AddOptions<MessageBrokerServiceConfiguration>().Bind(hostContext.Configuration.GetSection("AideClinicalReviewService:messaging"));
+
+            services.AddSingleton<IClinicalReviewRepository, ClinicalReviewRepository>();
+            services.AddSingleton<ICallBackHandler<AideClinicalReviewRequestMessage>, ReviewRequestCallBackHandler>();
+            services.AddHttpClient();
+
+            // Mongo DB (Workflow Manager)
+            services.Configure<AideClinicalReviewDatabaseSettings>(hostContext.Configuration.GetSection("AideClinicalReviewDatabase"));
+            services.AddSingleton<IMongoClient, MongoClient>(s => new MongoClient(hostContext.Configuration["AideClinicalReviewDatabase:ConnectionString"]));
+
+            services.AddSingleton<ClincalReviewService>();
+            services.AddHostedService(p => p.GetRequiredService<ClincalReviewService>());
+        }
+
+        private static Logger ConfigureNLog(string assemblyVersionNumber)
+        {
+            LayoutRenderer.Register("servicename", logEvent => typeof(Program).Namespace);
+            LayoutRenderer.Register("serviceversion", logEvent => assemblyVersionNumber);
+            LayoutRenderer.Register("machinename", logEvent => Environment.MachineName);
+
+            return LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+        }
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

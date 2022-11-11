@@ -1,13 +1,61 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+	<OutputType>Exe</OutputType>
+	<TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	<PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="6.0.2" />
+	<PackageReference Include="Monai.Deploy.Messaging" Version="0.1.14" />
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+	<PackageReference Include="Monai.Deploy.Messaging.RabbitMQ" Version="0.1.14" />
+	<PackageReference Include="NLog" Version="5.0.4" />
+	<PackageReference Include="NLog.Web.AspNetCore" Version="5.1.4" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aide.ClinicalReview.Contracts\Aide.ClinicalReview.Contracts.csproj" />
+    <ProjectReference Include="..\Aide.ClinicalReview.Database\Aide.ClinicalReview.Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.Local.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+	<Target Name="CopyPlugins" AfterTargets="publish">
+		<ItemGroup>
+			<PluginDlls Include="$(PublishDir)Monai.Deploy.Messaging.RabbitMQ.dll" />
+		</ItemGroup>
+		<Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(PublishDir)\plug-ins\" SkipUnchangedFiles="true" />
+		<Message Text="Files copied successfully to $(PublishDir)\plug-ins\." Importance="high" />
+	</Target>
+
+	<Target Name="CopyPluginsBuild" AfterTargets="build">
+		<ItemGroup>
+			<PluginDlls Include="$(OutDir)Monai.Deploy.Messaging.RabbitMQ.dll" />
+		</ItemGroup>
+		<Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(OutDir)\plug-ins\" SkipUnchangedFiles="true" />
+		<Message Text="Files copied successfully to $(OutDir)\plug-ins\." Importance="high" />
+	</Target>
 
 </Project>
