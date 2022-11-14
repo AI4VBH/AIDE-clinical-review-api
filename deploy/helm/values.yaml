@@ -1,0 +1,38 @@
+replicaCount: 3
+
+image:
+  repository: 150476025846.dkr.ecr.eu-west-2.amazonaws.com/aide/clinical-review-api
+  pullPolicy: IfNotPresent
+  tag: latest
+
+imagePullSecrets:
+ - name: regcred
+
+enviromentVariables:
+  RABBITMQ_HOST: host.docker.internal
+  RABBITMQ_API_URL: http://host.docker.internal:15672/api/
+  RABBITMQ_PORT: 5672
+  MINIO_HOST: minio-hl.minio.svc.cluster.local
+  MINIO_PORT: 9000
+  MINIO_USE_SSL: false
+  MINIO_BUCKET: 'monaideploy'
+  ClinicalReviewDatabase__ConnectionString: "mongodb://root:rootpassword@mongo-monai.monai:27017"
+
+enviromentVariablesFromSecrets:
+  secrets:
+    - name: RABBITMQ_USERNAME
+      secretName: rabbit-secret-master
+      secretKey: username
+    - name: RABBITMQ_PASSWORD
+      secretName: rabbit-secret-master
+      secretKey: password
+    - name: MINIO_ACCESS_KEY
+      secretName: minio-secret-master
+      secretKey: accessKey
+    - name: MINIO_SECRET_KEY
+      secretName: minio-secret-master
+      secretKey: secretKey
+      
+service:
+  type: ClusterIP
+  port: 80  
