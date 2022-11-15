@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Aide.ClinicalReview.Service.Options
+namespace Aide.ClinicalReview.Configuration
 {
     public sealed class AideClinicalReviewServiceOptions
     {
@@ -10,9 +10,16 @@ namespace Aide.ClinicalReview.Service.Options
         [ConfigurationKeyName("messaging")]
         public MessageBrokerConfiguration Messaging { get; set; }
 
+        // <summary>
+        /// Represents the <c>endpointSettings</c> section of the configuration file.
+        /// </summary>
+        [ConfigurationKeyName("endpointSettings")]
+        public EndpointSettings EndpointSettings { get; set; }
+
         public AideClinicalReviewServiceOptions()
         {
             Messaging = new MessageBrokerConfiguration();
+            EndpointSettings = new EndpointSettings();
         }
     }
 }

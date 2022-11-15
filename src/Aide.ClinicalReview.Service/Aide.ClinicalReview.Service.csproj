@@ -22,10 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\Aide.ClinicalReview.Common\Aide.ClinicalReview.Common.csproj" />
+    <ProjectReference Include="..\Aide.ClinicalReview.Configuration\Aide.ClinicalReview.Configuration.csproj" />
     <ProjectReference Include="..\Aide.ClinicalReview.Contracts\Aide.ClinicalReview.Contracts.csproj" />
     <ProjectReference Include="..\Aide.ClinicalReview.Database\Aide.ClinicalReview.Database.csproj" />
   </ItemGroup>

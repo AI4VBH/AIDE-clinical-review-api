@@ -1,9 +1,14 @@
-﻿using Aide.ClinicalReview.Contracts.Messages;
+﻿using Aide.ClinicalReview.Common.Interfaces;
+using Aide.ClinicalReview.Common.Services;
+using Aide.ClinicalReview.Contracts.Messages;
 using Aide.ClinicalReview.Database.Interfaces;
 using Aide.ClinicalReview.Database.Options;
 using Aide.ClinicalReview.Database.Repository;
 using Aide.ClinicalReview.Service.Handler;
+using Aide.ClinicalReview.Service.Services;
+using Aide.ClinicalReview.Service.Services.Http;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -65,7 +70,7 @@ namespace Aide.ClinicalReview.Service
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.CaptureStartupErrors(true);
-                    //webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>();
                 })
                 .UseNLog();
 
@@ -77,8 +82,19 @@ namespace Aide.ClinicalReview.Service
             services.AddOptions<MessageBrokerServiceConfiguration>().Bind(hostContext.Configuration.GetSection("AideClinicalReviewService:messaging"));
 
             services.AddSingleton<IClinicalReviewRepository, ClinicalReviewRepository>();
+            services.AddTransient<IClinicalReviewService, ClinicalReviewService>();
             services.AddSingleton<ICallBackHandler<AideClinicalReviewRequestMessage>, ReviewRequestCallBackHandler>();
             services.AddHttpClient();
+
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IUriService>(p =>
+            {
+                var accessor = p.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor?.HttpContext?.Request;
+                var uri = string.Concat(request?.Scheme, "://", request?.Host.ToUriComponent());
+                var newUri = new Uri(uri);
+                return new UriService(newUri);
+            });
 
             // Mongo DB (Workflow Manager)
             services.Configure<AideClinicalReviewDatabaseSettings>(hostContext.Configuration.GetSection("AideClinicalReviewDatabase"));

@@ -234,3 +234,10 @@
     :versions:
     - 3.13.2
     :when: 2022-11-14 17:53:02.665009645 Z
+- - :approve
+  - Moq
+  - :who: jackschofield23
+    :why: BSD 3 (https://raw.githubusercontent.com/moq/moq4/main/License.txt)
+    :versions:
+    - 4.18.2
+    :when: 2022-11-15 09:19:46.964761113 Z

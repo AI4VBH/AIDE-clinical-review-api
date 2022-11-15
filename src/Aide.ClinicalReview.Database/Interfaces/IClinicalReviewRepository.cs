@@ -5,9 +5,15 @@ namespace Aide.ClinicalReview.Database.Interfaces
     public interface IClinicalReviewRepository
     {
         /// <summary>
-        /// Gets a list of the latest ClinicalReviewRecord.
+        /// Gets a paginated list of the latest ClinicalReviewRecord along with a total count.
         /// </summary>
-        Task<List<ClinicalReviewRecord>> GetClinicalReviewListAsync();
+        Task<(IList<ClinicalReviewRecord> ClinicalReviews, long recordCount)> GetClinicalReviewListAsync(
+                                                      string[] roles,
+                                                      int? skip = null,
+                                                      int? limit = null,
+                                                      string? patientId = "",
+                                                      string? patientName = "",
+                                                      string? applicationName = "");
 
         /// <summary>
         /// Retrieves a ClinicalReviewRecord based on an Id.

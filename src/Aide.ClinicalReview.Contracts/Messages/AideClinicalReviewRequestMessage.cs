@@ -24,6 +24,9 @@ namespace Aide.ClinicalReview.Contracts.Messages
         [JsonPropertyName("workflow_name")]
         public string WorkflowName { get; set; } = string.Empty;
 
+        [JsonPropertyName("reviewer_roles")]
+        public string[] ReviewerRoles { get; set; } = Array.Empty<string>();
+
         [JsonPropertyName("patient_metadata")]
         public PatientMetadata? PatientMetadata { get; set; } = null;
 

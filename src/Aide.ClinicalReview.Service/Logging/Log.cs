@@ -35,6 +35,9 @@ namespace Aide.ClinicalReview.Service.Logging
 
         [LoggerMessage(EventId = 119, Level = LogLevel.Error, Message = "Recovering connection to storage service:  {reason}.")]
         public static partial void MessagingServiceErrorRecover(this ILogger logger, string reason);
+
+        [LoggerMessage(EventId = 120, Level = LogLevel.Error, Message = "Unexpected error occurred in GET /clinical-review API.")]
+        public static partial void ClinicalReviewGetAllAsyncError(this ILogger logger, Exception ex);
     }
 #pragma warning restore S125
 }

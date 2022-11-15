@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Aide.ClinicalReview.Service.Options
+namespace Aide.ClinicalReview.Configuration
 {
     public partial class MessageBrokerConfiguration
     {

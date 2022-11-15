@@ -2,7 +2,7 @@
 using Monai.Deploy.Messaging.Configuration;
 using System.Runtime.InteropServices;
 
-namespace Aide.ClinicalReview.Service.Options
+namespace Aide.ClinicalReview.Configuration
 {
     public partial class MessageBrokerConfiguration : MessageBrokerServiceConfiguration
     {

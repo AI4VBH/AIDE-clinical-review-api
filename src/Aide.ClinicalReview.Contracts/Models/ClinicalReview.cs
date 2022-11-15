@@ -18,5 +18,8 @@ namespace Aide.ClinicalReview.Contracts.Models
 
         [JsonPropertyName("reviewed")]
         public string Reviewed { get; set; } = string.Empty;
+
+        [JsonPropertyName("received")]
+        public DateTime Received { get; set; }
     }
 }

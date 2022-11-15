@@ -1,9 +1,9 @@
+using Aide.ClinicalReview.Configuration;
 using Aide.ClinicalReview.Contracts.Messages;
 using Aide.ClinicalReview.Service.Exceptions;
 using Aide.ClinicalReview.Service.Handler;
 using Aide.ClinicalReview.Service.Logging;
 using Aide.ClinicalReview.Service.Models;
-using Aide.ClinicalReview.Service.Options;
 using Ardalis.GuardClauses;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -101,7 +101,7 @@ namespace Aide.ClinicalReview.Service
                 ReviewedExecutionId = "abc",
                 ReviewedTaskId = "cde",
                 WorkflowName = "bobwf",
-                ApplicationMetadata = new Dictionary<string, string> { { "this_is_dict", "test value" } },
+                ApplicationMetadata = new Dictionary<string, string> { { "application_name", "test value" }, { "application_version", "test value" } },
                 Files = new List<Contracts.Messages.File>
                 {
                     new Contracts.Messages.File()
@@ -122,7 +122,9 @@ namespace Aide.ClinicalReview.Service
                     PatientId = "id",
                     PatientName = "pizza"
                 },
-                TaskId = "taskid"
+                TaskId = "taskid",
+                ReviewerRoles = new string[] { "clinician" }
+                
             };
 
             JsonMessage<AideClinicalReviewRequestMessage>? message = new(body, "xxx", "bbb");
