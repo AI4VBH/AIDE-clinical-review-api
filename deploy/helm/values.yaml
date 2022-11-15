@@ -28,10 +28,10 @@ enviromentVariablesFromSecrets:
       secretKey: password
     - name: MINIO_ACCESS_KEY
       secretName: minio-admin-user
-      secretKey: accessKey
+      secretKey: user
     - name: MINIO_SECRET_KEY
       secretName: minio-admin-user
-      secretKey: secretKey
+      secretKey: password
       
 service:
   type: ClusterIP
