@@ -72,9 +72,7 @@ namespace Aide.ClinicalReview.Database.Repository
 
             var clinicalReviews = await GetAllAsync(_clinicalReviewCollection,
                                       filter,
-                                      Builders<ClinicalReviewRecord>.Sort.Descending(x => x.Received),
-                                      skip,
-                                      limit);
+                                      Builders<ClinicalReviewRecord>.Sort.Descending(x => x.Received));
 
             return (clinicalReviews.Skip((int)skip).Take((int)limit).ToList(), clinicalReviews.Count());
         }
