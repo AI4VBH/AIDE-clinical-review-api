@@ -1,0 +1,131 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'develop'
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '6.0.x'
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Install Dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Enable NuGet cache
+      uses: actions/cache@v3.0.11
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget
+
+    - name: Restore Solution
+      run: dotnet restore Aide.ClinicalReview.Service.sln
+      working-directory: ./src
+
+    - name: Build Solution
+      run: dotnet build -c Release --nologo --no-restore Aide.ClinicalReview.Service.sln
+      working-directory: ./src
+
+    - name: Run Unit Test
+      run: |
+        find ~+ -type f -name "*.UnitTests.csproj" | \
+        xargs -L1 dotnet test -v=minimal --results-directory "./results" \
+        --collect:"XPlat Code Coverage" --settings "./coverlet.runsettings"
+      working-directory: ./tests
+
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: code-coverage-reports
+        path: ./tests/**/coverage.opencover.xml
+
+  clinical-review-integration-tests:
+    runs-on: ubuntu-latest
+    services:
+      mongo:
+        image: mongo:latest
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: rootpassword
+        ports:
+        - 27017:27017
+
+      rabbit:
+        image: rabbitmq:3.8.18-management
+        env:
+          RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+          RABBITMQ_DEFAULT_USER: "admin"
+          RABBITMQ_DEFAULT_PASS: "admin"
+          RABBITMQ_DEFAULT_VHOST: "clinicalreview"
+        ports:
+        - "15672:15672"
+        - "5672:5672"
+
+      minio:
+        image: minio/minio:edge-cicd
+        env:
+          MINIO_ROOT_USER: minioadmin
+          MINIO_ROOT_PASSWORD: minioadmin
+        ports:
+          - "9000:9000"
+          - "9001:9001"
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Install Dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Install LivingDoc CLI
+      run: dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
+
+    - name: Enable NuGet cache
+      uses: actions/cache@v3.0.11
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget
+
+    - name: Restore Solution
+      run: dotnet restore Aide.ClinicalReview.Service.sln
+      working-directory: ./src
+
+    - name: Build Solution
+      run: dotnet build -c Release --nologo --no-restore Aide.ClinicalReview.Service.sln
+      working-directory: ./src
+
+    - name: Run ClinicalReview Integration Tests
+      run: find ~+ -type f -name "*Aide.ClinicalReview.Service.IntegrationTests.csproj" | xargs -L1 dotnet test
+      working-directory: ./tests
+
+    - name: Generate LivingDoc HTML
+      if: always()
+      run: livingdoc test-assembly Aide.ClinicalReview.Service.IntegrationTests.dll -t TestExecution.json
+      working-directory: ./tests/Aide.ClinicalReview.Service.IntegrationTests/bin/Debug/net6.0
+
+    - name: Publish report
+      if: always()
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: ClinicalReviewIntegrationTestReport
+        path: ./tests/Aide.ClinicalReview.Service.IntegrationTests/bin/Debug/net6.0/LivingDoc.html

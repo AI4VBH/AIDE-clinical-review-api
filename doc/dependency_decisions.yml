@@ -1,0 +1,236 @@
+---
+- - :permit
+  - https://licenses.nuget.org/MIT
+  - :who: woodheadio
+    :why: MIT Licence
+    :versions: []
+    :when: 2022-11-14 16:00:00.103707888 Z
+- - :permit
+  - https://licenses.nuget.org/Apache-2.0
+  - :who: woodheadio
+    :why: Apache-2.0 Licence
+    :versions: []
+    :when: 2022-11-14 16:00:13.942861075 Z
+- - :permit
+  - http://go.microsoft.com/fwlink/?LinkId=329770
+  - :who: woodheadio
+    :why: DotNet Licence
+    :versions: []
+    :when: 2022-11-14 16:00:13.942861075 Z
+- - :permit
+  - https://github.com/dotnet/corefx/blob/master/LICENSE.TXT
+  - :who: woodheadio
+    :why: MIT Licence
+    :versions: []
+    :when: 2022-11-14 16:00:13.942861075 Z
+- - :permit
+  - https://raw.githubusercontent.com/xunit/xunit/master/license.txt
+  - :who: woodheadio
+    :why: DotNet / MIT Licence
+    :versions: []
+    :when: 2022-11-14 16:00:13.942861075 Z
+- - :permit
+  - https://licenses.nuget.org/BSD-3-Clause
+  - :who: woodheadio
+    :why: BSD-3-Clause
+    :versions: []
+    :when: 2022-11-14 16:00:13.942861075 Z
+- - :permit
+  - https://licenses.nuget.org/BSD-2-Clause
+  - :who: woodheadio
+    :why: BSD-2-Clause
+    :versions: []
+    :when: 2022-11-14 16:00:13.942861075 Z
+- - :approve
+  - Ardalis.GuardClauses
+  - :who: woodheadio
+    :why: https://github.com/ardalis/GuardClauses/blob/main/LICENSE
+    :versions:
+    - 4.0.1
+    :when: 2022-11-14 16:11:40.800534582 Z
+- - :approve
+  - BoDi
+  - :who: woodheadio
+    :why: https://github.com/gasparnagy/BoDi/raw/master/LICENSE.txt
+    :versions:
+    - 1.5.0
+    :when: 2022-11-14 16:14:34.453503311 Z
+- - :approve
+  - Microsoft.CodeCoverage
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/Microsoft.CodeCoverage/16.11.0/License
+    :versions:
+    - 16.11.0
+    :when: 2022-11-14 16:35:46.884398766 Z
+- - :approve
+  - Microsoft.CodeCoverage
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/Microsoft.CodeCoverage/17.0.0/License
+    :versions:
+    - 17.0.0
+    :when: 2022-11-14 16:38:10.973779785 Z
+- - :approve
+  - Microsoft.DotNet.PlatformAbstractions
+  - :who: woodheadio
+    :why: 'Covered by MIT licence for the .Net runtime at: https://github.com/dotnet/runtime/blob/main/LICENSE.TXT'
+    :versions: []
+    :when: 2022-11-14 16:44:30.499575265 Z
+- - :approve
+  - Microsoft.Extensions.DependencyModel
+  - :who: woodheadio
+    :why: 'Covered by MIT licence for the .Net runtime at: https://github.com/dotnet/runtime/blob/main/LICENSE.TXT'
+    :versions: []
+    :when: 2022-11-14 16:51:42.487415126 Z
+- - :approve
+  - NETStandard.Library
+  - :who: woodheadio
+    :why: 'Covered by MIT licence for the .Net runtime at: https://github.com/dotnet/runtime/blob/main/LICENSE.TXT'
+    :versions: []
+    :when: 2022-11-14 16:53:56.598378793 Z
+- - :approve
+  - Microsoft.NET.Test.Sdk
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/16.11.0/License
+    :versions:
+    - 16.11.0
+    :when: 2022-11-14 17:00:25.789001118 Z
+- - :approve
+  - Microsoft.NET.Test.Sdk
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/17.0.0/License
+    :versions:
+    - 17.0.0
+    :when: 2022-11-14 17:01:17.227893285 Z
+- - :approve
+  - Microsoft.TestPlatform.ObjectModel
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/Microsoft.TestPlatform.ObjectModel/16.11.0/License
+    :versions:
+    - 16.11.0
+    :when: 2022-11-14 17:02:46.728866831 Z
+- - :approve
+  - Microsoft.TestPlatform.ObjectModel
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/Microsoft.TestPlatform.ObjectModel/17.0.0/License
+    :versions:
+    - 17.0.0
+    :when: 2022-11-14 17:03:24.411795663 Z
+- - :approve
+  - Microsoft.TestPlatform.TestHost
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost/16.11.0/License
+    :versions:
+    - 16.11.0
+    :when: 2022-11-14 17:04:22.759371008 Z
+- - :approve
+  - Microsoft.TestPlatform.TestHost
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost/17.0.0/License
+    :versions:
+    - 17.0.0
+    :when: 2022-11-14 17:04:51.572120811 Z
+- - :approve
+  - MongoDB.Bson
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/MongoDB.Bson/2.14.1/License
+    :versions:
+    - 2.14.1
+    :when: 2022-11-14 17:07:45.754399782 Z
+- - :approve
+  - MongoDB.Driver
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/MongoDB.Driver/2.14.1/License
+    :versions:
+    - 2.14.1
+    :when: 2022-11-14 17:08:34.555274955 Z
+- - :approve
+  - MongoDB.Driver.Core
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/MongoDB.Driver.Core/2.14.1/License
+    :versions:
+    - 2.14.1
+    :when: 2022-11-14 17:09:07.684406797 Z
+- - :approve
+  - MongoDB.Libmongocrypt
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/MongoDB.Libmongocrypt/1.3.0/License
+    :versions:
+    - 1.3.0
+    :when: 2022-11-14 17:09:59.666964635 Z
+- - :approve
+  - Newtonsoft.Json
+  - :who: woodheadio
+    :why: https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md
+    :versions:
+    - 9.0.1
+    :when: 2022-11-14 17:10:55.612193812 Z
+- - :approve
+  - RabbitMQ.Client
+  - :who: woodheadio
+    :why: https://licenses.nuget.org/Apache-2.0%20OR%20MPL-2.0
+    :versions:
+    - 6.4.0
+    :when: 2022-11-14 17:11:49.445753726 Z
+- - :approve
+  - SharpCompress
+  - :who: woodheadio
+    :why: https://github.com/adamhathcock/sharpcompress/blob/master/LICENSE.txt
+    :versions:
+    - 0.30.1
+    :when: 2022-11-14 17:13:11.029956615 Z
+- - :approve
+  - xunit.analyzers
+  - :who: woodheadio
+    :why: https://raw.githubusercontent.com/xunit/xunit.analyzers/master/LICENSE
+    :versions:
+    - 0.10.0
+    :when: 2022-11-14 17:15:27.593363294 Z
+- - :approve
+  - Microsoft.OpenApi
+  - :who: woodheadio
+    :why: https://raw.githubusercontent.com/Microsoft/OpenAPI.NET/master/LICENSE
+    :versions:
+    - 1.2.3
+    :when: 2022-11-14 17:18:47.721744333 Z
+- - :approve
+  - SpecFlow
+  - :who: woodheadio
+    :why: BSD-3-Clause (https://github.com/SpecFlowOSS/SpecFlow/raw/master/LICENSE.txt)
+    :versions:
+    - 3.9.40
+    :when: 2022-11-14 17:44:26.535915952 Z
+- - :approve
+  - SpecFlow.Internal.Json
+  - :who: woodheadio
+    :why: BSD-3-Clause (https://github.com/SpecFlowOSS/SpecFlow/raw/master/LICENSE.txt)
+    :versions:
+    - 1.0.8
+    :when: 2022-11-14 17:45:09.771115494 Z
+- - :approve
+  - SpecFlow.NUnit
+  - :who: woodheadio
+    :why: BSD-3-Clause (https://github.com/SpecFlowOSS/SpecFlow/raw/master/LICENSE.txt)
+    :versions:
+    - 3.9.40
+    :when: 2022-11-14 17:45:09.771115494 Z
+- - :approve
+  - SpecFlow.Plus.LivingDocPlugin
+  - :who: woodheadio
+    :why: BSD-3-Clause (https://github.com/SpecFlowOSS/SpecFlow/raw/master/LICENSE.txt)
+    :versions:
+    - 3.9.57
+    :when: 2022-11-14 17:45:09.771115494 Z
+- - :approve
+  - SpecFlow.Tools.MsBuild.Generation
+  - :who: woodheadio
+    :why: BSD-3-Clause (https://github.com/SpecFlowOSS/SpecFlow/raw/master/LICENSE.txt)
+    :versions:
+    - 3.9.40
+    :when: 2022-11-14 17:45:09.771115494 Z
+- - :approve
+  - NUnit
+  - :who: woodheadio
+    :why: https://www.nuget.org/packages/NUnit/3.13.2/License
+    :versions:
+    - 3.13.2
+    :when: 2022-11-14 17:53:02.665009645 Z
