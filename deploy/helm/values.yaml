@@ -27,10 +27,10 @@ enviromentVariablesFromSecrets:
       secretName: rabbit-secret-master
       secretKey: password
     - name: MINIO_ACCESS_KEY
-      secretName: minio-secret-master
+      secretName: minio-admin-user
       secretKey: accessKey
     - name: MINIO_SECRET_KEY
-      secretName: minio-secret-master
+      secretName: minio-admin-user
       secretKey: secretKey
       
 service:
