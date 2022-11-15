@@ -90,7 +90,9 @@ namespace Aide.ClinicalReview.Service
             services.AddHttpClient();
 
             services.AddSingleton<IClinicalReviewRepository, ClinicalReviewRepository>();
+            services.AddSingleton<ITaskDetailsRepository, TaskDetailsRepository>();
             services.AddTransient<IClinicalReviewService, ClinicalReviewService>();
+            services.AddTransient<ITaskDetailsService, TaskDetailsService>();
             services.AddSingleton<ICallBackHandler<AideClinicalReviewRequestMessage>, ReviewRequestCallBackHandler>();
             services.AddHttpClient();
 

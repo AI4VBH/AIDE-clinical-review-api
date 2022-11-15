@@ -29,7 +29,7 @@ namespace Aide.ClinicalReview.Service.Logging
         [LoggerMessage(EventId = 108, Level = LogLevel.Error, Message = "Error sending message {eventType}.")]
         public static partial void ErrorSendingMessage(this ILogger logger, string eventType, Exception ex);
 
-        [LoggerMessage(EventId = 119, Level = LogLevel.Error, Message = "Recovering connection to storage service:  {reason}.")]
+        [LoggerMessage(EventId = 119, Level = LogLevel.Error, Message = "Recovering connection to storage service: {reason}.")]
         public static partial void MessagingServiceErrorRecover(this ILogger logger, string reason);
 
         [LoggerMessage(EventId = 120, Level = LogLevel.Error, Message = "Dicom Exception {reason}")]
@@ -37,5 +37,8 @@ namespace Aide.ClinicalReview.Service.Logging
         
         [LoggerMessage(EventId = 121, Level = LogLevel.Error, Message = "Unexpected error occurred in GET /clinical-review API.")]
         public static partial void ClinicalReviewGetAllAsyncError(this ILogger logger, Exception ex);
+
+        [LoggerMessage(EventId = 121, Level = LogLevel.Error, Message = "Unexpected error occured in GET /clinical-review/{executionId} API.")]
+        public static partial void GetTaskDetailsAsyncError(this ILogger logger, Guid executionId);
     }
 }

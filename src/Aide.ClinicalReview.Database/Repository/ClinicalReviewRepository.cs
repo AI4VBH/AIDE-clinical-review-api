@@ -27,7 +27,8 @@ namespace Aide.ClinicalReview.Database.Repository
 
         public async Task<string> CreateAsync(ClinicalReviewRecord clinicalReview)
         {
-            clinicalReview.Id = clinicalReview.ClinicalReviewMessage!.ExecutionId;
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            clinicalReview.Id = clinicalReview.ClinicalReviewMessage.ExecutionId;
             clinicalReview.Received = DateTime.UtcNow;
             await _clinicalReviewCollection.InsertOneAsync(clinicalReview);
             return clinicalReview.Id;
