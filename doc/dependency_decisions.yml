@@ -241,3 +241,102 @@
     :versions:
     - 4.18.2
     :when: 2022-11-15 09:19:46.964761113 Z
+- - :approve
+  - Crc32.NET
+  - :who: JoeBatt1989
+    :why: MIT (https://github.com/force-net/Crc32.NET/blob/develop/LICENSE)
+    :versions:
+    - 1.2.0
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - Microsoft.AspNet.WebApi.Client
+  - :who: JoeBatt1989
+    :why: https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client/5.2.9/License
+    :versions:
+    - 5.2.9
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - Microsoft.AspNet.WebApi.Core
+  - :who: JoeBatt1989
+    :why: https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Core/5.2.9/License
+    :versions:
+    - 5.2.9
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - Microsoft.AspNet.WebApi.WebHost
+  - :who: JoeBatt1989
+    :why: https://www.nuget.org/packages/Microsoft.AspNet.WebApi.WebHost/5.2.9/License
+    :versions:
+    - 5.2.9
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - Minio
+  - :who: JoeBatt1989
+    :why: No attached license
+    :versions:
+    - 4.0.6
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - Minio
+  - :who: JoeBatt1989
+    :why: No attached license
+    :versions:
+    - 4.0.6
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - MongoDB.Bson
+  - :who: JoeBatt1989
+    :why: Apache 2.0 (https://www.nuget.org/packages/MongoDB.Bson/2.18.0/License)
+    :versions:
+    - 2.18.0
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - MongoDB.Driver.Core
+  - :who: JoeBatt1989
+    :why: Apache 2.0 (https://www.nuget.org/packages/MongoDB.Driver.Core/2.18.0/License)
+    :versions:
+    - 2.18.0
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - MongoDB.Driver
+  - :who: JoeBatt1989
+    :why: Apache 2.0 (https://www.nuget.org/packages/MongoDB.Driver/2.18.0/License)
+    :versions:
+    - 2.18.0
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - MongoDB.Libmongocrypt
+  - :who: JoeBatt1989
+    :why: Apache 2.0 (https://www.nuget.org/packages/MongoDB.Libmongocrypt/1.6.0/License)
+    :versions:
+    - 1.6.0
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - Newtonsoft.Json.Bson
+  - :who: JoeBatt1989
+    :why: MIT (https://raw.github.com/JamesNK/Newtonsoft.Json.Bson/master/LICENSE.md)
+    :versions:
+    - 1.0.1
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - Snappier
+  - :who: JoeBatt1989
+    :why: Test only
+    :versions:
+    - 1.0.0
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - Snapshooter
+  - :who: JoeBatt1989
+    :why: MIT (https://github.com/SwissLife-OSS/Snapshooter/blob/master/LICENSE)
+    :versions:
+    - 0.7.1
+    :when: 2022-11-15 10:00:00.665009645 Z
+- - :approve
+  - Snapshooter.NUnit
+  - :who: JoeBatt1989
+    :why: MIT (https://github.com/SwissLife-OSS/Snapshooter/blob/master/LICENSE)
+    :versions:
+    - 0.7.1
+    :when: 2022-11-15 10:00:00.665009645 Z
+

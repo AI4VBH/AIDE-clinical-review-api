@@ -352,3 +352,4 @@ MigrationBackup/
 # JetBrains Rider
 .idea/
 *.sln.iml
+deploy/docker-compose/.run/*

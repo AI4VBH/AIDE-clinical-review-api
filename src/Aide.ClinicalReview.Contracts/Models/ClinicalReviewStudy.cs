@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Aide.ClinicalReview.Contracts.Models
 {
-    internal class ClinicalReviewStudy
+    public class ClinicalReviewStudy
     {
         [BsonId]
         [JsonPropertyName("execution_id")]
