@@ -44,28 +44,28 @@
 - - :approve
   - Ardalis.GuardClauses
   - :who: woodheadio
-    :why: https://github.com/ardalis/GuardClauses/blob/main/LICENSE
+    :why: MIT License https://github.com/ardalis/GuardClauses/blob/main/LICENSE
     :versions:
     - 4.0.1
     :when: 2022-11-14 16:11:40.800534582 Z
 - - :approve
   - BoDi
   - :who: woodheadio
-    :why: https://github.com/gasparnagy/BoDi/raw/master/LICENSE.txt
+    :why: Apache License Version 2.0 https://github.com/gasparnagy/BoDi/raw/master/LICENSE.txt
     :versions:
     - 1.5.0
     :when: 2022-11-14 16:14:34.453503311 Z
 - - :approve
   - Microsoft.CodeCoverage
   - :who: woodheadio
-    :why: https://www.nuget.org/packages/Microsoft.CodeCoverage/16.11.0/License
+    :why: MIT https://www.nuget.org/packages/Microsoft.CodeCoverage/16.11.0/License
     :versions:
     - 16.11.0
     :when: 2022-11-14 16:35:46.884398766 Z
 - - :approve
   - Microsoft.CodeCoverage
   - :who: woodheadio
-    :why: https://www.nuget.org/packages/Microsoft.CodeCoverage/17.0.0/License
+    :why: MIT https://www.nuget.org/packages/Microsoft.CodeCoverage/17.0.0/License
     :versions:
     - 17.0.0
     :when: 2022-11-14 16:38:10.973779785 Z
@@ -90,21 +90,21 @@
 - - :approve
   - Microsoft.NET.Test.Sdk
   - :who: woodheadio
-    :why: https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/16.11.0/License
+    :why: MIT https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/16.11.0/License
     :versions:
     - 16.11.0
     :when: 2022-11-14 17:00:25.789001118 Z
 - - :approve
   - Microsoft.NET.Test.Sdk
   - :who: woodheadio
-    :why: https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/17.0.0/License
+    :why: MIT https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/17.0.0/License
     :versions:
     - 17.0.0
     :when: 2022-11-14 17:01:17.227893285 Z
 - - :approve
   - Microsoft.TestPlatform.ObjectModel
   - :who: woodheadio
-    :why: https://www.nuget.org/packages/Microsoft.TestPlatform.ObjectModel/16.11.0/License
+    :why: MIT https://www.nuget.org/packages/Microsoft.TestPlatform.ObjectModel/16.11.0/License
     :versions:
     - 16.11.0
     :when: 2022-11-14 17:02:46.728866831 Z
@@ -118,7 +118,7 @@
 - - :approve
   - Microsoft.TestPlatform.TestHost
   - :who: woodheadio
-    :why: https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost/16.11.0/License
+    :why: MIT https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost/16.11.0/License
     :versions:
     - 16.11.0
     :when: 2022-11-14 17:04:22.759371008 Z
@@ -132,63 +132,63 @@
 - - :approve
   - MongoDB.Bson
   - :who: woodheadio
-    :why: https://www.nuget.org/packages/MongoDB.Bson/2.14.1/License
+    :why: Apache License, Version 2.0 https://www.nuget.org/packages/MongoDB.Bson/2.14.1/License
     :versions:
     - 2.14.1
     :when: 2022-11-14 17:07:45.754399782 Z
 - - :approve
   - MongoDB.Driver
   - :who: woodheadio
-    :why: https://www.nuget.org/packages/MongoDB.Driver/2.14.1/License
+    :why: Apache License, Version 2.0 https://www.nuget.org/packages/MongoDB.Driver/2.14.1/License
     :versions:
     - 2.14.1
     :when: 2022-11-14 17:08:34.555274955 Z
 - - :approve
   - MongoDB.Driver.Core
   - :who: woodheadio
-    :why: https://www.nuget.org/packages/MongoDB.Driver.Core/2.14.1/License
+    :why: Apache License, Version 2.0  https://www.nuget.org/packages/MongoDB.Driver.Core/2.14.1/License
     :versions:
     - 2.14.1
     :when: 2022-11-14 17:09:07.684406797 Z
 - - :approve
   - MongoDB.Libmongocrypt
   - :who: woodheadio
-    :why: https://www.nuget.org/packages/MongoDB.Libmongocrypt/1.3.0/License
+    :why: Apache License, Version 2.0 https://www.nuget.org/packages/MongoDB.Libmongocrypt/1.3.0/License
     :versions:
     - 1.3.0
     :when: 2022-11-14 17:09:59.666964635 Z
 - - :approve
   - Newtonsoft.Json
   - :who: woodheadio
-    :why: https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md
+    :why: MIT License https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md
     :versions:
     - 9.0.1
     :when: 2022-11-14 17:10:55.612193812 Z
 - - :approve
   - RabbitMQ.Client
   - :who: woodheadio
-    :why: https://licenses.nuget.org/Apache-2.0%20OR%20MPL-2.0
+    :why: Apache-2.0 and MPL-2.0 https://licenses.nuget.org/Apache-2.0%20OR%20MPL-2.0
     :versions:
     - 6.4.0
     :when: 2022-11-14 17:11:49.445753726 Z
 - - :approve
   - SharpCompress
   - :who: woodheadio
-    :why: https://github.com/adamhathcock/sharpcompress/blob/master/LICENSE.txt
+    :why: MIT License https://github.com/adamhathcock/sharpcompress/blob/master/LICENSE.txt
     :versions:
     - 0.30.1
     :when: 2022-11-14 17:13:11.029956615 Z
 - - :approve
   - xunit.analyzers
   - :who: woodheadio
-    :why: https://raw.githubusercontent.com/xunit/xunit.analyzers/master/LICENSE
+    :why: Apache License, Version 2.0 https://raw.githubusercontent.com/xunit/xunit.analyzers/master/LICENSE
     :versions:
     - 0.10.0
     :when: 2022-11-14 17:15:27.593363294 Z
 - - :approve
   - Microsoft.OpenApi
   - :who: woodheadio
-    :why: https://raw.githubusercontent.com/Microsoft/OpenAPI.NET/master/LICENSE
+    :why: MIT License https://raw.githubusercontent.com/Microsoft/OpenAPI.NET/master/LICENSE
     :versions:
     - 1.2.3
     :when: 2022-11-14 17:18:47.721744333 Z
@@ -251,35 +251,28 @@
 - - :approve
   - Microsoft.AspNet.WebApi.Client
   - :who: JoeBatt1989
-    :why: https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client/5.2.9/License
+    :why: Apache License, Version 2.0 https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client/5.2.9/License
     :versions:
     - 5.2.9
     :when: 2022-11-15 10:00:00.665009645 Z
 - - :approve
   - Microsoft.AspNet.WebApi.Core
   - :who: JoeBatt1989
-    :why: https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Core/5.2.9/License
+    :why: Apache License, Version 2.0 https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Core/5.2.9/License
     :versions:
     - 5.2.9
     :when: 2022-11-15 10:00:00.665009645 Z
 - - :approve
   - Microsoft.AspNet.WebApi.WebHost
   - :who: JoeBatt1989
-    :why: https://www.nuget.org/packages/Microsoft.AspNet.WebApi.WebHost/5.2.9/License
+    :why: Apache License, Version 2.0  https://www.nuget.org/packages/Microsoft.AspNet.WebApi.WebHost/5.2.9/License
     :versions:
     - 5.2.9
     :when: 2022-11-15 10:00:00.665009645 Z
 - - :approve
   - Minio
   - :who: JoeBatt1989
-    :why: No attached license
-    :versions:
-    - 4.0.6
-    :when: 2022-11-15 10:00:00.665009645 Z
-- - :approve
-  - Minio
-  - :who: JoeBatt1989
-    :why: No attached license
+    :why: Apache License 2.0 (https://github.com/minio/minio-dotnet/blob/master/LICENSE) 
     :versions:
     - 4.0.6
     :when: 2022-11-15 10:00:00.665009645 Z
@@ -321,7 +314,7 @@
 - - :approve
   - Snappier
   - :who: JoeBatt1989
-    :why: Test only
+    :why: Test only BSD (https://github.com/brantburnett/Snappier/blob/main/COPYING.txt)
     :versions:
     - 1.0.0
     :when: 2022-11-15 10:00:00.665009645 Z
@@ -356,31 +349,31 @@
 - - :approve
   - Microsoft.CodeCoverage
   - :who: lillie-dae
-    :why: https://www.nuget.org/packages/Microsoft.CodeCoverage
+    :why: MIT (https://github.com/microsoft/vstest/raw/main/LICENSE)
     :versions: [17.3.2, 17.1.0]
     :when: 2022-11-15 17:00:00.665009645 Z
 - - :approve
   - Microsoft.NET.Test.Sdk
   - :who: lillie-dae
-    :why: https://www.nuget.org/packages/Microsoft.NET.Test.Sdk
+    :why: MIT (https://raw.githubusercontent.com/microsoft/vstest/main/LICENSE)
     :versions: [17.3.2, 17.1.0]
     :when: 2022-11-15 17:00:00.665009645 Z
 - - :approve
   - Microsoft.TestPlatform.ObjectModel
   - :who: lillie-dae
-    :why: https://aka.ms/deprecateLicenseUrl
+    :why: MIT (https://github.com/microsoft/vstest/raw/v17.1.0/LICENSE)
     :versions: [17.3.2, 17.1.0]
     :when: 2022-11-15 17:00:00.665009645 Z
 - - :approve
   - Microsoft.TestPlatform.TestHost
   - :who: lillie-dae
-    :why: https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost
+    :why: MIT (https://github.com/microsoft/vstest/raw/v17.1.0/LICENSE)
     :versions: [17.3.2, 17.1.0]
     :when: 2022-11-15 17:00:00.665009645 Z
 - - :approve
   - YamlDotNet
   - :who: lillie-dae
-    :why: https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost
+    :why: MIT License https://github.com/aaubry/YamlDotNet/blob/master/LICENSE.txt
     :versions:
     - 12.0.2
     :when: 2022-11-15 17:00:00.665009645 Z
