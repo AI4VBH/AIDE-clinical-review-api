@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aide.ClinicalReview.Contrac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aide.ClinicalReview.ContractsTests", "Aide.ClinicalReview.ContractsTests\Aide.ClinicalReview.ContractsTests.csproj", "{AFF27041-D17E-4DE4-B85B-05F04204A38D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aide.ClinicalReview.Configuration", "Aide.ClinicalReview.Configuration\Aide.ClinicalReview.Configuration.csproj", "{F377F761-4743-4D92-A39D-B23F7BE3E768}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aide.ClinicalReview.Common", "Aide.ClinicalReview.Common\Aide.ClinicalReview.Common.csproj", "{AC8D01E3-1A3D-4C12-909B-E84326E688D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aide.ClinicalReview.Configuration", "Aide.ClinicalReview.Configuration\Aide.ClinicalReview.Configuration.csproj", "{F377F761-4743-4D92-A39D-B23F7BE3E768}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aide.ClinicalReview.Common.UnitTests", "Aide.ClinicalReview.Common.UnitTests\Aide.ClinicalReview.Common.UnitTests.csproj", "{C656D127-092D-4588-8728-4FDEB77AEAA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{F377F761-4743-4D92-A39D-B23F7BE3E768}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F377F761-4743-4D92-A39D-B23F7BE3E768}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F377F761-4743-4D92-A39D-B23F7BE3E768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C656D127-092D-4588-8728-4FDEB77AEAA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C656D127-092D-4588-8728-4FDEB77AEAA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C656D127-092D-4588-8728-4FDEB77AEAA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C656D127-092D-4588-8728-4FDEB77AEAA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{40CA1BB7-F149-4993-9FDF-6E836B95E207} = {EA4C314F-0EDD-4631-9395-E31561F40733}
 		{242477FC-0ED7-4A8B-88A7-BC1B0FF2E471} = {EA4C314F-0EDD-4631-9395-E31561F40733}
 		{AFF27041-D17E-4DE4-B85B-05F04204A38D} = {EA4C314F-0EDD-4631-9395-E31561F40733}
+		{C656D127-092D-4588-8728-4FDEB77AEAA0} = {EA4C314F-0EDD-4631-9395-E31561F40733}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B9D2CA2-810A-478D-AAA1-0C2F193CA18E}
