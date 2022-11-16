@@ -41,6 +41,17 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
             Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
         }
 
+        [Fact]
+        public async Task GetTaskDetailsAsync_DefaultExecutionId_ReturnsInternalServerError()
+        {
+            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(Guid.Empty)).ThrowsAsync(new ArgumentException());
+
+            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.Empty);
+
+            var objectResult = Assert.IsType<ObjectResult>(result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, objectResult.StatusCode);
+        }
+
         // TODO
         // Add test that checks the endpoint is available to users with the clinician role only
         // Requires auth middleware
