@@ -2,7 +2,7 @@
 
 namespace Aide.ClinicalReview.Configuration
 {
-    public class EndpointSettings
+    public sealed class EndpointSettings
     {
         [ConfigurationKeyName("defaultPageSize")]
         public int DefaultPageSize { get; set; } = 10;

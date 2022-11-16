@@ -6,7 +6,7 @@ namespace Aide.ClinicalReview.Service.Services
     /// <summary>
     /// Uri Service.
     /// </summary>
-    public class UriService : IUriService
+    public sealed class UriService : IUriService
     {
         private readonly Uri _baseUri;
 

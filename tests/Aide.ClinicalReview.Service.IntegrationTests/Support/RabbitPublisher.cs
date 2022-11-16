@@ -3,7 +3,7 @@ using RabbitMQ.Client;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.Support
 {
-    public class RabbitPublisher
+    public sealed class RabbitPublisher
     {
         public RabbitPublisher(IModel channel, string exchange, string routingKey)
         {

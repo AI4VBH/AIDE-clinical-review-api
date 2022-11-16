@@ -75,11 +75,13 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Clinical Review Studies are returned")]
+        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReview_StudyApi")]
         public virtual void ClinicalReviewStudiesAreReturned()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReview_StudyApi"};
+                    "ClinicalReview_StudyApi",
+                    "ignore"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review Studies are returned", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 4

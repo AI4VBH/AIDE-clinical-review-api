@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Aide.ClinicalReview.Database.Options
+namespace Aide.ClinicalReview.Database.Configuration
 {
     public sealed class AideClinicalReviewDatabaseSettings
     {

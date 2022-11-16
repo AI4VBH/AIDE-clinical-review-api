@@ -28,7 +28,7 @@
         /// <summary>
         /// Gets or sets Data.
         /// </summary>
-        public T Data { get; set; }
+        public T? Data { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether response has succeeded.
@@ -38,11 +38,11 @@
         /// <summary>
         /// Gets or sets errors.
         /// </summary>
-        public string[] Errors { get; set; }
+        public string[]? Errors { get; set; }
 
         /// <summary>
         /// Gets or sets message.
         /// </summary>
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
 }

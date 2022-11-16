@@ -21,7 +21,7 @@ using Polly.Retry;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.Support
 {
-    public class MongoClientUtil
+    public sealed class MongoClientUtil
     {
         private MongoClient Client { get; set; }
         private IMongoDatabase Database { get; set; }

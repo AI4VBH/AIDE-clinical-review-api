@@ -1,8 +1,8 @@
 ﻿using Aide.ClinicalReview.Common.Interfaces;
 using Aide.ClinicalReview.Common.Services;
 using Aide.ClinicalReview.Contracts.Messages;
+using Aide.ClinicalReview.Database.Configuration;
 using Aide.ClinicalReview.Database.Interfaces;
-using Aide.ClinicalReview.Database.Options;
 using Aide.ClinicalReview.Database.Repository;
 using Aide.ClinicalReview.Service.Handler;
 using Aide.ClinicalReview.Service.Services;
@@ -15,10 +15,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Monai.Deploy.Messaging;
 using Monai.Deploy.Messaging.Configuration;
+using Monai.Deploy.Storage;
+using Monai.Deploy.Storage.Configuration;
 using MongoDB.Driver;
 using NLog;
 using NLog.LayoutRenderers;
 using NLog.Web;
+using System.IO.Abstractions;
 using System.Reflection;
 
 namespace Aide.ClinicalReview.Service
@@ -80,6 +83,11 @@ namespace Aide.ClinicalReview.Service
             services.AddMonaiDeployMessageBrokerSubscriberService(hostContext.Configuration.GetSection("AideClinicalReviewService:messaging:subscriberServiceAssemblyName").Value);
 
             services.AddOptions<MessageBrokerServiceConfiguration>().Bind(hostContext.Configuration.GetSection("AideClinicalReviewService:messaging"));
+            services.AddOptions<StorageServiceConfiguration>().Bind(hostContext.Configuration.GetSection("AideClinicalReviewService:storage"));
+
+            services.AddSingleton<IClinicalReviewRepository, ClinicalReviewRepository>();
+            services.AddSingleton<ICallBackHandler<AideClinicalReviewRequestMessage>, ReviewRequestCallBackHandler>();
+            services.AddHttpClient();
 
             services.AddSingleton<IClinicalReviewRepository, ClinicalReviewRepository>();
             services.AddTransient<IClinicalReviewService, ClinicalReviewService>();
@@ -99,6 +107,11 @@ namespace Aide.ClinicalReview.Service
             // Mongo DB (Workflow Manager)
             services.Configure<AideClinicalReviewDatabaseSettings>(hostContext.Configuration.GetSection("AideClinicalReviewDatabase"));
             services.AddSingleton<IMongoClient, MongoClient>(s => new MongoClient(hostContext.Configuration["AideClinicalReviewDatabase:ConnectionString"]));
+
+            services.AddTransient<IFileSystem, FileSystem>();
+
+            services.AddMonaiDeployStorageService(hostContext.Configuration.GetSection("AideClinicalReviewService:storage:serviceAssemblyName").Value);
+            services.AddSingleton<DicomService>();
 
             services.AddSingleton<ClincalReviewService>();
             services.AddHostedService(p => p.GetRequiredService<ClincalReviewService>());

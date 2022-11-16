@@ -9,7 +9,7 @@ namespace Aide.ClinicalReview.Service.Filter
     /// <summary>
     /// Pagination Filter class.
     /// </summary>
-    public class PaginationFilter
+    public sealed class PaginationFilter
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PaginationFilter"/> class.

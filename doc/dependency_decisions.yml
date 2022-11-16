@@ -339,4 +339,48 @@
     :versions:
     - 0.7.1
     :when: 2022-11-15 10:00:00.665009645 Z
-
+- - :approve
+  - AWSSDK.Core
+  - :who: lillie-dae
+    :why: Apache 2.0 (http://aws.amazon.com/apache2.0/)
+    :versions:
+    - 3.7.100.6
+    :when: 2022-11-15 17:00:00.665009645 Z
+- - :approve
+  - AWSSDK.SecurityToken
+  - :who: lillie-dae
+    :why: Apache 2.0 (http://aws.amazon.com/apache2.0/)
+    :versions:
+    - 3.7.100.6
+    :when: 2022-11-15 17:00:00.665009645 Z
+- - :approve
+  - Microsoft.CodeCoverage
+  - :who: lillie-dae
+    :why: https://www.nuget.org/packages/Microsoft.CodeCoverage
+    :versions: [17.3.2, 17.1.0]
+    :when: 2022-11-15 17:00:00.665009645 Z
+- - :approve
+  - Microsoft.NET.Test.Sdk
+  - :who: lillie-dae
+    :why: https://www.nuget.org/packages/Microsoft.NET.Test.Sdk
+    :versions: [17.3.2, 17.1.0]
+    :when: 2022-11-15 17:00:00.665009645 Z
+- - :approve
+  - Microsoft.TestPlatform.ObjectModel
+  - :who: lillie-dae
+    :why: https://aka.ms/deprecateLicenseUrl
+    :versions: [17.3.2, 17.1.0]
+    :when: 2022-11-15 17:00:00.665009645 Z
+- - :approve
+  - Microsoft.TestPlatform.TestHost
+  - :who: lillie-dae
+    :why: https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost
+    :versions: [17.3.2, 17.1.0]
+    :when: 2022-11-15 17:00:00.665009645 Z
+- - :approve
+  - YamlDotNet
+  - :who: lillie-dae
+    :why: https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost
+    :versions:
+    - 12.0.2
+    :when: 2022-11-15 17:00:00.665009645 Z

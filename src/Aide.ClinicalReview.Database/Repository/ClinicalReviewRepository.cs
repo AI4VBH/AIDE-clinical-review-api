@@ -1,11 +1,10 @@
 ﻿using Aide.ClinicalReview.Contracts.Models;
+using Aide.ClinicalReview.Database.Configuration;
 using Aide.ClinicalReview.Database.Interfaces;
-using Aide.ClinicalReview.Database.Options;
 using Ardalis.GuardClauses;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Linq;
 
 namespace Aide.ClinicalReview.Database.Repository
 {
@@ -28,7 +27,7 @@ namespace Aide.ClinicalReview.Database.Repository
 
         public async Task<string> CreateAsync(ClinicalReviewRecord clinicalReview)
         {
-            clinicalReview.Id = clinicalReview.ClinicalReviewMessage.ExecutionId;
+            clinicalReview.Id = clinicalReview.ClinicalReviewMessage!.ExecutionId;
             clinicalReview.Received = DateTime.UtcNow;
             await _clinicalReviewCollection.InsertOneAsync(clinicalReview);
             return clinicalReview.Id;
@@ -56,25 +55,25 @@ namespace Aide.ClinicalReview.Database.Repository
             var builder = Builders<ClinicalReviewRecord>.Filter;
             var filter = builder.Empty;
 
-            filter &= builder.AnyIn(p => p.ClinicalReviewMessage.ReviewerRoles, roles);
+            filter &= builder.AnyIn(p => p.ClinicalReviewMessage!.ReviewerRoles, roles);
             if (!string.IsNullOrEmpty(patientId))
             {
-                filter &= builder.Regex(p => p.ClinicalReviewMessage.PatientMetadata.PatientId, new BsonRegularExpression($"/{patientId}/i"));
+                filter &= builder.Regex(p => p.ClinicalReviewMessage!.PatientMetadata!.PatientId, new BsonRegularExpression($"/{patientId}/i"));
             }
             if (!string.IsNullOrEmpty(patientName))
             {
-                filter &= builder.Regex(p => p.ClinicalReviewMessage.PatientMetadata.PatientName, new BsonRegularExpression($"/{patientName}/i"));
+                filter &= builder.Regex(p => p.ClinicalReviewMessage!.PatientMetadata!.PatientName, new BsonRegularExpression($"/{patientName}/i"));
             }
             if (!string.IsNullOrEmpty(applicationName))
             {
-                filter &= builder.Regex(p => p.ClinicalReviewMessage.ApplicationMetadata["application_name"], new BsonRegularExpression($"/{applicationName}/i"));
+                filter &= builder.Regex(p => p.ClinicalReviewMessage!.ApplicationMetadata["application_name"], new BsonRegularExpression($"/{applicationName}/i"));
             }
 
             var clinicalReviews = await GetAllAsync(_clinicalReviewCollection,
                                       filter,
                                       Builders<ClinicalReviewRecord>.Sort.Descending(x => x.Received));
 
-            return (clinicalReviews.Skip((int)skip).Take((int)limit).ToList(), clinicalReviews.Count());
+            return (clinicalReviews.Skip((int)skip!).Take((int)limit!).ToList(), clinicalReviews.Count());
         }
     }
 }

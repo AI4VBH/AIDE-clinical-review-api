@@ -4,7 +4,7 @@ using RabbitMQ.Client;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.Support
 {
-    public class RabbitConsumer
+    public sealed class RabbitConsumer
     {
         public RabbitConsumer(IModel channel, string exchange, string routingKey)
         {

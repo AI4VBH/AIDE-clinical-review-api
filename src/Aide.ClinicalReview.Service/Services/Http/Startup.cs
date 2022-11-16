@@ -40,7 +40,7 @@ namespace Aide.ClinicalReview.Service.Services.Http
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Aide Clinical Review Service", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = ClincalReviewService.ServiceName, Version = "v1" });
                 c.DescribeAllParametersInCamelCase();
             });
 

@@ -2,10 +2,6 @@
 
 namespace Aide.ClinicalReview.Service.Logging
 {
-#pragma warning disable S125
-    // Commented out code to match eventId's with
-    // Monai Services when implemented in future
-
     public static partial class Log
     {
         [LoggerMessage(EventId = 1, Level = LogLevel.Information, Message = "{ServiceName} started.")]
@@ -36,8 +32,10 @@ namespace Aide.ClinicalReview.Service.Logging
         [LoggerMessage(EventId = 119, Level = LogLevel.Error, Message = "Recovering connection to storage service:  {reason}.")]
         public static partial void MessagingServiceErrorRecover(this ILogger logger, string reason);
 
-        [LoggerMessage(EventId = 120, Level = LogLevel.Error, Message = "Unexpected error occurred in GET /clinical-review API.")]
+        [LoggerMessage(EventId = 120, Level = LogLevel.Error, Message = "Dicom Exception {reason}")]
+        public static partial void DicomException(this ILogger logger, string reason, Exception ex);
+        
+        [LoggerMessage(EventId = 121, Level = LogLevel.Error, Message = "Unexpected error occurred in GET /clinical-review API.")]
         public static partial void ClinicalReviewGetAllAsyncError(this ILogger logger, Exception ex);
     }
-#pragma warning restore S125
 }

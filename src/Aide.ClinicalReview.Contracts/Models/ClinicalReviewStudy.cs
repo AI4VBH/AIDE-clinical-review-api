@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Aide.ClinicalReview.Contracts.Models
 {
-    public class ClinicalReviewStudy
+    public sealed class ClinicalReviewStudy
     {
         [BsonId]
         [JsonPropertyName("execution_id")]
@@ -16,7 +16,7 @@ namespace Aide.ClinicalReview.Contracts.Models
         public List<Series> Study { get; set; } = new List<Series>();
     }
 
-    public class Series
+    public sealed class Series
     {
         [JsonPropertyName("series_id")]
         public string Id { get; set; } = string.Empty;

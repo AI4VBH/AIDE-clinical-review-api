@@ -17,7 +17,7 @@ namespace Aide.ClinicalReview.Service.Controllers
     /// </summary>
     [ApiController]
     [Route("clinical-review")]
-    public class ClinicalReviewController: ApiControllerBase
+    public sealed class ClinicalReviewController: ApiControllerBase
     {
         private readonly IClinicalReviewService _clinicalReviewService;
         private readonly ILogger<ClinicalReviewController> _logger;

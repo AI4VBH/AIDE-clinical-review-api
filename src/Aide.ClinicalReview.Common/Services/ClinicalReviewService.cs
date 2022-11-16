@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Aide.ClinicalReview.Common.Services
 {
-    public class ClinicalReviewService : IClinicalReviewService
+    public sealed class ClinicalReviewService : IClinicalReviewService
     {
         private readonly IClinicalReviewRepository _clinicalReviewRepository;
         private readonly ILogger<ClinicalReviewService> _logger;

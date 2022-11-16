@@ -75,11 +75,13 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Accepted Clinical Review request generates a Task Callback")]
+        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReviewApi")]
         public virtual void AcceptedClinicalReviewRequestGeneratesATaskCallback()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReviewApi"};
+                    "ClinicalReviewApi",
+                    "ignore"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Accepted Clinical Review request generates a Task Callback", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 4

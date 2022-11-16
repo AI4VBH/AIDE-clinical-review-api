@@ -75,11 +75,13 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Publish a clinical review event and see the event is saved in Mongo")]
+        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReviewEvent")]
         public virtual void PublishAClinicalReviewEventAndSeeTheEventIsSavedInMongo()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReviewEvent"};
+                    "ClinicalReviewEvent",
+                    "ignore"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Publish a clinical review event and see the event is saved in Mongo", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 4
