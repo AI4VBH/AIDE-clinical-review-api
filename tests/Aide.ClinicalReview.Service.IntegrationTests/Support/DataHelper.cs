@@ -182,6 +182,21 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             OutputHelper.WriteLine($"Successfully published ClinicalReviewRequestEvent with name={name}");
         }
 
+        public ClinicalReviewRecord DeserializeClinicalReviewTask(string name)
+        {
+            try
+            {
+                using var reader = new StreamReader(Path.Combine(GetBinDir(), "TestData", "ClinicalReviewTask", name));
+                string json = reader.ReadToEnd();
+                var clinicalReviewTask = JsonSerializer.Deserialize<ClinicalReviewRecord>(json);
+                return clinicalReviewTask;
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Something went wrong deserializing {name}, please review!");
+            }
+        }
+
         private string GetBinDir()
         {
             return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

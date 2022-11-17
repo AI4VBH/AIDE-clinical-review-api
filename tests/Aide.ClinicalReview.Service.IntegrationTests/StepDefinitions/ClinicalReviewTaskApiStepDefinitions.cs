@@ -88,6 +88,37 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
             actualClinicalReviewTasks.Count.Should().Be(0);
         }
 
+        [Then(@"I can see Clinical Review Tasks '(.*)' are returned")]
+        public void ThenICanSeeClinicalReviewTasksAreReturned(List<string> expectedClinicalReviewTasks)
+        {
+            HttpResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var response = JObject.Parse(HttpResponse.Content.ReadAsStringAsync().Result);
+
+            var actualClinicalReviewTasks = JsonSerializer.Deserialize<List<ClinicalReviewRecord>>(response["data"].ToString());
+
+            var clinicalReviewTasks = new List<ClinicalReviewRecord>();
+
+            foreach(var task in expectedClinicalReviewTasks)
+            {
+                clinicalReviewTasks.Add(DataHelper.DeserializeClinicalReviewTask(task));
+            }
+
+            Assertions.AssertClinicalReviewTasks(actualClinicalReviewTasks, clinicalReviewTasks);
+        }
+
+        [When(@"I send a request to get Clinical Review Tasks with no role")]
+        public async Task WhenISendARequestToGetClinicalReviewTasksWithNoRole()
+        {
+            HttpResponse = await DataHelper.GetClinicalReviewTasks();
+        }
+
+        [Then(@"I can Clinical Review Service Returns Bad request")]
+        public void ThenICanClinicalReviewServiceReturnsBadRequest()
+        {
+            HttpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
 
         [StepArgumentTransformation]
         public List<string> TransformToListOfString(string list)

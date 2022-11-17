@@ -173,13 +173,11 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("No Clinical Review Tasks are returned when the DB is empty")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReview_TaskApi")]
         public virtual void NoClinicalReviewTasksAreReturnedWhenTheDBIsEmpty()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReview_TaskApi",
-                    "ignore"};
+                    "ClinicalReview_TaskApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No Clinical Review Tasks are returned when the DB is empty", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 20
@@ -216,20 +214,18 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Correct Clinical Review Tasks are returned based on parameters")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
+        [NUnit.Framework.DescriptionAttribute("Correct Clinical Review Tasks are returned based on search parameters")]
         [NUnit.Framework.CategoryAttribute("ClinicalReview_TaskApi")]
-        [NUnit.Framework.TestCaseAttribute("", "patientName", "test", null)]
-        [NUnit.Framework.TestCaseAttribute("", "patientName", "none", null)]
-        [NUnit.Framework.TestCaseAttribute("", "patientId", "test", null)]
-        [NUnit.Framework.TestCaseAttribute("", "reviewedTaskId", "test", null)]
-        [NUnit.Framework.TestCaseAttribute("", "reviewedTaskId", "none", null)]
-        [NUnit.Framework.TestCaseAttribute("", "roles", "none", null)]
-        public virtual void CorrectClinicalReviewTasksAreReturnedBasedOnParameters(string clinicalReviewTasks, string name, string value, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("ClinicalReviewTask.json,ClinicalReviewTask_Search.json", "patientName", "Jane", "ClinicalReviewTask_Search.json", null)]
+        [NUnit.Framework.TestCaseAttribute("ClinicalReviewTask.json,ClinicalReviewTask_Search.json", "patientName", "bloggs", "ClinicalReviewTask.json,ClinicalReviewTask_Search.json", null)]
+        [NUnit.Framework.TestCaseAttribute("ClinicalReviewTask.json,ClinicalReviewTask_Search.json", "patientId", "1234567", "ClinicalReviewTask.json", null)]
+        [NUnit.Framework.TestCaseAttribute("ClinicalReviewTask.json,ClinicalReviewTask_Search.json", "patientId", "987654", "ClinicalReviewTask_Search.json", null)]
+        [NUnit.Framework.TestCaseAttribute("ClinicalReviewTask.json,ClinicalReviewTask_Search.json", "applicationName", "application", "ClinicalReviewTask.json,ClinicalReviewTask_Search.json", null)]
+        [NUnit.Framework.TestCaseAttribute("ClinicalReviewTask.json,ClinicalReviewTask_Search.json", "applicationName", "application_1", "ClinicalReviewTask.json", null)]
+        public virtual void CorrectClinicalReviewTasksAreReturnedBasedOnSearchParameters(string clinicalReviewTasks, string name, string value, string clinicalReviewTaskReturned, string[] exampleTags)
         {
             string[] @__tags = new string[] {
-                    "ClinicalReview_TaskApi",
-                    "ignore"};
+                    "ClinicalReview_TaskApi"};
             if ((exampleTags != null))
             {
                 @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
@@ -239,7 +235,8 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("clinicalReviewTasks", clinicalReviewTasks);
             argumentsOfScenario.Add("name", name);
             argumentsOfScenario.Add("value", value);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Correct Clinical Review Tasks are returned based on parameters", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            argumentsOfScenario.Add("clinicalReviewTaskReturned", clinicalReviewTaskReturned);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Correct Clinical Review Tasks are returned based on search parameters", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -267,7 +264,102 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When(string.Format("I send a request to get Clinical Review Tasks with parameter {0} and {1}", name, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 29
+ testRunner.Then(string.Format("I can see Clinical Review Tasks \'{0}\' are returned", clinicalReviewTaskReturned), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Clinical Review Tasks are not returned based on search parameters")]
+        [NUnit.Framework.CategoryAttribute("ClinicalReview_TaskApi")]
+        [NUnit.Framework.TestCaseAttribute("ClinicalReviewTask.json,ClinicalReviewTask_Search.json", "patientName", "George", null)]
+        [NUnit.Framework.TestCaseAttribute("ClinicalReviewTask.json,ClinicalReviewTask_Search.json", "patientId", "999999", null)]
+        [NUnit.Framework.TestCaseAttribute("ClinicalReviewTask.json,ClinicalReviewTask_Search.json", "applicationName", "stroke", null)]
+        public virtual void ClinicalReviewTasksAreNotReturnedBasedOnSearchParameters(string clinicalReviewTasks, string name, string value, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "ClinicalReview_TaskApi"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("clinicalReviewTasks", clinicalReviewTasks);
+            argumentsOfScenario.Add("name", name);
+            argumentsOfScenario.Add("value", value);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review Tasks are not returned based on search parameters", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 40
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 41
+ testRunner.Given(string.Format("I have Clinical Review Tasks \'{0}\' in Mongo", clinicalReviewTasks), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 42
+ testRunner.When(string.Format("I send a request to get Clinical Review Tasks with parameter {0} and {1}", name, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 43
  testRunner.Then("I can see no Clinical Review Tasks are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Clinical Review service returns bad request when roles are not added")]
+        [NUnit.Framework.CategoryAttribute("ClinicalReview_TaskApi")]
+        public virtual void ClinicalReviewServiceReturnsBadRequestWhenRolesAreNotAdded()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "ClinicalReview_TaskApi"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review service returns bad request when roles are not added", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 51
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 52
+ testRunner.Given("I have Clinical Review Tasks \'ClinicalReviewTask.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 53
+ testRunner.When("I send a request to get Clinical Review Tasks with no role", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 54
+ testRunner.Then("I can Clinical Review Service Returns Bad request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
