@@ -84,51 +84,6 @@ namespace Aide.ClinicalReview.Service
                 topic,
                 topic,
                 AideClinicalReviewRequestCallBack);
-
-            TestCode(topic);
-        }
-
-        //TODO: Remove this
-        private void TestCode(string topic)
-        {
-            //Debug code...
-            //TODO: Remove this.
-
-            var body = new AideClinicalReviewRequestMessage()
-            {
-                CorrelationId = "123",
-                ExecutionId = Guid.NewGuid().ToString(),
-                ReviewedExecutionId = "abc",
-                ReviewedTaskId = "cde",
-                WorkflowName = "bobwf",
-                ApplicationMetadata = new Dictionary<string, string> { { "application_name", "test value" }, { "application_version", "test value" } },
-                Files = new List<Contracts.Messages.File>
-                {
-                    new Contracts.Messages.File()
-                    {
-                        Bucket = "bucket",
-                        Credentials = new Contracts.Messages.Credentials
-                        {
-                            AccessKey = "accesskey",
-                            AccessToken = "token",
-                            SessionToken = "token"
-                        }
-                    }
-                },
-                PatientMetadata = new Contracts.Messages.PatientMetadata()
-                {
-                    PatientDob = "this is dob",
-                    PatientGender = "F",
-                    PatientId = "id",
-                    PatientName = "pizza"
-                },
-                TaskId = "taskid",
-                ReviewerRoles = new string[] { "clinician" }
-                
-            };
-
-            JsonMessage<AideClinicalReviewRequestMessage>? message = new(body, "xxx", "bbb");
-            _messageBrokerPublisherService?.Publish(topic, message.ToMessage());
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

@@ -7,6 +7,7 @@ using Polly;
 using Polly.Retry;
 using System.Reflection;
 using System.Text.Json;
+using System.Web;
 using TechTalk.SpecFlow.Infrastructure;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.Support
@@ -44,9 +45,21 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             _ = await ApiHelper.GetResponseAsync();
         }
 
-        public async Task<HttpResponseMessage> GetClinicalReviewTasks()
+        public async Task<HttpResponseMessage> GetClinicalReviewTasks(Dictionary<string, string> parameters = null)
         {
-            ApiHelper.SetUrl($"{TestExecutionConfig.ApiConfig.BaseUrl}/{TestExecutionConfig.ApiConfig.TasksEndpoint}");
+            var builder = new UriBuilder($"{TestExecutionConfig.ApiConfig.BaseUrl}{TestExecutionConfig.ApiConfig.TasksEndpoint}");
+
+            if(parameters != null)
+            {
+                var query = HttpUtility.ParseQueryString(builder.Query);
+                foreach (var parameter in parameters)
+                {
+                    query[parameter.Key] = parameter.Value;
+                }
+                builder.Query = query.ToString();
+            }
+
+            ApiHelper.SetUrl(builder.ToString());
             ApiHelper.SetRequestVerb("GET");
             return await ApiHelper.GetResponseAsync();
         }

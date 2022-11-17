@@ -74,20 +74,22 @@
     </SpecFlowFeatureFiles>
   </ItemGroup>
 
-  <Target Name="CopyPlugins" AfterTargets="publish">
+  <Target Name="CopyStoragePlugin" AfterTargets="Build">
     <ItemGroup>
-      <PluginDlls Include="$(PublishDir)Monai.Deploy.Messaging.RabbitMQ.dll" />
+      <Minio Include="$(TargetDir)Minio.dll" />
+      <MonaiDeployStorage Include="$(TargetDir)Monai.Deploy.Storage.*.dll" />
     </ItemGroup>
-    <Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(PublishDir)\plug-ins\" SkipUnchangedFiles="true" />
-    <Message Text="Files copied successfully to $(PublishDir)\plug-ins\." Importance="high" />
+    <Copy SourceFiles="@(Minio)" DestinationFolder="$(TargetDir)plug-ins\" />
+    <Copy SourceFiles="@(MonaiDeployStorage)" DestinationFolder="$(TargetDir)plug-ins\" />
   </Target>
 
-  <Target Name="CopyPluginsBuild" AfterTargets="build">
+  <Target Name="CopyMessagingPlugin" AfterTargets="Build">
     <ItemGroup>
-      <PluginDlls Include="$(OutDir)Monai.Deploy.Messaging.RabbitMQ.dll" />
+      <MonaiDeployMessaging Include="$(TargetDir)Monai.Deploy.Messaging.*" />
+      <RabbitMQ Include="$(TargetDir)RabbitMQ.Client.dll" />
     </ItemGroup>
-    <Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(OutDir)\plug-ins\" SkipUnchangedFiles="true" />
-    <Message Text="Files copied successfully to $(OutDir)\plug-ins\." Importance="high" />
+    <Copy SourceFiles="@(MonaiDeployMessaging)" DestinationFolder="$(TargetDir)plug-ins\" />
+    <Copy SourceFiles="@(RabbitMQ)" DestinationFolder="$(TargetDir)plug-ins\" />
   </Target>
 
 </Project>

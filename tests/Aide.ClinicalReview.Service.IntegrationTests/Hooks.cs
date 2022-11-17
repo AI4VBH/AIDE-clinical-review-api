@@ -43,8 +43,8 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
 
             TestExecutionConfig.MongoConfig.ConnectionString = config.GetValue<string>("AideClinicalReviewDatabase:ConnectionString");
             TestExecutionConfig.MongoConfig.Database = config.GetValue<string>("AideClinicalReviewDatabase:DatabaseName");
-            TestExecutionConfig.MongoConfig.ClinicalReviewTaskCollection = config.GetValue<string>("AideClinicalReviewDatabase:ClinicalReviewTaskCollection");
-            TestExecutionConfig.MongoConfig.ClinicalReviewStudyCollection = config.GetValue<string>("AideClinicalReviewDatabase:ClinicalReviewStudyCollection");
+            TestExecutionConfig.MongoConfig.ClinicalReviewTaskCollection = config.GetValue<string>("AideClinicalReviewDatabase:AideClinicalReviewService");
+            //TestExecutionConfig.MongoConfig.ClinicalReviewStudyCollection = config.GetValue<string>("AideClinicalReviewDatabase:ClinicalReviewStudyCollection");
 
             TestExecutionConfig.MinioConfig.Endpoint = config.GetValue<string>("AideClinicalReviewService:storage:settings:endpoint");
             TestExecutionConfig.MinioConfig.AccessKey = config.GetValue<string>("AideClinicalReviewService:storage:settings:accessKey");
@@ -54,7 +54,7 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
 
             TestExecutionConfig.ApiConfig.BaseUrl = "http://localhost:5000";
             TestExecutionConfig.ApiConfig.StudiesEndpoint = "/studies";
-            TestExecutionConfig.ApiConfig.TasksEndpoint = "/tasks";
+            TestExecutionConfig.ApiConfig.TasksEndpoint = "/clinical-review";
 
             RabbitConnectionFactory.DeleteAllQueues();
 
@@ -75,7 +75,7 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
             RabbitConnectionFactory.PurgeAllQueues();
 
             MongoClient?.DeleteAllClinicalReviewTasks();
-            MongoClient?.DeleteAllClinicalReviewStudies();
+            //MongoClient?.DeleteAllClinicalReviewStudies();
         }
 
         [BeforeScenario]
