@@ -13,16 +13,14 @@ namespace Aide.ClinicalReview.Service.Controllers
     public class TaskDetailsController : ApiControllerBase
     {
         private readonly ITaskDetailsService _taskDetailsService;
-        private readonly IOptions<AideClinicalReviewServiceOptions> _options;
         private readonly ILogger<TaskDetailsController> _logger;
 
         public TaskDetailsController(
             ITaskDetailsService taskDetailsService,
             IOptions<AideClinicalReviewServiceOptions> options,
-            ILogger<TaskDetailsController> logger) : base(options)
+            ILogger<TaskDetailsController> logger) : base(options ?? throw new ArgumentNullException(nameof(options)))
         {
             _taskDetailsService = taskDetailsService ?? throw new ArgumentNullException(nameof(taskDetailsService));
-            _options = options ?? throw new ArgumentNullException(nameof(options));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
