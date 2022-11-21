@@ -100,7 +100,7 @@ namespace Aide.ClinicalReview.Service.Handler
                         clinicalReviewStudy.StudyUid = GetValueFromDicomTag<string>(dcmFile, DicomTag.StudyInstanceUID);
                     }
 
-                    if (clinicalReviewStudy.StudyDate == null)
+                    if (clinicalReviewStudy.StudyDate == null || clinicalReviewStudy.StudyDate == DateTime.MinValue)
                     {
                         clinicalReviewStudy.StudyDate = GetValueFromDicomTag<DateTime>(dcmFile, DicomTag.StudyDate);
                     }
