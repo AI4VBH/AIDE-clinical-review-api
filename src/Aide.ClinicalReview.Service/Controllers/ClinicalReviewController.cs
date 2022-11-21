@@ -1,5 +1,6 @@
 ﻿using Aide.ClinicalReview.Common.Interfaces;
 using Aide.ClinicalReview.Configuration;
+using Aide.ClinicalReview.Contracts.Exceptions;
 using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.Filter;
 using Aide.ClinicalReview.Service.Logging;

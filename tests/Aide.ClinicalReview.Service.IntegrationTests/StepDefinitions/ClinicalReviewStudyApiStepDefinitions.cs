@@ -1,8 +1,12 @@
 using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.Support;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Net;
 using System.Text.Json;
 using TechTalk.SpecFlow;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
 {
@@ -26,20 +30,52 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
             }
         }
 
-        [When(@"I send a request to get Clinical Review Studies")]
-        public async Task WhenISendARequestToGetClinicalReviewStudies()
+        [When(@"I send a request to get Clinical Review Studies '(.*)'")]
+        public async Task WhenISendARequestToGetClinicalReviewStudies(string executionId)
         {
-            HttpResponse = await DataHelper.GetClinicalReviewStudies();
+            HttpResponse = await DataHelper.GetClinicalReviewStudies(executionId);
         }
 
         [Then(@"I can see correct Studies are returned")]
         public void ThenICanSeeCorrectStudiesAreReturned()
         {
-            var response = HttpResponse.Content.ReadAsStringAsync().Result;
+            HttpResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var actualClinicalReviewStudies = JsonSerializer.Deserialize<List<ClinicalReviewStudy>>(response);
+            var response = (HttpResponse.Content.ReadAsStringAsync().Result);
+
+            var actualClinicalReviewStudies = JsonConvert.DeserializeObject<ClinicalReviewStudy>(response);
 
             Assertions.AssertClinicalReviewStudies(actualClinicalReviewStudies, DataHelper.ClinicalReviewStudies);
+        }
+
+        [Given(@"I have no Clinical Review Study in Mongo")]
+        public void GivenIHaveNoClinicalReviewStudyInMongo()
+        {
+            // for BDD readability only
+        }
+
+        [Then(@"No Clinical Review Study is returned")]
+        public void ThenICanSeeNoClinicalReviewStudyIsReturned()
+        {
+            HttpResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var response = JObject.Parse(HttpResponse.Content.ReadAsStringAsync().Result);
+
+           var actualClinicalReviewTasks = JsonConvert.DeserializeObject<ClinicalReviewStudy>(response["data"].ToString());
+
+           actualClinicalReviewTasks.Should().Be(0);
+        }
+
+        [Then(@"Clinical Review Study Returns Bad request")]
+        public void ThenICanClinicalReviewServiceReturnsBadRequest()
+        {
+            HttpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Then(@"Clinical Review Study Returns Not found")]
+        public void ThenICanClinicalReviewServiceReturnsNotFound()
+        {
+            HttpResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [StepArgumentTransformation]

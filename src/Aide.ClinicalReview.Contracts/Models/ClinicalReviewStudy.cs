@@ -1,30 +1,36 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using System.Text.Json.Serialization;
 
 namespace Aide.ClinicalReview.Contracts.Models
 {
-    public sealed class ClinicalReviewStudy
+    public class ClinicalReviewStudy
     {
         [BsonId]
-        [JsonPropertyName("execution_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("executionId")]
         public string ExecutionId { get; set; } = string.Empty;
 
-        [JsonPropertyName("roles")]
+        [JsonProperty("roles")]
         public List<string> Roles { get; set; } = new List<string>();
 
-        [JsonPropertyName("study")]
+        [JsonProperty("study")]
         public List<Series> Study { get; set; } = new List<Series>();
     }
 
-    public sealed class Series
+    public class Series
     {
-        [JsonPropertyName("series_id")]
-        public string Id { get; set; } = string.Empty;
+        [JsonProperty("seriesId")]
+        public string SeriesId { get; set; } = string.Empty;
 
-        [JsonPropertyName("modality")]
+        [JsonProperty("modality")]
         public string Modality { get; set; } = string.Empty;
 
-        [JsonPropertyName("files")]
+        [JsonProperty("files")]
         public List<string> Files { get; set; } = new List<string>();
     }
 }

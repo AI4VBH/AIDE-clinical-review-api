@@ -20,7 +20,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("ClinicalReviewStudyApi")]
+    [NUnit.Framework.DescriptionAttribute("Clinical Review Study Api")]
     public partial class ClinicalReviewStudyApiFeature
     {
         
@@ -35,7 +35,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "ClinicalReviewStudyApi", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Clinical Review Study Api", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -75,13 +75,11 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Clinical Review Studies are returned")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReview_StudyApi")]
         public virtual void ClinicalReviewStudiesAreReturned()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReview_StudyApi",
-                    "ignore"};
+                    "ClinicalReview_StudyApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review Studies are returned", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 4
@@ -108,10 +106,229 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I have Clinical Review studies \'ClinicalReviewStudy.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 6
- testRunner.When("I send a request to get Clinical Review Studies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I send a request to get Clinical Review Studies \'7aa6a79a-ed9a-4d15-b501-b902aa87" +
+                        "be4a?roles=Clinician\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
  testRunner.Then("I can see correct Studies are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Clinical Review Studies are not returned when user does not have the right role")]
+        [NUnit.Framework.CategoryAttribute("ClinicalReview_StudyApi")]
+        public virtual void ClinicalReviewStudiesAreNotReturnedWhenUserDoesNotHaveTheRightRole()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "ClinicalReview_StudyApi"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review Studies are not returned when user does not have the right role", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 10
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 11
+ testRunner.Given("I have Clinical Review studies \'ClinicalReviewStudy.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 12
+ testRunner.When("I send a request to get Clinical Review Studies \'7aa6a79a-ed9a-4d15-b501-b902aa87" +
+                        "be4a?roles=Doctor,Nurse\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 13
+ testRunner.Then("Clinical Review Study Returns Bad request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Clinical Review Studies are not returned when roles are not included")]
+        [NUnit.Framework.CategoryAttribute("ClinicalReview_StudyApi")]
+        public virtual void ClinicalReviewStudiesAreNotReturnedWhenRolesAreNotIncluded()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "ClinicalReview_StudyApi"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review Studies are not returned when roles are not included", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 16
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 17
+ testRunner.Given("I have Clinical Review studies \'ClinicalReviewStudy.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 18
+ testRunner.When("I send a request to get Clinical Review Studies \'7aa6a79a-ed9a-4d15-b501-b902aa87" +
+                        "be4a\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 19
+ testRunner.Then("Clinical Review Study Returns Bad request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Clinical Review Studies are not returned when default guid is provided")]
+        [NUnit.Framework.CategoryAttribute("ClinicalReview_StudyApi")]
+        public virtual void ClinicalReviewStudiesAreNotReturnedWhenDefaultGuidIsProvided()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "ClinicalReview_StudyApi"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review Studies are not returned when default guid is provided", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 22
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 23
+ testRunner.Given("I have Clinical Review studies \'ClinicalReviewStudy.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 24
+ testRunner.When("I send a request to get Clinical Review Studies \'00000000-0000-0000-0000-00000000" +
+                        "0000?roles=Clinician\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 25
+ testRunner.Then("Clinical Review Study Returns Bad request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Clinical Review Studies are not returned when execution ID does not exist in the " +
+            "DB")]
+        [NUnit.Framework.CategoryAttribute("ClinicalReview_StudyApi")]
+        public virtual void ClinicalReviewStudiesAreNotReturnedWhenExecutionIDDoesNotExistInTheDB()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "ClinicalReview_StudyApi"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review Studies are not returned when execution ID does not exist in the " +
+                    "DB", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 28
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 29
+ testRunner.Given("I have no Clinical Review Study in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 30
+ testRunner.When("I send a request to get Clinical Review Studies \'7aa6a79a-ed9a-4d15-b501-b902aa87" +
+                        "be4a?roles=Clinician\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 31
+ testRunner.Then("Clinical Review Study Returns Not found", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Clinical Review Studies are not returned when unauthorised")]
+        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
+        [NUnit.Framework.CategoryAttribute("ClinicalReview_StudyApi")]
+        public virtual void ClinicalReviewStudiesAreNotReturnedWhenUnauthorised()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "ClinicalReview_StudyApi",
+                    "ignore"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review Studies are not returned when unauthorised", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 34
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 35
+ testRunner.Given("I have Clinical Review studies \'ClinicalReviewStudy.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 36
+ testRunner.When("I am a unauthorised user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 37
+ testRunner.Then("No Clinical Review Study is returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

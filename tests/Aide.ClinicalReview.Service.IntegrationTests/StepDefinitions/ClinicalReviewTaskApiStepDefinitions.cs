@@ -2,6 +2,7 @@ using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.Support;
 using Aide.ClinicalReview.Service.Wrappers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Text.Json;
@@ -71,7 +72,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
 
             var response = JObject.Parse(HttpResponse.Content.ReadAsStringAsync().Result);
 
-            var actualClinicalReviewTasks = JsonSerializer.Deserialize<List<ClinicalReviewRecord>>(response["data"].ToString());
+            var actualClinicalReviewTasks = JsonConvert.DeserializeObject<List<ClinicalReviewRecord>>(response["data"].ToString());
 
             Assertions.AssertClinicalReviewTasks(actualClinicalReviewTasks, DataHelper.ClinicalReviewTasks);
         }
@@ -83,7 +84,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
 
             var response = JObject.Parse(HttpResponse.Content.ReadAsStringAsync().Result);
 
-            var actualClinicalReviewTasks = JsonSerializer.Deserialize<List<ClinicalReviewRecord>>(response["data"].ToString());
+            var actualClinicalReviewTasks = JsonConvert.DeserializeObject<List<ClinicalReviewRecord>>(response["data"].ToString());
 
             actualClinicalReviewTasks.Count.Should().Be(0);
         }
@@ -95,7 +96,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
 
             var response = JObject.Parse(HttpResponse.Content.ReadAsStringAsync().Result);
 
-            var actualClinicalReviewTasks = JsonSerializer.Deserialize<List<ClinicalReviewRecord>>(response["data"].ToString());
+            var actualClinicalReviewTasks = JsonConvert.DeserializeObject<List<ClinicalReviewRecord>>(response["data"].ToString());
 
             var clinicalReviewTasks = new List<ClinicalReviewRecord>();
 

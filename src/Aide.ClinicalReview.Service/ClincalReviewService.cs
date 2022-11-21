@@ -1,6 +1,6 @@
 using Aide.ClinicalReview.Configuration;
 using Aide.ClinicalReview.Contracts.Messages;
-using Aide.ClinicalReview.Service.Exceptions;
+using Aide.ClinicalReview.Contracts.Exceptions;
 using Aide.ClinicalReview.Service.Handler;
 using Aide.ClinicalReview.Service.Logging;
 using Aide.ClinicalReview.Service.Models;
@@ -56,11 +56,11 @@ namespace Aide.ClinicalReview.Service
 
             _messageBrokerPublisherService = _scope.ServiceProvider
                 .GetRequiredService<IMessageBrokerPublisherService>() 
-                ?? throw new ServiceNotFoundException(nameof(IMessageBrokerPublisherService));
+                ?? throw new MongoNotFoundException(nameof(IMessageBrokerPublisherService));
 
             _messageBrokerSubscriberService = _scope.ServiceProvider
                 .GetRequiredService<IMessageBrokerSubscriberService>() 
-                ?? throw new ServiceNotFoundException(nameof(IMessageBrokerSubscriberService));
+                ?? throw new MongoNotFoundException(nameof(IMessageBrokerSubscriberService));
 
             _messageBrokerSubscriberService.OnConnectionError += (sender, args) =>
             {
@@ -120,7 +120,7 @@ namespace Aide.ClinicalReview.Service
                 var message = args.Message.ConvertToJsonMessage<AideClinicalReviewRequestMessage>();
 
                 var handler = _scope.ServiceProvider.GetService<ICallBackHandler<AideClinicalReviewRequestMessage>>()
-                    ?? throw new ServiceNotFoundException(nameof(ReviewRequestCallBackHandler));
+                    ?? throw new MongoNotFoundException(nameof(ReviewRequestCallBackHandler));
 
                 // Run action on the message
                 await handler.HandleMessage(message).ConfigureAwait(false);

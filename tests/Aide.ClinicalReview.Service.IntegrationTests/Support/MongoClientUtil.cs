@@ -33,8 +33,8 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         {
             Client = new MongoClient(TestExecutionConfig.MongoConfig.ConnectionString);
             Database = Client.GetDatabase($"{TestExecutionConfig.MongoConfig.Database}");
-            ClinicalReviewTaskCollection = Database.GetCollection<ClinicalReviewRecord>($"{TestExecutionConfig.MongoConfig.ClinicalReviewTaskCollection}");
-           // ClinicalReviewStudyCollection = Database.GetCollection<ClinicalReviewStudy>($"{TestExecutionConfig.MongoConfig.ClinicalReviewStudyCollection}");
+            ClinicalReviewTaskCollection = Database.GetCollection<ClinicalReviewRecord>($"{TestExecutionConfig.MongoConfig.AideClinicalReviewRecordCollection}");
+            ClinicalReviewStudyCollection = Database.GetCollection<ClinicalReviewStudy>($"{TestExecutionConfig.MongoConfig.AideClinicalReviewStudyCollection}");
             RetryMongo = Policy.Handle<Exception>().WaitAndRetry(retryCount: 10, sleepDurationProvider: _ => TimeSpan.FromMilliseconds(1000));
         }
 

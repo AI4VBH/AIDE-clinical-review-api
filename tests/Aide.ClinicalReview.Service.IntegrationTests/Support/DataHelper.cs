@@ -3,6 +3,7 @@ using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.POCO;
 using BoDi;
 using Monai.Deploy.Messaging.Messages;
+using Newtonsoft.Json;
 using Polly;
 using Polly.Retry;
 using System.Reflection;
@@ -21,10 +22,12 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         private ApiHelper ApiHelper { get; }
         private RetryPolicy<string> RetryTaskCallback { get; set; }
         private string ExecutionId { get; set; }
+
+
         private ClinicalReviewRecord ClinicalReviewTask { get; set; }
         private ClinicalReviewStudy ClinicalReviewStudy { get; set; }
         public List<ClinicalReviewRecord> ClinicalReviewTasks { get; set; } = new List<ClinicalReviewRecord>();
-        public List<ClinicalReviewStudy> ClinicalReviewStudies { get; set; } = new List<ClinicalReviewStudy>();
+        public ClinicalReviewStudy ClinicalReviewStudies { get; set; } = new ClinicalReviewStudy();
         public AideClinicalReviewRequestMessage ClinicalReviewEvent { get; set; }
 
         public DataHelper(IObjectContainer objectContainer)
@@ -64,9 +67,9 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             return await ApiHelper.GetResponseAsync();
         }
 
-        public async Task<HttpResponseMessage> GetClinicalReviewStudies()
+        public async Task<HttpResponseMessage> GetClinicalReviewStudies(string executionId)
         {
-            ApiHelper.SetUrl($"{TestExecutionConfig.ApiConfig.BaseUrl}/endpoint");
+            ApiHelper.SetUrl($"{TestExecutionConfig.ApiConfig.BaseUrl}{TestExecutionConfig.ApiConfig.TaskDetailsEndpoint}/{executionId}");
             ApiHelper.SetRequestVerb("GET");
             return await ApiHelper.GetResponseAsync();
         }
@@ -79,10 +82,10 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             {
                 using var reader = new StreamReader(Path.Combine(GetBinDir(), "TestData", "ClinicalReviewTask", name));
                 string json = reader.ReadToEnd();
-                ClinicalReviewTask = JsonSerializer.Deserialize<ClinicalReviewRecord>(json);
+                ClinicalReviewTask = JsonConvert.DeserializeObject<ClinicalReviewRecord>(json);
                 ClinicalReviewTasks.Add(ClinicalReviewTask);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw new Exception($"Something went wrong deserializing {name}, please review!");
             }
@@ -101,8 +104,8 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             {
                 using var reader = new StreamReader(Path.Combine(GetBinDir(), "TestData", "ClinicalReviewStudy", name));
                 string json = reader.ReadToEnd();
-                ClinicalReviewStudy = JsonSerializer.Deserialize<ClinicalReviewStudy>(json);
-                ClinicalReviewStudies.Add(ClinicalReviewStudy);
+                ClinicalReviewStudy = JsonConvert.DeserializeObject<ClinicalReviewStudy>(json);
+                ClinicalReviewStudies = ClinicalReviewStudy;
             }
             catch (Exception)
             {
@@ -164,7 +167,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             {
                 using var reader = new StreamReader(Path.Combine(GetBinDir(), "TestData", "ClinicalReviewEvent", name));
                 string json = reader.ReadToEnd();
-                ClinicalReviewEvent = JsonSerializer.Deserialize<AideClinicalReviewRequestMessage>(json);
+                ClinicalReviewEvent = JsonConvert.DeserializeObject<AideClinicalReviewRequestMessage>(json);
 
                 var message = new JsonMessage<string>(
                     json,
@@ -188,7 +191,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             {
                 using var reader = new StreamReader(Path.Combine(GetBinDir(), "TestData", "ClinicalReviewTask", name));
                 string json = reader.ReadToEnd();
-                var clinicalReviewTask = JsonSerializer.Deserialize<ClinicalReviewRecord>(json);
+                var clinicalReviewTask = JsonConvert.DeserializeObject<ClinicalReviewRecord>(json);
                 return clinicalReviewTask;
             }
             catch (Exception)

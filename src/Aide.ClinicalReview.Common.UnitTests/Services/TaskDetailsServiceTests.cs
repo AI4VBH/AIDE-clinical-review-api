@@ -3,6 +3,7 @@ using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Database.Interfaces;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -24,15 +25,17 @@ namespace Aide.ClinicalReview.Common.UnitTests.Services
         [Fact]
         public async Task GetTaskDetailsAsync_InvalidGuid_ThrowsException()
         {
-            await Assert.ThrowsAsync<ArgumentException>(() => TaskDetailsService.GetTaskDetailsAsync(Guid.Empty));
+            var roles = new string[] { "clinician"};
+            await Assert.ThrowsAsync<ArgumentException>(() => TaskDetailsService.GetTaskDetailsAsync(Guid.Empty,roles));
         }
 
         [Fact]
         public async Task GetTaskDetailsAsync_ValidGuid_ReturnsExpectedResult()
         {
-            _taskDetailsRepository.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>())).ReturnsAsync(new ClinicalReviewStudy());
+            _taskDetailsRepository.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>())).ReturnsAsync(new ClinicalReviewStudy() { Roles = new List<string> { "clinician" } });
 
-            var result = await TaskDetailsService.GetTaskDetailsAsync(Guid.NewGuid());
+            var roles = new string[] { "clinician" };
+            var result = await TaskDetailsService.GetTaskDetailsAsync(Guid.NewGuid(),roles);
 
             Assert.NotNull(result);
         }

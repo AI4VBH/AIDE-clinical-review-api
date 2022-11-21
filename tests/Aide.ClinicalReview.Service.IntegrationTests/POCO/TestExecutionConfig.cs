@@ -33,9 +33,9 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.POCO
 
             public static string Database { get; set; } = string.Empty;
 
-            public static string ClinicalReviewTaskCollection { get; set; } = string.Empty;
+            public static string AideClinicalReviewStudyCollection { get; set; } = string.Empty;
 
-            public static string ClinicalReviewStudyCollection { get; set; } = string.Empty;
+            public static string AideClinicalReviewRecordCollection { get; set; } = string.Empty;
         }
 
         public static class MinioConfig
@@ -56,6 +56,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.POCO
             public static string BaseUrl { get; set; } = string.Empty;
             public static string TasksEndpoint { get; set; } = string.Empty;
             public static string StudiesEndpoint { get; set; } = string.Empty;
+            public static string TaskDetailsEndpoint { get; set; } = string.Empty;
         }
     }
 }

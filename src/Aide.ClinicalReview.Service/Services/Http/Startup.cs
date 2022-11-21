@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System.Net.Mime;
+using Newtonsoft.Json.Converters;
+
 
 namespace Aide.ClinicalReview.Service.Services.Http
 {
@@ -36,7 +38,7 @@ namespace Aide.ClinicalReview.Service.Services.Http
         {
             services.AddSingleton(Configuration);
             services.AddHttpContextAccessor();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opts => opts.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
             services.AddSwaggerGen(c =>
             {

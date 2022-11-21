@@ -1,5 +1,6 @@
 ﻿using Aide.ClinicalReview.Common.Interfaces;
 using Aide.ClinicalReview.Configuration;
+using Aide.ClinicalReview.Contracts.Exceptions;
 using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.Controllers;
 using Microsoft.AspNetCore.Http;
@@ -31,25 +32,38 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task GetTaskDetailsAsync_WrongExecutionId_ReturnsBadRequest()
+        public async Task GetTaskDetailsAsync_WrongExecutionId_ReturnsNotFoundExecutionId()
         {
-            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>())).ReturnsAsync((ClinicalReviewStudy)null);
+            var roles = new string[] { "clinician" };
+            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>(), It.IsAny<string[]>())).ThrowsAsync(new MongoNotFoundException("Not found executionId"));
 
-            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid());
+            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid(), "clincian");
 
             var objectResult = Assert.IsType<ObjectResult>(result);
             Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
         }
 
         [Fact]
-        public async Task GetTaskDetailsAsync_DefaultExecutionId_ReturnsInternalServerError()
+        public async Task GetTaskDetailsAsync_DefaultExecutionId_ReturnsBadRequest()
         {
-            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(Guid.Empty)).ThrowsAsync(new ArgumentException());
+            var roles = new string[] { "clinician" };
+            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(Guid.Empty,It.IsAny<string[]>())).ThrowsAsync(new ArgumentException());
 
-            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.Empty);
+            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.Empty, "clincian");
 
             var objectResult = Assert.IsType<ObjectResult>(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, objectResult.StatusCode);
+            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+        }
+
+        public async Task GetTaskDetailsAsync_ThrowsException_ReturnsBadRequestRoles()
+        {
+            var roles = new string[] { "clinician" };
+            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>(),It.IsAny<string[]>())).ThrowsAsync( new UnathorisedRoleException("Unauthorised Roles"));
+
+            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid(), "clincian");
+
+            var objectResult = Assert.IsType<ObjectResult>(result);
+            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
         }
 
         // TODO
@@ -59,9 +73,10 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
         [Fact]
         public async Task GetTaskDetailsAsync_ThrowsException_ReturnsInternalServerError()
         {
-            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>())).Throws(() => new Exception("unexpected error"));
+            var roles = new string[] { "clinician" };
+            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>(),It.IsAny<string[]>())).Throws(() => new Exception("unexpected error"));
 
-            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid());
+            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid(),"clincian");
 
             var objectResult = Assert.IsType<ObjectResult>(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, objectResult.StatusCode);
@@ -70,9 +85,10 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
         [Fact]
         public async Task GetTaskDetailsAsync_ValidExecutionId_ReturnsExpectedResult()
         {
-            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>())).ReturnsAsync(new ClinicalReviewStudy());
+            var roles = new string[] { "clinician" };
+            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>(), roles)).ReturnsAsync(new ClinicalReviewStudy());
 
-            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid());
+            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid(),"clincian");
 
             Assert.IsType<OkObjectResult>(result);
         }

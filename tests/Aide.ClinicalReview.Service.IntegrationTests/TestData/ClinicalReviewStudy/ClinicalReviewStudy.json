@@ -1,12 +1,20 @@
 ﻿{
   "ExecutionId": "7aa6a79a-ed9a-4d15-b501-b902aa87be4a",
-  "Roles": [ "" ],
-  "Study": {
-    "SeriesId": "",
-    "Modality": "",
-    "Files": [
-      "",
-      ""
-    ]
-  }
+  "Roles": [ "Clinician" ],
+  "Study": [
+    {
+      "SeriesId": "series-id1",
+      "Modality": "CT",
+      "Files": [
+        "object-keys-for-minio"
+      ]
+    },
+    {
+      "SeriesId": "series-id2",
+      "Modality": "DOC",
+      "Files": [
+        "object-keys-for-minio"
+      ]
+    }
+  ]
 }

@@ -40,10 +40,9 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             // assertions
         }
 
-        internal static void AssertClinicalReviewStudies(List<ClinicalReviewStudy>? actualClinicalReviewStudies, List<ClinicalReviewStudy>? expectedClinicalReviewStudies)
+        internal static void AssertClinicalReviewStudies(ClinicalReviewStudy actualClinicalReviewStudies,ClinicalReviewStudy expectedClinicalReviewStudies)
         {
-            actualClinicalReviewStudies?.Count.Should().Be(expectedClinicalReviewStudies?.Count);
-            actualClinicalReviewStudies?.Select(x => x.ExecutionId ).ToArray().Should().BeEquivalentTo(expectedClinicalReviewStudies?.Select(x => x.ExecutionId).ToArray());
+            actualClinicalReviewStudies.Should().BeEquivalentTo(expectedClinicalReviewStudies);
         }
     }
 }

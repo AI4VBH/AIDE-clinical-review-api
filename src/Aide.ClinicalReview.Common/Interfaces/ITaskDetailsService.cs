@@ -4,6 +4,6 @@ namespace Aide.ClinicalReview.Common.Interfaces
 {
     public interface ITaskDetailsService
     {
-        Task<ClinicalReviewStudy> GetTaskDetailsAsync(Guid executionId);
+        Task<ClinicalReviewStudy> GetTaskDetailsAsync(Guid executionId, string[] roles);
     }
 }

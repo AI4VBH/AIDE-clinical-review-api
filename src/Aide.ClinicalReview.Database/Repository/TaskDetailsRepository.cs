@@ -18,7 +18,7 @@ namespace Aide.ClinicalReview.Database.Repository
             }
 
             var db = client.GetDatabase(databaseSettings.Value.DatabaseName);
-            _clinicalReviewStudyCollection = db.GetCollection<ClinicalReviewStudy>(databaseSettings.Value.AideClinicalReviewService);
+            _clinicalReviewStudyCollection = db.GetCollection<ClinicalReviewStudy>(databaseSettings.Value.AideClinicalReviewStudy);
         }
 
         public async Task<ClinicalReviewStudy> GetTaskDetailsAsync(Guid executionId)

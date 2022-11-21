@@ -10,8 +10,11 @@ namespace Aide.ClinicalReview.Database.Configuration
         [ConfigurationKeyName("DatabaseName")]
         public string DatabaseName { get; set; } = null!;
 
-        [ConfigurationKeyName("AideClinicalReviewService")]
-        public string AideClinicalReviewService { get; set; } = null!;
+        [ConfigurationKeyName("AideClinicalReviewRecord")]
+        public string AideClinicalReviewRecord { get; set; } = null!;
+
+        [ConfigurationKeyName("AideClinicalReviewStudy")]
+        public string AideClinicalReviewStudy { get; set; } = null!;
 
     }
 }

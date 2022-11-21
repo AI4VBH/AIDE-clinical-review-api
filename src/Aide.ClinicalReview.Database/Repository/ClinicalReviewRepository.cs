@@ -22,7 +22,7 @@ namespace Aide.ClinicalReview.Database.Repository
             }
 
             var mongoDatabase = client.GetDatabase(databaseSettings.Value.DatabaseName);
-            _clinicalReviewCollection = mongoDatabase.GetCollection<ClinicalReviewRecord>(databaseSettings.Value.AideClinicalReviewService);
+            _clinicalReviewCollection = mongoDatabase.GetCollection<ClinicalReviewRecord>(databaseSettings.Value.AideClinicalReviewRecord);
         }
 
         public async Task<string> CreateAsync(ClinicalReviewRecord clinicalReview)
