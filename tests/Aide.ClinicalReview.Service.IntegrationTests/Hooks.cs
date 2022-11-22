@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Polly;
 using Polly.Retry;
+using TechTalk.SpecFlow.Infrastructure;
 
 namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
 {
@@ -56,6 +57,7 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
             TestExecutionConfig.ApiConfig.StudiesEndpoint = "/studies";
             TestExecutionConfig.ApiConfig.TasksEndpoint = "/clinical-review";
             TestExecutionConfig.ApiConfig.TaskDetailsEndpoint = "/task-details";
+            TestExecutionConfig.ApiConfig.DicomEndpont = "/dicom";
 
             RabbitConnectionFactory.DeleteAllQueues();
 
@@ -66,6 +68,12 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
             RetryPolicy = Policy.Handle<Exception>().WaitAndRetryAsync(retryCount: 20, sleepDurationProvider: _ => TimeSpan.FromMilliseconds(500));
             ClinicalReviewPublisher = new RabbitPublisher(RabbitConnectionFactory.GetRabbitConnection(), TestExecutionConfig.RabbitConfig.Exchange, TestExecutionConfig.RabbitConfig.ClinicalReviewQueue);
             TaskCallbackConsumer = new RabbitConsumer(RabbitConnectionFactory.GetRabbitConnection(), TestExecutionConfig.RabbitConfig.Exchange, TestExecutionConfig.RabbitConfig.TaskCallbackQueue);
+        }
+
+        [BeforeTestRun(Order = 2)]
+        public static async Task CreateBucket()
+        {
+            await MinioClient.CreateBucket(TestExecutionConfig.MinioConfig.Bucket);
         }
 
         [BeforeTestRun(Order = 1)]
@@ -88,6 +96,7 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
             ObjectContainer.RegisterInstanceAs(MinioClient);
             ObjectContainer.RegisterInstanceAs(WebApplicationFactory?.CreateClient());
             ObjectContainer.RegisterInstanceAs(new DataHelper(ObjectContainer));
+            ObjectContainer.RegisterInstanceAs(new MinioDataSeeding(MinioClient, ObjectContainer.Resolve<ISpecFlowOutputHelper>()));
         }
 
         [AfterTestRun(Order = 1)]

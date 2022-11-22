@@ -26,18 +26,10 @@ namespace Aide.ClinicalReview.Service.Services
 
         public async Task<Stream?> GetDicomFileAsync(string key)
         {
-            Guard.Against.NullOrWhiteSpace(key);
+            var bucket = _options.Value.Settings[StorageConfiguration.Bucket];
 
-            var keyValues = key.Replace('\\', '/').Split('/');
-            var bucket = keyValues.First();
-            if (string.IsNullOrWhiteSpace(bucket))
-            {
-                bucket = _options.Value.Settings[StorageConfiguration.Bucket];
-            }
-            if (key.StartsWith(bucket))
-            {
-                key = string.Join('/', keyValues.Skip(1));
-            }
+            Guard.Against.NullOrWhiteSpace(key);
+            Guard.Against.NullOrWhiteSpace(bucket);
 
             try
             {

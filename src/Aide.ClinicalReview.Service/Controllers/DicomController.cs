@@ -49,9 +49,11 @@ namespace Aide.ClinicalReview.Service.Controllers
                 return Problem($"Request failed, no dicom file found for key: {key}", $"{ENDPOINT}", NotFound);
             }
 
+            var keyValues = key.Replace('\\', '/').Split('/');
+
             return new FileStreamResult(dicom, "application/dicom")
             {
-                FileDownloadName = "request.dicom"
+                FileDownloadName = keyValues.LastOrDefault() ?? "unnamed-dicom.dcm"
             };
         }
     }

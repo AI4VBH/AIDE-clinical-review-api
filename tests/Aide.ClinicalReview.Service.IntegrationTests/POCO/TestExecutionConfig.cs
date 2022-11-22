@@ -57,6 +57,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.POCO
             public static string TasksEndpoint { get; set; } = string.Empty;
             public static string StudiesEndpoint { get; set; } = string.Empty;
             public static string TaskDetailsEndpoint { get; set; } = string.Empty;
+            public static string DicomEndpont { get; internal set; }
         }
     }
 }

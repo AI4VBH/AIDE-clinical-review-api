@@ -36,15 +36,15 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
         }
 
         [Theory]
-        [InlineData("bucket1", "0b273c5b-4d9c-4521-84c4-72382013f476/dcmoutput.dcm", "bucket1/0b273c5b-4d9c-4521-84c4-72382013f476/dcmoutput.dcm")]
-        public async Task GetDicomFileAsync_WithValidKey_ReturnsStream(string bucket, string subKey, string key)
+        [InlineData("bucket1", "0b273c5b-4d9c-4521-84c4-72382013f476/dcmoutput.dcm")]
+        public async Task GetDicomFileAsync_WithValidKey_ReturnsStream(string bucket, string key)
         {
             _options.Value.Settings.Add(StorageConfiguration.Bucket, bucket);
             using var test_Stream = new MemoryStream(Encoding.UTF8.GetBytes("whatever"));
 
             _storageService.Setup(s => s.GetObjectAsync(
                 It.Is<string>(i => i.Equals(bucket)),
-                It.Is<string>(i => i.Equals(subKey)),
+                It.Is<string>(i => i.Equals(key)),
                 It.IsAny<CancellationToken>()))
                 .ReturnsAsync(test_Stream);
 
@@ -55,17 +55,17 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
         }
 
         [Theory]
-        [InlineData("bucket1", "/0b273c5b-4d9c-4521-84c4-72382013f476/dcmoutput.dcm", "bucket1/0b273c5b-4d9c-4521-84c4-72382013f476/dcmoutput.dcm")]
-        public async Task GetDicomFileAsync_WithValidKey_ReturnsNull(string bucket, string subKey, string key)
+        [InlineData("bucket1", "/0b273c5b-4d9c-4521-84c4-72382013f476/dcmoutput.dcm")]
+        public async Task GetDicomFileAsync_WithValidKey_ReturnsNull(string bucket, string key)
         {
             _options.Value.Settings.Add(StorageConfiguration.Bucket, bucket);
             using var test_Stream = new MemoryStream(Encoding.UTF8.GetBytes("whatever"));
 
             _storageService.Setup(s => s.GetObjectAsync(
                 It.Is<string>(i => i.Equals(bucket)),
-                It.Is<string>(i => i.Equals(subKey)),
+                It.Is<string>(i => i.Equals(key)),
                 It.IsAny<CancellationToken>()))
-                .ReturnsAsync(test_Stream);
+                .ReturnsAsync((Stream)null);
 
             var result = await DicomServiceObject.GetDicomFileAsync(key);
 

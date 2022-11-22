@@ -91,7 +91,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
                                 };
                                 await Client.PutObjectAsync(
                                     TestExecutionConfig.MinioConfig.Bucket,
-                                    relativePath,
+                                    relativePath = relativePath.Replace("\\", "/"),
                                     file,
                                     "application/octet-stream",
                                     metaData);
@@ -110,7 +110,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
                         };
                             await Client.PutObjectAsync(
                                 TestExecutionConfig.MinioConfig.Bucket,
-                                folderPath,
+                                folderPath = folderPath.Replace("\\", "/"),
                                 localPath,
                                 "application/octet-stream",
                                 metaData);

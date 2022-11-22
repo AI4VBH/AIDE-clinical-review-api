@@ -74,6 +74,13 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             return await ApiHelper.GetResponseAsync();
         }
 
+        public async Task<HttpResponseMessage> GetClinicalReviewDicoms(string file)
+        {
+            ApiHelper.SetUrl($"{TestExecutionConfig.ApiConfig.BaseUrl}{TestExecutionConfig.ApiConfig.DicomEndpont}?key={file}");
+            ApiHelper.SetRequestVerb("GET");
+            return await ApiHelper.GetResponseAsync();
+        }
+
         public void CreateClinicalReviewTask(string name)
         {
             OutputHelper.WriteLine($"Creating ClinicalReviewTask with name={name}");
