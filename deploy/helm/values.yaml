@@ -17,6 +17,8 @@ enviromentVariables:
   MINIO_USE_SSL: false
   MINIO_BUCKET: 'monaideploy'
   ClinicalReviewDatabase__ConnectionString: "mongodb://root:rootpassword@mongo-monai.monai:27017"
+  Kestrel__EndPoints__Http__Url: "http://::5000"
+      
 
 enviromentVariablesFromSecrets:
   secrets:
@@ -35,4 +37,4 @@ enviromentVariablesFromSecrets:
       
 service:
   type: ClusterIP
-  port: 80  
+  port: 5000
