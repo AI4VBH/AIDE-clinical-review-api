@@ -50,22 +50,34 @@ step "deploy-the-clinical-review-api" {
                 enviromentVariables:
                   DOTNET_ENVIRONMENT: #{DOTNET_ENVIRONMENT}
                   LOGSTASH_URL: http://logstash.shared:5011
-                  AideClinicalReviewService__messaging__subscriberSettings__endpoint: #{MessagingEndpoint} 
-                  AideClinicalReviewService__messaging__publisherSettings__endpoint: #{MessagingEndpoint}
-                  enviromentVariablesFromSecrets:
-                    secrets:
-                      - name: AideClinicalReviewService__messaging__subscriberSettings__username
-                        secretName: #{RabbitSecretName}
-                        secretKey: username
-                      - name: AideClinicalReviewService__messaging__subscriberSettings__password
-                        secretName: #{RabbitSecretName}
-                        secretKey: password
-                      - name: AideClinicalReviewService__messaging__publisherSettings__username
-                        secretName: #{RabbitSecretName}
-                        secretKey: username
-                      - name: AideClinicalReviewService__messaging__publisherSettings__password
-                        secretName: #{RabbitSecretName}
-                        secretKey: password
+                  AideClinicalReviewService__messaging__subscriberSettings__endpoint: rabbitmq.rabbitmq
+                  AideClinicalReviewService__messaging__publisherSetting__endpoint: rabbitmq.rabbitmq
+                  AideClinicalReviewService__messaging__subscriberSettings__port: 5672
+                  AideClinicalReviewService__messaging__publisherSettings__port: 5672
+                  AideClinicalReviewService__storage__settings__endpoint: minio-hl.minio.svc.cluster.local
+                  AideClinicalReviewService__storage__settings__port: 9000
+                  AideClinicalReviewService__storage__settings__bucket: 'monaideploy'
+                  ClinicalReviewDatabase__ConnectionString: "mongodb://root:rootpassword@mongo-monai.monai:27017"
+                enviromentVariablesFromSecrets:
+                  secrets:
+                    - name: AideClinicalReviewService__messaging__subscriberSettings__username
+                      secretName: rabbit-secret-master
+                      secretKey: username
+                    - name: AideClinicalReviewService__messaging__subscriberSettings__password
+                      secretName: rabbit-secret-master
+                      secretKey: password
+                    - name: AideClinicalReviewService__messaging__publisherSettings__username
+                      secretName: rabbit-secret-master
+                      secretKey: username
+                    - name: AideClinicalReviewService__messaging__publisherSettings__password
+                      secretName: rabbit-secret-master
+                      secretKey: password
+                    - name: AideClinicalReviewService__storage__settings__accessKey
+                      secretName: minio-admin-user
+                      secretKey: user
+                    - name: MAideClinicalReviewService__storage__settings__accessToken
+                      secretName: minio-admin-user
+                      secretKey: password
             EOT
             Octopus.Action.Package.DownloadOnTentacle = "False"
             Octopus.Action.Package.FeedId = "octopus-server-built-in"
