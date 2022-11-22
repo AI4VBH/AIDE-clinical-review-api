@@ -5,3 +5,7 @@ variable "ImagePullSecretName" {
 variable "Namespace" {
     value "aide" {}
 }
+
+variable "MessagingEndpoint" {
+    value "rabbitmq.rabbitmq" {}
+}
