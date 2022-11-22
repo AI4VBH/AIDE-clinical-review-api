@@ -45,25 +45,9 @@
 		</None>
 	</ItemGroup>
 
-	<Target Name="CopyPlugins" AfterTargets="publish">
-		<ItemGroup>
-			<PluginDlls Include="$(PublishDir)Monai.Deploy.Messaging.RabbitMQ.dll" />
-		</ItemGroup>
-		<Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(PublishDir)\plug-ins\" SkipUnchangedFiles="true" />
-		<Message Text="Files copied successfully to $(PublishDir)\plug-ins\." Importance="high" />
-	</Target>
-
-	<Target Name="CopyPluginsBuild" AfterTargets="build">
-		<ItemGroup>
-			<PluginDlls Include="$(OutDir)Monai.Deploy.Messaging.RabbitMQ.dll" />
-		</ItemGroup>
-		<Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(OutDir)\plug-ins\" SkipUnchangedFiles="true" />
-		<Message Text="Files copied successfully to $(OutDir)\plug-ins\." Importance="high" />
-	</Target>
-
   <Target Name="CopyPlugins" AfterTargets="publish">
     <ItemGroup>
-      <PluginDlls Include="$(PublishDir)Monai.Deploy.Storage.MinIO.dll" />
+      <PluginDlls Include="$(PublishDir)Monai.Deploy.Messaging.RabbitMQ.dll;$(PublishDir)Monai.Deploy.Storage.MinIO.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(PublishDir)\plug-ins\" SkipUnchangedFiles="true" />
     <Message Text="Files copied successfully to $(PublishDir)\plug-ins\." Importance="high" />
@@ -71,7 +55,7 @@
 
   <Target Name="CopyPluginsBuild" AfterTargets="build">
     <ItemGroup>
-      <PluginDlls Include="$(OutDir)Monai.Deploy.Storage.MinIO.dll" />
+      <PluginDlls Include="$(OutDir)Monai.Deploy.Messaging.RabbitMQ.dll;$(OutDir)Monai.Deploy.Storage.MinIO.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(OutDir)\plug-ins\" SkipUnchangedFiles="true" />
     <Message Text="Files copied successfully to $(OutDir)\plug-ins\." Importance="high" />
