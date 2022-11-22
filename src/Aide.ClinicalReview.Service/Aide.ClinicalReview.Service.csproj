@@ -43,6 +43,9 @@
 		<None Update="appsettings.Local.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
+    <None Update="nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
 	</ItemGroup>
 
   <Target Name="CopyPlugins" AfterTargets="publish">
