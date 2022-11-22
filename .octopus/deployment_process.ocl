@@ -75,9 +75,13 @@ step "deploy-the-clinical-review-api" {
                     - name: AideClinicalReviewService__storage__settings__accessKey
                       secretName: minio-admin-user
                       secretKey: user
-                    - name: MAideClinicalReviewService__storage__settings__accessToken
+                    - name: AideClinicalReviewService__storage__settings__accessToken
                       secretName: minio-admin-user
                       secretKey: password
+                    - name: AideClinicalReviewDatabase__ConnectionString
+                      secretName: #{MongoAideUserSecretName}
+                      secretKey: connectionString.standard
+                      
             EOT
             Octopus.Action.Package.DownloadOnTentacle = "False"
             Octopus.Action.Package.FeedId = "octopus-server-built-in"
