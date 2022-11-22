@@ -9,29 +9,35 @@ imagePullSecrets:
  - name: regcred
 
 enviromentVariables:
-  RABBITMQ_HOST: host.docker.internal
-  RABBITMQ_API_URL: http://host.docker.internal:15672/api/
-  RABBITMQ_PORT: 5672
-  MINIO_HOST: minio-hl.minio.svc.cluster.local
-  MINIO_PORT: 9000
-  MINIO_USE_SSL: false
-  MINIO_BUCKET: 'monaideploy'
+  AideClinicalReviewService__messaging__subscriberSettings__endpoint: rabbitmq.rabbitmq
+  AideClinicalReviewService__messaging__publisherSetting__endpoint: rabbitmq.rabbitmq
+  AideClinicalReviewService__messaging__subscriberSettings__port: 5672
+  AideClinicalReviewService__messaging__publisherSettings__port: 5672
+  AideClinicalReviewService__storage__settings__endpoint: minio-hl.minio.svc.cluster.local
+  AideClinicalReviewService__storage__settings__port: 9000
+  AideClinicalReviewService__storage__settings__bucket: 'monaideploy'
   ClinicalReviewDatabase__ConnectionString: "mongodb://root:rootpassword@mongo-monai.monai:27017"
   Kestrel__EndPoints__Http__Url: "http://::5000"
       
 
 enviromentVariablesFromSecrets:
   secrets:
-    - name: RABBITMQ_USERNAME
+    - name: AideClinicalReviewService__messaging__subscriberSettings__username
       secretName: rabbit-secret-master
       secretKey: username
-    - name: RABBITMQ_PASSWORD
+    - name: AideClinicalReviewService__messaging__subscriberSettings__password
       secretName: rabbit-secret-master
       secretKey: password
-    - name: MINIO_ACCESS_KEY
+    - name: AideClinicalReviewService__messaging__publisherSettings__username
+      secretName: rabbit-secret-master
+      secretKey: username
+    - name: AideClinicalReviewService__messaging__publisherSettings__password
+      secretName: rabbit-secret-master
+      secretKey: password
+    - name: AideClinicalReviewService__storage__settings__accessKey
       secretName: minio-admin-user
       secretKey: user
-    - name: MINIO_SECRET_KEY
+    - name: AideClinicalReviewService__storage__settings__accessToken
       secretName: minio-admin-user
       secretKey: password
       
