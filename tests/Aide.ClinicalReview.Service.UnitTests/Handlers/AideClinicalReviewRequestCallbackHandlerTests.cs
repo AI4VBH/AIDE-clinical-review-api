@@ -3,6 +3,7 @@ using Aide.ClinicalReview.Service.Handler;
 using Aide.ClinicalReview.Service.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace Aide.ClinicalReview.Service.UnitTests.Handlers
 {
@@ -33,10 +34,10 @@ namespace Aide.ClinicalReview.Service.UnitTests.Handlers
             );
         }
 
-        //[Fact]
-        //public async void HandleMessage_ValidMessage_GivesExpectedResult()
-        //{
-
-        //}
+        [Fact]
+        public async void HandleMessage_NullMessage_ThrowsArgumentNullException()
+        {
+            await Assert.ThrowsAsync<ArgumentNullException>(() => AideClinicalReviewCallbackHandler.HandleMessage(null));
+        }
     }
 }

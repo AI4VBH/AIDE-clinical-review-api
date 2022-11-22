@@ -9,6 +9,7 @@ using Monai.Deploy.Messaging.Messages;
 using Aide.ClinicalReview.Service.Services;
 using Aide.ClinicalReview.Service.Extensions;
 using FellowOakDicom;
+using Aide.ClinicalReview.Common.Constants;
 
 namespace Aide.ClinicalReview.Service.Handler
 {
@@ -52,103 +53,101 @@ namespace Aide.ClinicalReview.Service.Handler
             var clinicalReviewRecord = new ClinicalReviewRecord()
             {
                 ClinicalReviewMessage = message.Body,
-                Ready = readyState, 
+                Ready = readyState,
                 Reviewed = reviewed
             };
 
-            var executionId = await _clinicalReviewRepository.CreateAsync(clinicalReviewRecord);
+            await _clinicalReviewRepository.CreateAsync(clinicalReviewRecord);
 
-            await HandleTaskDetails(executionId, message.Body.Files);
+            await HandleTaskDetails(message.Body.ExecutionId, message.Body.Files, message.Body.ReviewerRoles.ToList());
         }
 
-        private async Task HandleTaskDetails(string executionId, List<File> files)
+        private async Task HandleTaskDetails(string executionId, List<File> files, List<string> roles)
         {
             Guard.Against.NullOrWhiteSpace(executionId);
+
+            if (roles.IsNullOrEmpty())
+            {
+                roles = new List<string> { RoleConstants.Clinician };
+            }
 
             var clinicalReviewStudy = new ClinicalReviewStudy()
             {
                 ExecutionId = executionId,
+                Roles = roles
             };
 
             foreach (var file in files)
             {
                 var dcmFilesInfo = await _dicomService.GetAllDicomFileInfoInPath(file.RelativeRootPath, file.Bucket);
 
-                if (dcmFilesInfo.IsNullOrEmpty())
-                {
-                    continue; // should I be throwing something here or just skip?
-                }
+                // TODO
+                // Clarify how to handle this case
+                // May need to incorporate some sort of callback to inform failure
+
+                //if (dcmFilesInfo.IsNullOrEmpty())
+                //{
+                //    continue; // should I be throwing something here or just skip?
+                //}
 
                 var series = new Series();
                 var filesDictionary = new SortedDictionary<int, string>();
 
                 foreach (var fileInfo in dcmFilesInfo)
                 {
-                    // do I need to do a check here that the current file is a .dcm file?
                     var dcmFileStream = await _dicomService.GetDicomFileAsync(fileInfo.FilePath, file.Bucket);
 
-                    if (dcmFileStream is null)
-                    {
-                        continue; // not sure if this is the correct thing to be doing here
-                    }
+                    // TODO
+                    // Same comment as above
+
+                    //if (dcmFileStream is null)
+                    //{
+                    //    continue;
+                    //}
 
                     var dcmFile = await DicomFile.OpenAsync(dcmFileStream, FileReadOption.Default);
 
+#pragma warning disable CS8601 // Possible null reference assignment.
                     // Study properties
                     if (string.IsNullOrWhiteSpace(clinicalReviewStudy.StudyUid))
                     {
-                        clinicalReviewStudy.StudyUid = GetValueFromDicomTag<string>(dcmFile, DicomTag.StudyInstanceUID);
+                        clinicalReviewStudy.StudyUid = dcmFile.GetValueOrDefualt<string>(DicomTag.StudyInstanceUID);
                     }
 
                     if (clinicalReviewStudy.StudyDate == null || clinicalReviewStudy.StudyDate == DateTime.MinValue)
                     {
-                        clinicalReviewStudy.StudyDate = GetValueFromDicomTag<DateTime>(dcmFile, DicomTag.StudyDate);
+                        clinicalReviewStudy.StudyDate = dcmFile.GetValueOrDefualt<DateTime>(DicomTag.StudyDate);
                     }
 
                     if (string.IsNullOrWhiteSpace(clinicalReviewStudy.StudyDescription))
                     {
-                        clinicalReviewStudy.StudyDescription = GetValueFromDicomTag<string>(dcmFile, DicomTag.StudyDescription);
+                        clinicalReviewStudy.StudyDescription = dcmFile.GetValueOrDefualt<string>(DicomTag.StudyDescription);
                     }
 
                     // Series properties
                     if (string.IsNullOrWhiteSpace(series.Id))
                     {
-                        series.Id = GetValueFromDicomTag<string>(dcmFile, DicomTag.SeriesInstanceUID);
+                        series.Id = dcmFile.GetValueOrDefualt<string>(DicomTag.SeriesInstanceUID);
                     }
 
                     if (string.IsNullOrWhiteSpace(series.Modality))
                     {
-                        series.Modality = GetValueFromDicomTag<string>(dcmFile, DicomTag.Modality);
+                        series.Modality = dcmFile.GetValueOrDefualt<string>(DicomTag.Modality);
                     }
 
                     filesDictionary.Add(
-                        GetValueFromDicomTag<int>(dcmFile, DicomTag.InstanceNumber),
+                        dcmFile.GetValueOrDefualt<int>(DicomTag.InstanceNumber),
                         fileInfo.FilePath
                     );
                 }
+#pragma warning restore CS8601 // Possible null reference assignment.
 
                 series.Files = filesDictionary.Values.ToList();
 
                 clinicalReviewStudy.Study.Add(series);
-
-                // TODO
-                // Set the roles for the clinical review study
-                // Not sure exactly where these come from? Maybe sent as part of the message?
-                // Or will they need to be pulled from the auth?
             }
 
             await _taskDetailsRepository.CreateTaskDetailsAsync(clinicalReviewStudy);
-        }
-
-        private T? GetValueFromDicomTag<T>(DicomFile dcmFile, DicomTag tag)
-        {
-            var receivedValue = dcmFile.Dataset.TryGetSingleValue<T>(tag, out T value);
-            if (receivedValue)
-            {
-                return value;
-            }
-
-            return default(T);
         }
     }
 }

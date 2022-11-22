@@ -55,7 +55,9 @@ namespace Aide.ClinicalReview.Service.Services
 
             try
             {
-                return await _storageService.ListObjectsAsync(bucket, path, true);
+                var results = await _storageService.ListObjectsAsync(bucket, path, true);
+
+                return results.Where(x => Path.GetExtension(x.FilePath).ToLower() == ".dcm").ToList();
             }
             catch (Exception ex)
             {
