@@ -47,6 +47,25 @@ step "deploy-the-clinical-review-api" {
                   tag: #{Octopus.Action.Package.PackageVersion}
                 imagePullSecrets:
                   - name: #{ImagePullSecretName}
+                enviromentVariables:
+                  DOTNET_ENVIRONMENT: #{DOTNET_ENVIRONMENT}
+                  LOGSTASH_URL: http://logstash.shared:5011
+                  AideClinicalReviewService__messaging__subscriberSettings__endpoint: #{MessagingEndpoint} 
+                  AideClinicalReviewService__messaging__publisherSettings__endpoint: #{MessagingEndpoint}
+                  enviromentVariablesFromSecrets:
+                    secrets:
+                      - name: AideClinicalReviewService__messaging__subscriberSettings__username
+                        secretName: #{RabbitSecretName}
+                        secretKey: username
+                      - name: AideClinicalReviewService__messaging__subscriberSettings__password
+                        secretName: #{RabbitSecretName}
+                        secretKey: password
+                      - name: AideClinicalReviewService__messaging__publisherSettings__username
+                        secretName: #{RabbitSecretName}
+                        secretKey: username
+                      - name: AideClinicalReviewService__messaging__publisherSettings__password
+                        secretName: #{RabbitSecretName}
+                        secretKey: password
             EOT
             Octopus.Action.Package.DownloadOnTentacle = "False"
             Octopus.Action.Package.FeedId = "octopus-server-built-in"
