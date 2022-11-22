@@ -34,7 +34,7 @@ namespace Aide.ClinicalReview.Contracts.Models
     public class Series
     {
         [JsonProperty("series_uid")]
-        public string Id { get; set; } = string.Empty;
+        public string SeriesUid { get; set; } = string.Empty;
 
         [JsonProperty("modality")]
         public string Modality { get; set; } = string.Empty;

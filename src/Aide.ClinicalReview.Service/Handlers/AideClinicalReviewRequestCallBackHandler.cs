@@ -125,9 +125,9 @@ namespace Aide.ClinicalReview.Service.Handler
                     }
 
                     // Series properties
-                    if (string.IsNullOrWhiteSpace(series.Id))
+                    if (string.IsNullOrWhiteSpace(series.SeriesUid))
                     {
-                        series.Id = dcmFile.GetValueOrDefualt<string>(DicomTag.SeriesInstanceUID);
+                        series.SeriesUid = dcmFile.GetValueOrDefualt<string>(DicomTag.SeriesInstanceUID);
                     }
 
                     if (string.IsNullOrWhiteSpace(series.Modality))
