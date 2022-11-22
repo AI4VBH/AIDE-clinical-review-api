@@ -37,7 +37,7 @@ enviromentVariablesFromSecrets:
     - name: AideClinicalReviewService__storage__settings__accessKey
       secretName: minio-admin-user
       secretKey: user
-    - name: MAideClinicalReviewService__storage__settings__accessToken
+    - name: AideClinicalReviewService__storage__settings__accessToken
       secretName: minio-admin-user
       secretKey: password
       
