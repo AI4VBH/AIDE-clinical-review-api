@@ -24,16 +24,40 @@ namespace Aide.ClinicalReview.Service.Services
             _options = options;
         }
 
-        public async Task<Stream?> GetDicomFileAsync(string key)
+        public async Task<Stream?> GetDicomFileAsync(string key, string? bucket = null)
         {
-            var bucket = _options.Value.Settings[StorageConfiguration.Bucket];
-
             Guard.Against.NullOrWhiteSpace(key);
-            Guard.Against.NullOrWhiteSpace(bucket);
+            
+            if (string.IsNullOrWhiteSpace(bucket))
+            {
+                bucket = _options.Value.Settings[StorageConfiguration.Bucket];
+            }
 
             try
             {
                 return await _storageService.GetObjectAsync(bucket, key);
+            }
+            catch (Exception ex)
+            {
+                _logger.DicomException(ex.Message, ex);
+                return null;
+            }
+        }
+
+        public async Task<IList<VirtualFileInfo>?> GetAllDicomFileInfoInPath(string path, string? bucket = null)
+        {
+            Guard.Against.NullOrWhiteSpace(path);
+
+            if (string.IsNullOrWhiteSpace(bucket))
+            {
+                bucket = _options.Value.Settings[StorageConfiguration.Bucket];
+            }
+
+            try
+            {
+                var results = await _storageService.ListObjectsAsync(bucket, path, true);
+
+                return results.Where(x => Path.GetExtension(x.FilePath).ToLower() == ".dcm").ToList();
             }
             catch (Exception ex)
             {

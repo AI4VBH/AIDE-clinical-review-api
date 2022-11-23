@@ -27,5 +27,12 @@ namespace Aide.ClinicalReview.Database.Repository
                 .Find(x => x.ExecutionId == executionId.ToString())
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<string> CreateTaskDetailsAsync(ClinicalReviewStudy clinicalReviewStudy)
+        {
+            await _clinicalReviewStudyCollection.InsertOneAsync(clinicalReviewStudy);
+
+            return clinicalReviewStudy.ExecutionId;
+        }
     }
 }

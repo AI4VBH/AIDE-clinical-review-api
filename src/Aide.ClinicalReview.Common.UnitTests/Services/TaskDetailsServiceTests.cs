@@ -39,5 +39,21 @@ namespace Aide.ClinicalReview.Common.UnitTests.Services
 
             Assert.NotNull(result);
         }
+
+        [Fact]
+        public async Task CreateTaskDetailsAsync_NullMessage_ThrowsException()
+        {
+            await Assert.ThrowsAsync<ArgumentNullException>(() => TaskDetailsService.CreateTaskDetailsAsync(null));
+        }
+
+        [Fact]
+        public async Task CreateTaskDetailsAsync_DefaultMessage_ReturnsDefaultClinicalReviewStudy()
+        {
+            _taskDetailsRepository.Setup(x => x.CreateTaskDetailsAsync(It.IsAny<ClinicalReviewStudy>())).ReturnsAsync(Guid.NewGuid().ToString());
+
+            var result = await TaskDetailsService.CreateTaskDetailsAsync(new ClinicalReviewStudy());
+
+            Assert.NotNull(result);
+        }
     }
 }

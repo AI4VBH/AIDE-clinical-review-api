@@ -18,14 +18,23 @@ namespace Aide.ClinicalReview.Contracts.Models
         [JsonProperty("roles")]
         public List<string> Roles { get; set; } = new List<string>();
 
+        [JsonProperty("study_uid")]
+        public string StudyUid { get; set; } = string.Empty;
+
+        [JsonProperty("study_date")]
+        public DateTime? StudyDate { get; set; } = null;
+
+        [JsonProperty("study_description")]
+        public string StudyDescription { get; set; } = string.Empty;
+
         [JsonProperty("study")]
         public List<Series> Study { get; set; } = new List<Series>();
     }
 
     public class Series
     {
-        [JsonProperty("seriesId")]
-        public string SeriesId { get; set; } = string.Empty;
+        [JsonProperty("series_uid")]
+        public string SeriesUid { get; set; } = string.Empty;
 
         [JsonProperty("modality")]
         public string Modality { get; set; } = string.Empty;

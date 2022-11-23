@@ -114,7 +114,7 @@ namespace Aide.ClinicalReview.Service
             services.AddTransient<IFileSystem, FileSystem>();
 
             services.AddMonaiDeployStorageService(hostContext.Configuration.GetSection("AideClinicalReviewService:storage:serviceAssemblyName").Value);
-            services.AddSingleton<DicomService>();
+            services.AddSingleton<IDicomService, DicomService>();
 
             services.AddSingleton<ClincalReviewService>();
             services.AddHostedService(p => p.GetRequiredService<ClincalReviewService>());

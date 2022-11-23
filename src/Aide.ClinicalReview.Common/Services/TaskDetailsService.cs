@@ -33,5 +33,12 @@ namespace Aide.ClinicalReview.Common.Services
             return taskDetails;
 
         }
+
+        public async Task<string> CreateTaskDetailsAsync(ClinicalReviewStudy clinicalReviewStudy)
+        {
+            Guard.Against.Null(clinicalReviewStudy);
+
+            return await _taskDetailsRepository.CreateTaskDetailsAsync(clinicalReviewStudy);
+        }
     }
 }

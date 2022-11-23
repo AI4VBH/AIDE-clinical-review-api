@@ -41,7 +41,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
             using var test_Stream = new MemoryStream(Encoding.UTF8.GetBytes("whatever"));
 
             var ct = new CancellationTokenSource();
-            _dicomService.Setup(s => s.GetDicomFileAsync(It.Is<string>(i => i.Equals(key))))
+            _dicomService.Setup(s => s.GetDicomFileAsync(It.Is<string>(i => i.Equals(key)), It.IsAny<string>()))
                 .ReturnsAsync(test_Stream);
 
             var result = await DicomController.GetDicomFile(key);

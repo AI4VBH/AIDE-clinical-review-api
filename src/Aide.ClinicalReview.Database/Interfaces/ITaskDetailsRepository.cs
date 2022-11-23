@@ -5,5 +5,7 @@ namespace Aide.ClinicalReview.Database.Interfaces
     public interface ITaskDetailsRepository
     {
         Task<ClinicalReviewStudy> GetTaskDetailsAsync(Guid executionId);
+
+        Task<string> CreateTaskDetailsAsync(ClinicalReviewStudy study);
     }
 }
