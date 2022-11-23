@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Aide.ClinicalReview.Service.Extensions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -50,7 +51,7 @@ namespace Aide.ClinicalReview.Service.Services.Http
             var logger = serviceProvider.GetService<ILogger<Startup>>();
 
             //services.AddMonaiAuthentication(Configuration, logger);
-            //services.AddHttpLoggingForMonai(Configuration);
+            services.AddHttpLoggingForClinicalReview(Configuration);
             services.AddHealthChecks()
                 //.AddCheck<MonaiHealthCheck>("Workflow Manager Services")
                 .AddMongoDb(mongodbConnectionString: Configuration["WorkloadManagerDatabase:ConnectionString"], mongoDatabaseName: Configuration["WorkloadManagerDatabase:DatabaseName"]);
