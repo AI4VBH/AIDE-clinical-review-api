@@ -57,7 +57,6 @@ step "deploy-the-clinical-review-api" {
                   AideClinicalReviewService__storage__settings__endpoint: minio-hl.minio.svc.cluster.local
                   AideClinicalReviewService__storage__settings__port: 9000
                   AideClinicalReviewService__storage__settings__bucket: 'monaideploy'
-                  ClinicalReviewDatabase__ConnectionString: "mongodb://root:rootpassword@mongo-monai.monai:27017"
                 enviromentVariablesFromSecrets:
                   secrets:
                     - name: AideClinicalReviewService__messaging__subscriberSettings__username
@@ -81,6 +80,7 @@ step "deploy-the-clinical-review-api" {
                     - name: AideClinicalReviewDatabase__ConnectionString
                       secretName: #{MongoAideUserSecretName}
                       secretKey: connectionString.standard
+                      
                       
             EOT
             Octopus.Action.Package.DownloadOnTentacle = "False"
