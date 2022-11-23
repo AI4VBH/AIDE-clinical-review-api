@@ -6,6 +6,6 @@ namespace Aide.ClinicalReview.Database.Interfaces
     {
         Task<ClinicalReviewStudy> GetTaskDetailsAsync(Guid executionId);
 
-        Task<ClinicalReviewStudy> CreateTaskDetailsAsync(ClinicalReviewStudy study);
+        Task<string> CreateTaskDetailsAsync(ClinicalReviewStudy study);
     }
 }

@@ -34,7 +34,7 @@ namespace Aide.ClinicalReview.Common.Services
 
         }
 
-        public async Task<ClinicalReviewStudy> CreateTaskDetailsAsync(ClinicalReviewStudy clinicalReviewStudy)
+        public async Task<string> CreateTaskDetailsAsync(ClinicalReviewStudy clinicalReviewStudy)
         {
             Guard.Against.Null(clinicalReviewStudy);
 

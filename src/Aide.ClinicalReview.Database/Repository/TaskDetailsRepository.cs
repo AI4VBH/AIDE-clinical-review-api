@@ -28,11 +28,11 @@ namespace Aide.ClinicalReview.Database.Repository
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<ClinicalReviewStudy> CreateTaskDetailsAsync(ClinicalReviewStudy clinicalReviewStudy)
+        public async Task<string> CreateTaskDetailsAsync(ClinicalReviewStudy clinicalReviewStudy)
         {
             await _clinicalReviewStudyCollection.InsertOneAsync(clinicalReviewStudy);
 
-            return clinicalReviewStudy;
+            return clinicalReviewStudy.ExecutionId;
         }
     }
 }

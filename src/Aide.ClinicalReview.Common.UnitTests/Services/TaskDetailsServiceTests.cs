@@ -49,7 +49,7 @@ namespace Aide.ClinicalReview.Common.UnitTests.Services
         [Fact]
         public async Task CreateTaskDetailsAsync_DefaultMessage_ReturnsDefaultClinicalReviewStudy()
         {
-            _taskDetailsRepository.Setup(x => x.CreateTaskDetailsAsync(It.IsAny<ClinicalReviewStudy>())).ReturnsAsync(new ClinicalReviewStudy());
+            _taskDetailsRepository.Setup(x => x.CreateTaskDetailsAsync(It.IsAny<ClinicalReviewStudy>())).ReturnsAsync(Guid.NewGuid().ToString());
 
             var result = await TaskDetailsService.CreateTaskDetailsAsync(new ClinicalReviewStudy());
 

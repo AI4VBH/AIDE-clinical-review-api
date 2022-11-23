@@ -111,32 +111,32 @@ namespace Aide.ClinicalReview.Service.Handler
                     // Study properties
                     if (string.IsNullOrWhiteSpace(clinicalReviewStudy.StudyUid))
                     {
-                        clinicalReviewStudy.StudyUid = dcmFile.GetValueOrDefualt<string>(DicomTag.StudyInstanceUID);
+                        clinicalReviewStudy.StudyUid = dcmFile.GetValueOrDefault<string>(DicomTag.StudyInstanceUID);
                     }
 
                     if (clinicalReviewStudy.StudyDate == null || clinicalReviewStudy.StudyDate == DateTime.MinValue)
                     {
-                        clinicalReviewStudy.StudyDate = dcmFile.GetValueOrDefualt<DateTime>(DicomTag.StudyDate);
+                        clinicalReviewStudy.StudyDate = dcmFile.GetValueOrDefault<DateTime>(DicomTag.StudyDate);
                     }
 
                     if (string.IsNullOrWhiteSpace(clinicalReviewStudy.StudyDescription))
                     {
-                        clinicalReviewStudy.StudyDescription = dcmFile.GetValueOrDefualt<string>(DicomTag.StudyDescription);
+                        clinicalReviewStudy.StudyDescription = dcmFile.GetValueOrDefault<string>(DicomTag.StudyDescription);
                     }
 
                     // Series properties
                     if (string.IsNullOrWhiteSpace(series.SeriesUid))
                     {
-                        series.SeriesUid = dcmFile.GetValueOrDefualt<string>(DicomTag.SeriesInstanceUID);
+                        series.SeriesUid = dcmFile.GetValueOrDefault<string>(DicomTag.SeriesInstanceUID);
                     }
 
                     if (string.IsNullOrWhiteSpace(series.Modality))
                     {
-                        series.Modality = dcmFile.GetValueOrDefualt<string>(DicomTag.Modality);
+                        series.Modality = dcmFile.GetValueOrDefault<string>(DicomTag.Modality);
                     }
 
                     filesDictionary.Add(
-                        dcmFile.GetValueOrDefualt<int>(DicomTag.InstanceNumber),
+                        dcmFile.GetValueOrDefault<int>(DicomTag.InstanceNumber),
                         fileInfo.FilePath
                     );
                 }
