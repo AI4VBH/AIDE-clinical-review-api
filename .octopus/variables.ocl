@@ -9,7 +9,3 @@ variable "Namespace" {
 variable "MessagingEndpoint" {
     value "rabbitmq.rabbitmq" {}
 }
-
-variable "MongoAideUserSecretName" {
-    value "mongodb-admin-monaiuser" {}
-}
