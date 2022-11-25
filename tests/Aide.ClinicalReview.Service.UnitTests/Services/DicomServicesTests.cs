@@ -1,4 +1,19 @@
-﻿using Aide.ClinicalReview.Configuration;
+﻿// 
+// Copyright 2022 Crown Copyright
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using Aide.ClinicalReview.Configuration;
 using Aide.ClinicalReview.Service.Controllers;
 using Aide.ClinicalReview.Service.Services;
 using FluentAssertions;
@@ -43,9 +58,9 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
             using var test_Stream = new MemoryStream(Encoding.UTF8.GetBytes("whatever"));
 
             _storageService.Setup(s => s.GetObjectAsync(
-                It.Is<string>(i => i.Equals(bucket)),
-                It.Is<string>(i => i.Equals(key)),
-                It.IsAny<CancellationToken>()))
+                    It.Is<string>(i => i.Equals(bucket)),
+                    It.Is<string>(i => i.Equals(key)),
+                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(test_Stream);
 
             var result = await DicomServiceObject.GetDicomFileAsync(key);
@@ -62,9 +77,9 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
             using var test_Stream = new MemoryStream(Encoding.UTF8.GetBytes("whatever"));
 
             _storageService.Setup(s => s.GetObjectAsync(
-                It.Is<string>(i => i.Equals(bucket)),
-                It.Is<string>(i => i.Equals(key)),
-                It.IsAny<CancellationToken>()))
+                    It.Is<string>(i => i.Equals(bucket)),
+                    It.Is<string>(i => i.Equals(key)),
+                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Stream)null);
 
             var result = await DicomServiceObject.GetDicomFileAsync(key);

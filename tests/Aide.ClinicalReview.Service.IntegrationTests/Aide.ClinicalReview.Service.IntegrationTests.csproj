@@ -1,100 +1,116 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<!--
+Copyright 2022 Crown Copyright
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-  <ItemGroup>
-    <SpecFlowObsoleteCodeBehindFiles Remove="Features\ClinicalReviewApi - Copy.feature.cs" />
-    <SpecFlowObsoleteCodeBehindFiles Remove="Features\ClinicalReviewStudyApi - Copy.feature.cs" />
-  </ItemGroup>
+http://www.apache.org/licenses/LICENSE-2.0
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.2.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.10" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-    <PackageReference Include="Minio" Version="4.0.6" />
-    <PackageReference Include="Monai.Deploy.Messaging" Version="0.1.15" />
-    <PackageReference Include="Monai.Deploy.Messaging.RabbitMQ" Version="0.1.15" />
-    <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
-    <PackageReference Include="Polly" Version="7.2.3" />
-    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
-    <PackageReference Include="Snapshooter.NUnit" Version="0.7.1" />
-    <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
-    <PackageReference Include="SpecFlow.NUnit" Version="3.9.40" />
-    <PackageReference Include="nunit" Version="3.13.2" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.1.0" />
-    <PackageReference Include="FluentAssertions" Version="6.2.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-  </ItemGroup>
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Aide.ClinicalReview.Contracts\Aide.ClinicalReview.Contracts.csproj" />
-    <ProjectReference Include="..\..\src\Aide.ClinicalReview.Service\Aide.ClinicalReview.Service.csproj" />
-  </ItemGroup>
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <None Update="TestData\ClinicalReviewEvent\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\ClinicalReviewTask\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\ClinicalReviewStudy\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="appsettings.Test.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="DICOMs\study\dcm\series\*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="DICOMs\study\workflows\task1\execution1\*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Update="Features\ClinicalReviewTaskApi.feature.cs">
-      <DependentUpon>ClinicalReviewTaskApi.feature</DependentUpon>
-    </Compile>
-    <Compile Update="Features\ClinicalReviewStudyApi.feature.cs">
-      <DependentUpon>ClinicalReviewStudyApi.feature</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <SpecFlowFeatureFiles Update="Features\ClinicalReviewTaskApi.feature">
-      <Visible>$(UsingMicrosoftNETSdk)</Visible>
-      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
-    </SpecFlowFeatureFiles>
-    <SpecFlowFeatureFiles Update="Features\ClinicalReviewStudyApi.feature">
-      <Visible>$(UsingMicrosoftNETSdk)</Visible>
-      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
-    </SpecFlowFeatureFiles>
-  </ItemGroup>
-
-  <Target Name="CopyStoragePlugin" AfterTargets="Build">
     <ItemGroup>
-      <Minio Include="$(TargetDir)Minio.dll" />
-      <MonaiDeployStorage Include="$(TargetDir)Monai.Deploy.Storage.*.dll" />
+        <SpecFlowObsoleteCodeBehindFiles Remove="Features\ClinicalReviewApi - Copy.feature.cs"/>
+        <SpecFlowObsoleteCodeBehindFiles Remove="Features\ClinicalReviewStudyApi - Copy.feature.cs"/>
     </ItemGroup>
-    <Copy SourceFiles="@(Minio)" DestinationFolder="$(TargetDir)plug-ins\" />
-    <Copy SourceFiles="@(MonaiDeployStorage)" DestinationFolder="$(TargetDir)plug-ins\" />
-  </Target>
 
-  <Target Name="CopyMessagingPlugin" AfterTargets="Build">
     <ItemGroup>
-      <MonaiDeployMessaging Include="$(TargetDir)Monai.Deploy.Messaging.*" />
-      <RabbitMQ Include="$(TargetDir)RabbitMQ.Client.dll" />
+        <PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.2.9"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.10"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0"/>
+        <PackageReference Include="Minio" Version="4.0.6"/>
+        <PackageReference Include="Monai.Deploy.Messaging" Version="0.1.15"/>
+        <PackageReference Include="Monai.Deploy.Messaging.RabbitMQ" Version="0.1.15"/>
+        <PackageReference Include="MongoDB.Driver" Version="2.18.0"/>
+        <PackageReference Include="Polly" Version="7.2.3"/>
+        <PackageReference Include="RabbitMQ.Client" Version="6.4.0"/>
+        <PackageReference Include="Snapshooter.NUnit" Version="0.7.1"/>
+        <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57"/>
+        <PackageReference Include="SpecFlow.NUnit" Version="3.9.40"/>
+        <PackageReference Include="nunit" Version="3.13.2"/>
+        <PackageReference Include="NUnit3TestAdapter" Version="4.1.0"/>
+        <PackageReference Include="FluentAssertions" Version="6.2.0"/>
+        <PackageReference Include="System.Net.Http" Version="4.3.4"/>
     </ItemGroup>
-    <Copy SourceFiles="@(MonaiDeployMessaging)" DestinationFolder="$(TargetDir)plug-ins\" />
-    <Copy SourceFiles="@(RabbitMQ)" DestinationFolder="$(TargetDir)plug-ins\" />
-  </Target>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Aide.ClinicalReview.Contracts\Aide.ClinicalReview.Contracts.csproj"/>
+        <ProjectReference Include="..\..\src\Aide.ClinicalReview.Service\Aide.ClinicalReview.Service.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="TestData\ClinicalReviewEvent\*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestData\ClinicalReviewTask\*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestData\ClinicalReviewStudy\*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="appsettings.Test.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="DICOMs\study\dcm\series\*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="DICOMs\study\workflows\task1\execution1\*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Features\ClinicalReviewTaskApi.feature.cs">
+            <DependentUpon>ClinicalReviewTaskApi.feature</DependentUpon>
+        </Compile>
+        <Compile Update="Features\ClinicalReviewStudyApi.feature.cs">
+            <DependentUpon>ClinicalReviewStudyApi.feature</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <SpecFlowFeatureFiles Update="Features\ClinicalReviewTaskApi.feature">
+            <Visible>$(UsingMicrosoftNETSdk)</Visible>
+            <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+        </SpecFlowFeatureFiles>
+        <SpecFlowFeatureFiles Update="Features\ClinicalReviewStudyApi.feature">
+            <Visible>$(UsingMicrosoftNETSdk)</Visible>
+            <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+        </SpecFlowFeatureFiles>
+    </ItemGroup>
+
+    <Target Name="CopyStoragePlugin" AfterTargets="Build">
+        <ItemGroup>
+            <Minio Include="$(TargetDir)Minio.dll"/>
+            <MonaiDeployStorage Include="$(TargetDir)Monai.Deploy.Storage.*.dll"/>
+        </ItemGroup>
+        <Copy SourceFiles="@(Minio)" DestinationFolder="$(TargetDir)plug-ins\"/>
+        <Copy SourceFiles="@(MonaiDeployStorage)" DestinationFolder="$(TargetDir)plug-ins\"/>
+    </Target>
+
+    <Target Name="CopyMessagingPlugin" AfterTargets="Build">
+        <ItemGroup>
+            <MonaiDeployMessaging Include="$(TargetDir)Monai.Deploy.Messaging.*"/>
+            <RabbitMQ Include="$(TargetDir)RabbitMQ.Client.dll"/>
+        </ItemGroup>
+        <Copy SourceFiles="@(MonaiDeployMessaging)" DestinationFolder="$(TargetDir)plug-ins\"/>
+        <Copy SourceFiles="@(RabbitMQ)" DestinationFolder="$(TargetDir)plug-ins\"/>
+    </Target>
 </Project>

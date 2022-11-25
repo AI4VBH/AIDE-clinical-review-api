@@ -1,4 +1,19 @@
-﻿using Aide.ClinicalReview.Common.Interfaces;
+﻿// 
+// Copyright 2022 Crown Copyright
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using Aide.ClinicalReview.Common.Interfaces;
 using Aide.ClinicalReview.Configuration;
 using Aide.ClinicalReview.Contracts.Exceptions;
 using Aide.ClinicalReview.Contracts.Models;
@@ -18,7 +33,7 @@ namespace Aide.ClinicalReview.Service.Controllers
     /// </summary>
     [ApiController]
     [Route("clinical-review")]
-    public sealed class ClinicalReviewController: ApiControllerBase
+    public sealed class ClinicalReviewController : ApiControllerBase
     {
         private readonly IClinicalReviewService _clinicalReviewService;
         private readonly ILogger<ClinicalReviewController> _logger;
@@ -52,7 +67,8 @@ namespace Aide.ClinicalReview.Service.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(PagedResponse<List<ClinicalReviewRecord>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllAsync([FromQuery] PaginationFilter filter, [FromQuery] string roles = "", [FromQuery] string? patientId = "", [FromQuery] string? patientName = "", [FromQuery] string? applicationName = "")
+        public async Task<IActionResult> GetAllAsync([FromQuery] PaginationFilter filter, [FromQuery] string roles = "", [FromQuery] string? patientId = "", [FromQuery] string? patientName = "",
+            [FromQuery] string? applicationName = "")
         {
             try
             {
@@ -62,7 +78,7 @@ namespace Aide.ClinicalReview.Service.Controllers
 
                 var rolesList = roles.Split(",");
 
-                if(!rolesList.Any() || rolesList.Any(s => string.IsNullOrWhiteSpace(s)))
+                if (!rolesList.Any() || rolesList.Any(s => string.IsNullOrWhiteSpace(s)))
                 {
                     return Problem($"Roles are required.", $"/clinical-review", BadRequest);
                 }

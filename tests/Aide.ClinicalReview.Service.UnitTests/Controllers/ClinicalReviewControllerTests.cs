@@ -1,4 +1,19 @@
-﻿using Aide.ClinicalReview.Common.Interfaces;
+﻿// 
+// Copyright 2022 Crown Copyright
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using Aide.ClinicalReview.Common.Interfaces;
 using Aide.ClinicalReview.Configuration;
 using Aide.ClinicalReview.Contracts.Messages;
 using Aide.ClinicalReview.Contracts.Models;
@@ -42,7 +57,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
                 new ClinicalReviewRecord
                 {
                     Id = Guid.NewGuid().ToString(),
-                    ClinicalReviewMessage = 
+                    ClinicalReviewMessage =
                         new AideClinicalReviewRequestMessage()
                         {
                             CorrelationId = "123",
@@ -73,7 +88,6 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
                             },
                             TaskId = "taskid",
                             ReviewerRoles = new string[] { "clinician" }
-
                         }
                 }
             };
@@ -112,7 +126,6 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
         [Fact]
         public async Task GetListAsync_ThrowsException_ReturnsInternalServerError()
         {
-
             _clinicalReviewService.Setup(w => w.GetClinicalReviewListAsync(It.IsAny<string[]>(), It.IsAny<int>(), It.IsAny<int>(), "", "", "")).Throws(() => new Exception("unexpected error"));
 
             var result = await ClinicalReviewController.GetAllAsync(new Filter.PaginationFilter(), "clinician");

@@ -1,4 +1,19 @@
-﻿using Aide.ClinicalReview.Common.Interfaces;
+﻿// 
+// Copyright 2022 Crown Copyright
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using Aide.ClinicalReview.Common.Interfaces;
 using Aide.ClinicalReview.Configuration;
 using Aide.ClinicalReview.Contracts.Exceptions;
 using Aide.ClinicalReview.Contracts.Models;
@@ -47,7 +62,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
         public async Task GetTaskDetailsAsync_DefaultExecutionId_ReturnsBadRequest()
         {
             var roles = new string[] { "clinician" };
-            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(Guid.Empty,It.IsAny<string[]>())).ThrowsAsync(new ArgumentException());
+            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(Guid.Empty, It.IsAny<string[]>())).ThrowsAsync(new ArgumentException());
 
             var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.Empty, "clincian");
 
@@ -58,7 +73,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
         public async Task GetTaskDetailsAsync_ThrowsException_ReturnsBadRequestRoles()
         {
             var roles = new string[] { "clinician" };
-            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>(),It.IsAny<string[]>())).ThrowsAsync( new UnathorisedRoleException("Unauthorised Roles"));
+            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>(), It.IsAny<string[]>())).ThrowsAsync(new UnathorisedRoleException("Unauthorised Roles"));
 
             var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid(), "clincian");
 
@@ -74,9 +89,9 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
         public async Task GetTaskDetailsAsync_ThrowsException_ReturnsInternalServerError()
         {
             var roles = new string[] { "clinician" };
-            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>(),It.IsAny<string[]>())).Throws(() => new Exception("unexpected error"));
+            _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>(), It.IsAny<string[]>())).Throws(() => new Exception("unexpected error"));
 
-            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid(),"clincian");
+            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid(), "clincian");
 
             var objectResult = Assert.IsType<ObjectResult>(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, objectResult.StatusCode);
@@ -88,7 +103,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
             var roles = new string[] { "clinician" };
             _taskDetailsService.Setup(x => x.GetTaskDetailsAsync(It.IsAny<Guid>(), roles)).ReturnsAsync(new ClinicalReviewStudy());
 
-            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid(),"clincian");
+            var result = await TaskDetailsController.GetTaskDetailsAsync(Guid.NewGuid(), "clincian");
 
             Assert.IsType<OkObjectResult>(result);
         }

@@ -17,7 +17,9 @@
     "Name": "Stroke",
     "Version": "v1.0",
     "Mode": "QA",
-    "Roles": [ "" ]
+    "Roles": [
+      ""
+    ]
   },
   "Files": [
     {

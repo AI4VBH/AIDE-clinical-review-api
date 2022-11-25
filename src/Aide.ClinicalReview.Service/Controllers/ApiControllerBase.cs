@@ -1,4 +1,19 @@
-﻿using Aide.ClinicalReview.Configuration;
+﻿// 
+// Copyright 2022 Crown Copyright
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using Aide.ClinicalReview.Configuration;
 using Aide.ClinicalReview.Service.Filter;
 using Aide.ClinicalReview.Service.Services;
 using Aide.ClinicalReview.Service.Wrappers;
@@ -65,13 +80,13 @@ namespace Aide.ClinicalReview.Service.Controllers
 
             respose.NextPage =
                 validFilter.PageNumber >= 1 && validFilter.PageNumber < roundedTotalPages
-                ? uriService.GetPageUriString(new PaginationFilter(validFilter.PageNumber + 1, pageSize), route)
-                : null;
+                    ? uriService.GetPageUriString(new PaginationFilter(validFilter.PageNumber + 1, pageSize), route)
+                    : null;
 
             respose.PreviousPage =
                 validFilter.PageNumber - 1 >= 1 && validFilter.PageNumber <= roundedTotalPages
-                ? uriService.GetPageUriString(new PaginationFilter(validFilter.PageNumber - 1, pageSize), route)
-                : null;
+                    ? uriService.GetPageUriString(new PaginationFilter(validFilter.PageNumber - 1, pageSize), route)
+                    : null;
 
             respose.FirstPage = uriService.GetPageUriString(new PaginationFilter(1, pageSize), route);
             respose.LastPage = uriService.GetPageUriString(new PaginationFilter(roundedTotalPages, pageSize), route);

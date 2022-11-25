@@ -1,4 +1,19 @@
-﻿using Aide.ClinicalReview.Service.Extensions;
+﻿// 
+// Copyright 2022 Crown Copyright
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using Aide.ClinicalReview.Service.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -63,7 +78,6 @@ namespace Aide.ClinicalReview.Service.Services.Http
         /// <param name="app">Application Builder.</param>
         /// <param name="env">Web Host Environment.</param>
 #pragma warning disable SA1204 // Static elements should appear before instance elements
-
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 #pragma warning restore SA1204 // Static elements should appear before instance elements
         {
@@ -99,10 +113,7 @@ namespace Aide.ClinicalReview.Service.Services.Http
             //app.UseEndpointAuthorizationMiddleware();
             app.UseHttpLogging();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

@@ -1,4 +1,19 @@
-﻿using Aide.ClinicalReview.Contracts.Messages;
+﻿// 
+// Copyright 2022 Crown Copyright
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using Aide.ClinicalReview.Contracts.Messages;
 using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.POCO;
 using BoDi;
@@ -52,13 +67,14 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         {
             var builder = new UriBuilder($"{TestExecutionConfig.ApiConfig.BaseUrl}{TestExecutionConfig.ApiConfig.TasksEndpoint}");
 
-            if(parameters != null)
+            if (parameters != null)
             {
                 var query = HttpUtility.ParseQueryString(builder.Query);
                 foreach (var parameter in parameters)
                 {
                     query[parameter.Key] = parameter.Value;
                 }
+
                 builder.Query = query.ToString();
             }
 
@@ -158,7 +174,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
                 var message = TaskCallbackConsumer.GetMessage<string>();
 
                 if (message != null)
-                { 
+                {
                     // check for rabbit message
                 }
 

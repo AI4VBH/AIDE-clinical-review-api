@@ -22,7 +22,9 @@
         "relative_root_path": "/dcm"
       }
     ],
-    "reviewer_roles": [ "clinician" ],
+    "reviewer_roles": [
+      "clinician"
+    ],
     "application_metadata": {
       "application_name": "application_1",
       "application_version": "1.0",
