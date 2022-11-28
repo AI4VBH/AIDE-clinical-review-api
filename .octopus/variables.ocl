@@ -1,0 +1,11 @@
+variable "ImagePullSecretName" {
+    value "regcred" {}
+}
+
+variable "Namespace" {
+    value "aide" {}
+}
+
+variable "MessagingEndpoint" {
+    value "rabbitmq.rabbitmq" {}
+}

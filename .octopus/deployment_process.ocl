@@ -1,0 +1,101 @@
+step "run-a-kubectl-cli-script" {
+    name = "Add Docker Image Pull Secret"
+    properties = {
+        Octopus.Action.TargetRoles = "kubernetes"
+    }
+
+    action {
+        action_type = "Octopus.KubernetesRunScript"
+        properties = {
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                export AWS_ACCESS_KEY_ID=$(get_octopusvariable "AWS_ACCESS_KEY_ID")
+                export AWS_SECRET_ACCESS_KEY=$(get_octopusvariable "AWS_SECRET_ACCESS_KEY")
+                export AWS_DEFAULT_REGION=$(get_octopusvariable "AWS_REGION")
+                
+                kubectl create namespace aide --dry-run=client -o yaml | kubectl apply -f -
+                
+                kubectl create secret docker-registry $(get_octopusvariable "ImagePullSecretName") \
+                  --docker-server=$(get_octopusvariable "AWS_ACCOUNT").dkr.ecr.$(get_octopusvariable "AWS_REGION").amazonaws.com \
+                  --docker-username=AWS \
+                  --docker-password=$(aws ecr get-login-password) \
+                  --namespace=aide \
+                  --dry-run=client -o yaml | kubectl apply -f -
+            EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+        }
+        worker_pool_variable = "WorkerPoolName"
+    }
+}
+
+step "deploy-the-clinical-review-api" {
+    name = "Deploy the Clinical Review API"
+    properties = {
+        Octopus.Action.TargetRoles = "kubernetes"
+    }
+
+    action {
+        action_type = "Octopus.HelmChartUpgrade"
+        properties = {
+            Octopus.Action.Helm.AdditionalArgs = "--create-namespace"
+            Octopus.Action.Helm.ClientVersion = "V3"
+            Octopus.Action.Helm.Namespace = "#{Namespace}"
+            Octopus.Action.Helm.ReleaseName = "clinical-review"
+            Octopus.Action.Helm.ResetValues = "True"
+            Octopus.Action.Helm.YamlValues = <<-EOT
+                image:
+                  tag: #{Octopus.Action.Package.PackageVersion}
+                imagePullSecrets:
+                  - name: #{ImagePullSecretName}
+                enviromentVariables:
+                  DOTNET_ENVIRONMENT: #{DOTNET_ENVIRONMENT}
+                  LOGSTASH_URL: http://logstash.shared:5011
+                  AideClinicalReviewService__messaging__subscriberSettings__endpoint: rabbitmq.rabbitmq
+                  AideClinicalReviewService__messaging__publisherSetting__endpoint: rabbitmq.rabbitmq
+                  AideClinicalReviewService__messaging__subscriberSettings__port: 5672
+                  AideClinicalReviewService__messaging__publisherSettings__port: 5672
+                  AideClinicalReviewService__storage__settings__endpoint: minio-hl.minio.svc.cluster.local
+                  AideClinicalReviewService__storage__settings__port: 9000
+                  AideClinicalReviewService__storage__settings__bucket: 'monaideploy'
+                enviromentVariablesFromSecrets:
+                  secrets:
+                    - name: AideClinicalReviewService__messaging__subscriberSettings__username
+                      secretName: rabbit-secret-master
+                      secretKey: username
+                    - name: AideClinicalReviewService__messaging__subscriberSettings__password
+                      secretName: rabbit-secret-master
+                      secretKey: password
+                    - name: AideClinicalReviewService__messaging__publisherSettings__username
+                      secretName: rabbit-secret-master
+                      secretKey: username
+                    - name: AideClinicalReviewService__messaging__publisherSettings__password
+                      secretName: rabbit-secret-master
+                      secretKey: password
+                    - name: AideClinicalReviewService__storage__settings__accessKey
+                      secretName: minio-admin-user
+                      secretKey: user
+                    - name: AideClinicalReviewService__storage__settings__accessToken
+                      secretName: minio-admin-user
+                      secretKey: password
+                    - name: AideClinicalReviewDatabase__ConnectionString
+                      secretName: #{MongoAideUserSecretName}
+                      secretKey: connectionString.standard
+                      
+                      
+            EOT
+            Octopus.Action.Package.DownloadOnTentacle = "False"
+            Octopus.Action.Package.FeedId = "octopus-server-built-in"
+            Octopus.Action.Package.PackageId = "AIDE.ClinicalReviewAPI"
+        }
+        worker_pool_variable = "WorkerPoolName"
+
+        packages {
+            acquisition_location = "Server"
+            feed = "octopus-server-built-in"
+            package_id = "AIDE.ClinicalReviewAPI"
+            properties = {
+                SelectionMode = "immediate"
+            }
+        }
+    }
+}
