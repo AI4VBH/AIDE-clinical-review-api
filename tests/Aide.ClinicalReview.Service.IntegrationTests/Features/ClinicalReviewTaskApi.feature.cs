@@ -94,8 +94,8 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
             argumentsOfScenario.Add("value", value);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review Tasks are returned when there are Clinical Review Tasks for the r" +
                     "ole", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 4
-this.ScenarioInitialize(scenarioInfo);
+#line 18
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -114,14 +114,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
- testRunner.Given(string.Format("I have Clinical Review Tasks \'{0}\' in Mongo", clinicalReviewTasks), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 19
+        testRunner.Given(string.Format("I have Clinical Review Tasks \'{0}\' in Mongo", clinicalReviewTasks), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 6
- testRunner.When(string.Format("I send a request to get Clinical Review Tasks with parameter {0} and {1}", name, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 20
+        testRunner.When(string.Format("I send a request to get Clinical Review Tasks with parameter {0} and {1}", name, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 7
- testRunner.Then("I can see correct Clinical Review Tasks are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 21
+        testRunner.Then("I can see correct Clinical Review Tasks are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -138,8 +138,8 @@ this.ScenarioInitialize(scenarioInfo);
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review Tasks are not returned when there are no Clinical Review Tasks fo" +
                     "r the role", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 14
-this.ScenarioInitialize(scenarioInfo);
+#line 29
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -158,14 +158,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 15
- testRunner.Given("I have Clinical Review Tasks \'ClinicalReviewTask.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 30
+        testRunner.Given("I have Clinical Review Tasks \'ClinicalReviewTask.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 16
- testRunner.When("I send a request to get Clinical Review Tasks with parameter roles and other", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 31
+        testRunner.When("I send a request to get Clinical Review Tasks with parameter roles and other", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 17
- testRunner.Then("I can see no Clinical Review Tasks are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 32
+        testRunner.Then("I can see no Clinical Review Tasks are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -180,8 +180,8 @@ this.ScenarioInitialize(scenarioInfo);
                     "ClinicalReview_TaskApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No Clinical Review Tasks are returned when the DB is empty", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 20
-this.ScenarioInitialize(scenarioInfo);
+#line 35
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -200,14 +200,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 21
- testRunner.Given("I have no Clinical Review Tasks in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 36
+        testRunner.Given("I have no Clinical Review Tasks in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 22
- testRunner.When("I send a request to get Clinical Review Tasks", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 37
+        testRunner.When("I send a request to get Clinical Review Tasks", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 23
- testRunner.Then("I can see no Clinical Review Tasks are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 38
+        testRunner.Then("I can see no Clinical Review Tasks are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -237,8 +237,8 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("value", value);
             argumentsOfScenario.Add("clinicalReviewTaskReturned", clinicalReviewTaskReturned);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Correct Clinical Review Tasks are returned based on search parameters", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 26
-this.ScenarioInitialize(scenarioInfo);
+#line 41
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -257,14 +257,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 27
- testRunner.Given(string.Format("I have Clinical Review Tasks \'{0}\' in Mongo", clinicalReviewTasks), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 42
+        testRunner.Given(string.Format("I have Clinical Review Tasks \'{0}\' in Mongo", clinicalReviewTasks), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 28
- testRunner.When(string.Format("I send a request to get Clinical Review Tasks with parameter {0} and {1}", name, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 43
+        testRunner.When(string.Format("I send a request to get Clinical Review Tasks with parameter {0} and {1}", name, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 29
- testRunner.Then(string.Format("I can see Clinical Review Tasks \'{0}\' are returned", clinicalReviewTaskReturned), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 44
+        testRunner.Then(string.Format("I can see Clinical Review Tasks \'{0}\' are returned", clinicalReviewTaskReturned), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -290,8 +290,8 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("name", name);
             argumentsOfScenario.Add("value", value);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review Tasks are not returned based on search parameters", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 40
-this.ScenarioInitialize(scenarioInfo);
+#line 56
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -310,14 +310,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 41
- testRunner.Given(string.Format("I have Clinical Review Tasks \'{0}\' in Mongo", clinicalReviewTasks), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 57
+        testRunner.Given(string.Format("I have Clinical Review Tasks \'{0}\' in Mongo", clinicalReviewTasks), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 42
- testRunner.When(string.Format("I send a request to get Clinical Review Tasks with parameter {0} and {1}", name, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 58
+        testRunner.When(string.Format("I send a request to get Clinical Review Tasks with parameter {0} and {1}", name, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 43
- testRunner.Then("I can see no Clinical Review Tasks are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 59
+        testRunner.Then("I can see no Clinical Review Tasks are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -332,8 +332,8 @@ this.ScenarioInitialize(scenarioInfo);
                     "ClinicalReview_TaskApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review service returns bad request when roles are not added", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 51
-this.ScenarioInitialize(scenarioInfo);
+#line 68
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -352,14 +352,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 52
- testRunner.Given("I have Clinical Review Tasks \'ClinicalReviewTask.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 69
+        testRunner.Given("I have Clinical Review Tasks \'ClinicalReviewTask.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 53
- testRunner.When("I send a request to get Clinical Review Tasks with no role", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 70
+        testRunner.When("I send a request to get Clinical Review Tasks with no role", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 54
- testRunner.Then("I can Clinical Review Service Returns Bad request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 71
+        testRunner.Then("I can Clinical Review Service Returns Bad request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

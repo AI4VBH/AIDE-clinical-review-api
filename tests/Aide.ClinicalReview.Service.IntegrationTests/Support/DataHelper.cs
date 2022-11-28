@@ -15,6 +15,7 @@
 
 using Aide.ClinicalReview.Contracts.Messages;
 using Aide.ClinicalReview.Contracts.Models;
+using Aide.ClinicalReview.Service.IntegrationTests.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.POCO;
 using BoDi;
 using Monai.Deploy.Messaging.Messages;
@@ -22,7 +23,6 @@ using Newtonsoft.Json;
 using Polly;
 using Polly.Retry;
 using System.Reflection;
-using System.Text.Json;
 using System.Web;
 using TechTalk.SpecFlow.Infrastructure;
 
@@ -43,7 +43,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         private ClinicalReviewStudy ClinicalReviewStudy { get; set; }
         public List<ClinicalReviewRecord> ClinicalReviewTasks { get; set; } = new List<ClinicalReviewRecord>();
         public ClinicalReviewStudy ClinicalReviewStudies { get; set; } = new ClinicalReviewStudy();
-        public AideClinicalReviewRequestMessage ClinicalReviewEvent { get; set; }
+        public AideClinicalReviewRequestMessage ClinicalReviewEvent { get; private set; }
 
         public DataHelper(IObjectContainer objectContainer)
         {
@@ -141,6 +141,21 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             OutputHelper.WriteLine($"ClinicalReviewStudy with name={name} created!");
         }
 
+        public ClinicalReviewStudy GetClinicalReviewStudy(string name)
+        {
+            try
+            {
+                using var reader = new StreamReader(Path.Combine(GetBinDir(), "TestData", "ClinicalReviewStudy", name));
+                string json = reader.ReadToEnd();
+                ClinicalReviewStudy = JsonConvert.DeserializeObject<ClinicalReviewStudy>(json);
+                return ClinicalReviewStudy;
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Something went wrong deserializing {name}, please review!");
+            };
+        }
+
         public List<ClinicalReviewRecord> GetClinicalReviewTasksFromEvent()
         {
             if (!string.IsNullOrEmpty(ClinicalReviewEvent.ExecutionId))
@@ -188,12 +203,19 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         {
             try
             {
-                using var reader = new StreamReader(Path.Combine(GetBinDir(), "TestData", "ClinicalReviewEvent", name));
+                using var reader = new StreamReader(Path.Combine(GetBinDir(), "TestData", "ClinicalReviewRequestEvent", name));
                 string json = reader.ReadToEnd();
-                ClinicalReviewEvent = JsonConvert.DeserializeObject<AideClinicalReviewRequestMessage>(json);
+                var crEvent = JsonConvert.DeserializeObject<AideClinicalReviewRequestMessage>(json);
 
-                var message = new JsonMessage<string>(
-                    json,
+                if (crEvent is null)
+                {
+                    throw new ArgumentNullException($"Event not found for {name}");
+                }
+
+                ClinicalReviewEvent = crEvent;
+
+                var message = new JsonMessage<AideClinicalReviewRequestMessage>(
+                    crEvent,
                     "16988a78-87b5-4168-a5c3-2cfc2bab8e54",
                     Guid.NewGuid().ToString(),
                     string.Empty);

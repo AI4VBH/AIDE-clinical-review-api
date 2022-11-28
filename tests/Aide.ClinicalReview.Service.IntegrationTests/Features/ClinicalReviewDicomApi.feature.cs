@@ -82,8 +82,8 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
                     "ClinicalReview_DicomApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Correct Dicom file is returned from Minio", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 4
-this.ScenarioInitialize(scenarioInfo);
+#line 18
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -102,15 +102,15 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
- testRunner.Given("I have Dicom files in Minio", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 19
+        testRunner.Given("I have Dicom files in Minio", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 6
- testRunner.When("I send a request to get Dicom file payload/study/workflows/task1/execution1/insta" +
+#line 20
+        testRunner.When("I send a request to get Dicom file payload/study/workflows/task1/execution1/insta" +
                         "nce1.dcm", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 7
- testRunner.Then("I can see correct Dicom file is returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 21
+        testRunner.Then("I can see correct Dicom file is returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -125,8 +125,8 @@ this.ScenarioInitialize(scenarioInfo);
                     "ClinicalReview_DicomApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Missing Dicom file returns 404", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 10
-this.ScenarioInitialize(scenarioInfo);
+#line 24
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -145,15 +145,15 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 11
- testRunner.Given("I have Dicom files in Minio", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 25
+        testRunner.Given("I have Dicom files in Minio", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 12
- testRunner.When("I send a request to get Dicom file payload/study/workflows/task1/execution1/insta" +
+#line 26
+        testRunner.When("I send a request to get Dicom file payload/study/workflows/task1/execution1/insta" +
                         "nce2.dcm", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 13
- testRunner.Then("I receive a not found response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 27
+        testRunner.Then("I receive a not found response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

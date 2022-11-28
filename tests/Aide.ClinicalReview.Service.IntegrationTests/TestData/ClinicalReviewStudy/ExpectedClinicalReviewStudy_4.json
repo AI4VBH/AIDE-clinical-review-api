@@ -1,0 +1,30 @@
+﻿{
+  "ExecutionId": "7aa6a79a-ed9a-4d15-b501-b902aa87be4a",
+  "Roles": [ "clinician" ],
+  "study_uid": "1.2.826.0.1.3680043.2.1125.1.64854732231592794220757963127858480",
+  "study_desc": null,
+  "study_date": "20190304",
+  "Study": [
+    {
+      "Series_uid": "1.2.826.0.1.3680043.2.1125.1.88346615283577664091166302060792432",
+      "Modality": "CT",
+      "Files": [
+        "payload/study/dcm/series/instance1.dcm"
+      ]
+    },
+    {
+      "Series_uid": "1.2.826.0.1.3680043.2.1125.1.88346615283577664091166302060792436",
+      "Modality": "CT",
+      "Files": [
+        "payload/study/workflows/task4/execution1/diffseries1.dcm"
+      ]
+    },
+    {
+      "Series_uid": "1.2.826.0.1.3680043.2.1125.1.88346615283577664091166302060792437",
+      "Modality": "CT",
+      "Files": [
+        "payload/study/workflows/task4/execution1/diffseries2.dcm"
+      ]
+    }
+  ]
+}

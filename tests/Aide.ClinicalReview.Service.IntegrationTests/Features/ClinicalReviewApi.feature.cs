@@ -84,8 +84,8 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
                     "ignore"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Accepted Clinical Review request generates a Task Callback", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 4
-this.ScenarioInitialize(scenarioInfo);
+#line 19
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -104,14 +104,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
- testRunner.When("I accept the Clinical Review Task ClinicalReviewTask.json", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 20
+        testRunner.When("I accept the Clinical Review Task ClinicalReviewTask.json", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 6
- testRunner.Then("I can see Clinical Review Task is updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 21
+        testRunner.Then("I can see Clinical Review Task is updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 7
- testRunner.And("I can see a Task Callback is generated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 22
+        testRunner.And("I can see a Task Callback is generated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();

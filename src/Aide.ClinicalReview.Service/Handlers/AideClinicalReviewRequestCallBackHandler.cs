@@ -92,6 +92,9 @@ namespace Aide.ClinicalReview.Service.Handler
                 Roles = roles
             };
 
+            var serieslist = new List<Series>();
+            var seriesDict = new Dictionary<string, SortedDictionary<int, string>>();
+
             foreach (var file in files)
             {
                 var dcmFilesInfo = await _dicomService.GetAllDicomFileInfoInPath(file.RelativeRootPath, file.Bucket);
@@ -104,9 +107,6 @@ namespace Aide.ClinicalReview.Service.Handler
                 //{
                 //    continue; // should I be throwing something here or just skip?
                 //}
-
-                var series = new Series();
-                var filesDictionary = new SortedDictionary<int, string>();
 
                 foreach (var fileInfo in dcmFilesInfo)
                 {
@@ -122,45 +122,75 @@ namespace Aide.ClinicalReview.Service.Handler
 
                     var dcmFile = await DicomFile.OpenAsync(dcmFileStream, FileReadOption.Default);
 
+                    // Series properties
+                    var seriesUid = dcmFile.GetValueOrDefault<string>(DicomTag.SeriesInstanceUID)!;
+                    var fileInstanceNumber = dcmFile.GetValueOrDefault<int>(DicomTag.InstanceNumber);
+
+                    if (seriesDict.ContainsKey(seriesUid))
+                    {
+                        if (seriesDict.TryGetValue(seriesUid, out var fileList))
+                        {
+                            fileList.Add(fileInstanceNumber, fileInfo.FilePath);
+                        }
+
+                        continue;
+                    }
+
+                    var series = new Series();
+
+                    if (string.IsNullOrWhiteSpace(series.SeriesUid))
+                    {
+                        series.SeriesUid = seriesUid;
+                    }
+
 #pragma warning disable CS8601 // Possible null reference assignment.
+                    if (string.IsNullOrWhiteSpace(series.Modality))
+                    {
+                        series.Modality = dcmFile.GetValueOrDefault<string>(DicomTag.Modality);
+                    }
+
                     // Study properties
                     if (string.IsNullOrWhiteSpace(clinicalReviewStudy.StudyUid))
                     {
                         clinicalReviewStudy.StudyUid = dcmFile.GetValueOrDefault<string>(DicomTag.StudyInstanceUID);
                     }
 
-                    if (clinicalReviewStudy.StudyDate == null || clinicalReviewStudy.StudyDate == DateTime.MinValue)
+                    if (clinicalReviewStudy.StudyDate == null)
                     {
-                        clinicalReviewStudy.StudyDate = dcmFile.GetValueOrDefault<DateTime>(DicomTag.StudyDate);
+                        clinicalReviewStudy.StudyDate = dcmFile.GetValueOrDefault<string>(DicomTag.StudyDate);
                     }
 
                     if (string.IsNullOrWhiteSpace(clinicalReviewStudy.StudyDescription))
                     {
                         clinicalReviewStudy.StudyDescription = dcmFile.GetValueOrDefault<string>(DicomTag.StudyDescription);
                     }
-
-                    // Series properties
-                    if (string.IsNullOrWhiteSpace(series.SeriesUid))
-                    {
-                        series.SeriesUid = dcmFile.GetValueOrDefault<string>(DicomTag.SeriesInstanceUID);
-                    }
-
-                    if (string.IsNullOrWhiteSpace(series.Modality))
-                    {
-                        series.Modality = dcmFile.GetValueOrDefault<string>(DicomTag.Modality);
-                    }
-
-                    filesDictionary.Add(
-                        dcmFile.GetValueOrDefault<int>(DicomTag.InstanceNumber),
-                        fileInfo.FilePath
-                    );
-                }
 #pragma warning restore CS8601 // Possible null reference assignment.
 
-                series.Files = filesDictionary.Values.ToList();
-
-                clinicalReviewStudy.Study.Add(series);
+                    serieslist.Add(series);
+                    seriesDict.Add(
+                        seriesUid,
+                        new SortedDictionary<int, string>
+                        {
+                            {
+                                fileInstanceNumber,
+                                fileInfo.FilePath
+                            }
+                        }
+                    );
+                }
             }
+
+            foreach (var seriesKey in seriesDict.Keys)
+            {
+                var seriesInList = serieslist.First(s => s.SeriesUid == seriesKey);
+
+                if (seriesDict.TryGetValue(seriesKey, out var sortedFilesDict))
+                {
+                    seriesInList.Files = sortedFilesDict.Values.ToList();
+                }
+            }
+
+            clinicalReviewStudy.Study.AddRange(serieslist);
 
             await _taskDetailsRepository.CreateTaskDetailsAsync(clinicalReviewStudy);
         }

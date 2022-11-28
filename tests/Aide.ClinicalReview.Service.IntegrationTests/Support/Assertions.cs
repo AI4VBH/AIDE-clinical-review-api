@@ -38,15 +38,25 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         {
             foreach (var clinicalReviewTask in clinicalReviewTasks)
             {
-                // assertions
+                clinicalReviewTask.ClinicalReviewMessage.Should().BeEquivalentTo(clinicalReviewEvent);
+                clinicalReviewTask.Ready.Should().Be("false");
+                clinicalReviewTask.Reviewed.Should().Be("false");
             }
         }
 
-        internal static void AssertClinicalReviewStudyFromEvent(List<ClinicalReviewStudy> clinicalReviewStudies, AideClinicalReviewRequestMessage clinicalReviewEvent)
+        public static void AssertClinicalReviewStudyFromEvent(
+            List<ClinicalReviewStudy> clinicalReviewStudies, 
+            AideClinicalReviewRequestMessage clinicalReviewEvent, 
+            ClinicalReviewStudy expectedClinicalReviewStudyDetails)
         {
             foreach (var clinicalReviewStudy in clinicalReviewStudies)
             {
-                // assertions
+                clinicalReviewStudy.ExecutionId.Should().Be(clinicalReviewEvent.ExecutionId);
+                clinicalReviewStudy.StudyUid.Should().Be(clinicalReviewStudy.StudyUid);
+                clinicalReviewStudy.StudyDate.Should().Be(clinicalReviewStudy.StudyDate);
+                clinicalReviewStudy.StudyDescription.Should().Be(clinicalReviewStudy.StudyDescription);
+                clinicalReviewStudy.Roles.Should().BeEquivalentTo(clinicalReviewEvent.ReviewerRoles);
+                clinicalReviewStudy.Study.Should().BeEquivalentTo(expectedClinicalReviewStudyDetails.Study);
             }
         }
 
@@ -58,6 +68,29 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         internal static void AssertClinicalReviewStudies(ClinicalReviewStudy actualClinicalReviewStudies, ClinicalReviewStudy expectedClinicalReviewStudies)
         {
             actualClinicalReviewStudies.Should().BeEquivalentTo(expectedClinicalReviewStudies);
+        }
+
+        public static void AssertClinicalReviewRolesFromEvent(
+            List<ClinicalReviewRecord> actualClinicalReviewTasks, 
+            List<ClinicalReviewStudy> actualClinicalReviewStudies, 
+            AideClinicalReviewRequestMessage clinicalReviewEvent)
+        {
+            foreach(var task in actualClinicalReviewTasks)
+            {
+                task.ClinicalReviewMessage.ReviewerRoles.Should().BeEquivalentTo(clinicalReviewEvent.ReviewerRoles);
+            }
+
+            foreach (var study in actualClinicalReviewStudies)
+            {
+                if (clinicalReviewEvent.ReviewerRoles.Length < 1)
+                {
+                    study.Roles.Should().BeEquivalentTo(new string[] { "clinician" });
+                }
+                else
+                {
+                    study.Roles.Should().BeEquivalentTo(clinicalReviewEvent.ReviewerRoles);
+                }
+            }
         }
     }
 }

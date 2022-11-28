@@ -14,13 +14,10 @@
 // limitations under the License.
 
 using Aide.ClinicalReview.Contracts.Models;
-using Aide.ClinicalReview.Service.IntegrationTests.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.Support;
-using Aide.ClinicalReview.Service.Wrappers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
-using System.Text.Json;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
 {
@@ -135,11 +132,10 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
             HttpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
-
         [StepArgumentTransformation]
         public List<string> TransformToListOfString(string list)
         {
-            return list.Split(",").ToList();
+            return list.Split(",").Select(x => x.Trim()).ToList();
         }
     }
 }

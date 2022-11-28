@@ -17,11 +17,7 @@ using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.Support;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Net;
-using System.Text.Json;
-using TechTalk.SpecFlow;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
 {

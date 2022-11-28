@@ -14,12 +14,7 @@
 // limitations under the License.
 
 using Aide.ClinicalReview.Service.IntegrationTests.Support;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.IO;
 using System.Net;
-using TechTalk.SpecFlow;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
 {

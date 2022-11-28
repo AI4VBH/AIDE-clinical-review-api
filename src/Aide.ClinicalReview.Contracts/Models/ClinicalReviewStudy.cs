@@ -33,7 +33,8 @@ namespace Aide.ClinicalReview.Contracts.Models
 
         [JsonProperty("study_uid")] public string StudyUid { get; set; } = string.Empty;
 
-        [JsonProperty("study_date")] public DateTime? StudyDate { get; set; } = null;
+        [JsonProperty("study_date")]
+        public string StudyDate { get; set; } = null;
 
         [JsonProperty("study_description")] public string StudyDescription { get; set; } = string.Empty;
 

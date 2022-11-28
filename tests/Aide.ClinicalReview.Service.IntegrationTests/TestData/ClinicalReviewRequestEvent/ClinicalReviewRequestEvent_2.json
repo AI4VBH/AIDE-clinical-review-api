@@ -1,0 +1,46 @@
+﻿{
+  "task_id": "8335cd0d-248e-4ab0-9bda-1c18ae5306af",
+  "execution_id": "7aa6a79a-ed9a-4d15-b501-b902aa87be4a",
+  "reviewed_task_id": "some_task",
+  "reviewed_execution_id": "some_execution",
+  "correlation_id": "4f2ba0c7-a51d-4087-b02a-4a38946e1b72",
+  "workflow_name": "Workflow_1",
+  "reviewer_roles": [ "clinician" ],
+  "patient_metadata": {
+    "patient_name": "John Doe",
+    "patient_id": "100001",
+    "patient_dob": "01/01/1990",
+    "patient_gender": "Male"
+  },
+  "application_metadata": {
+    "name": "Stroke",
+    "version": "v1.0",
+    "mode": "QA"
+  },
+  "files": [
+    {
+      "name": "study",
+      "endpoint": "//test",
+      "credentials": {
+        "access_key": "",
+        "access_token": "",
+        "session_token": ""
+      },
+      "bucket": "monaideploy",
+      "secured_connection": false,
+      "relative_root_path": "payload/study/dcm"
+    },
+    {
+      "name": "study",
+      "endpoint": "//test",
+      "credentials": {
+        "access_key": "",
+        "access_token": "",
+        "session_token": ""
+      },
+      "bucket": "monaideploy",
+      "secured_connection": false,
+      "relative_root_path": "payload/study/workflows/task2/execution1"
+    }
+  ]
+}

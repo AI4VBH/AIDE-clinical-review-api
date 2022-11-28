@@ -13,40 +13,115 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.Support;
+using MongoDB.Driver;
+using Polly;
+using Polly.Retry;
+using TechTalk.SpecFlow.Infrastructure;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
 {
     [Binding]
     public class ClinicalReviewEventStepDefinitions
     {
-        DataHelper DataHelper { get; set; }
+        // Retry Policy Variables
+        private const int RETRY_COUNT = 10;
+        private readonly TimeSpan SLEEP_DURATION = TimeSpan.FromMilliseconds(500);
 
-        public ClinicalReviewEventStepDefinitions(DataHelper dataHelper)
+        private DataHelper DataHelper { get; set; }
+        private ISpecFlowOutputHelper OutputHelper { get; set; }
+        private MinioDataSeeding MinioDataSeeding { get; set; }
+        private RetryPolicy RetryPolicy { get; set; }
+
+        public ClinicalReviewEventStepDefinitions(DataHelper dataHelper, MinioDataSeeding minioDataSeeding)
         {
             DataHelper = dataHelper;
+            MinioDataSeeding = minioDataSeeding;
+
+            RetryPolicy = Policy.Handle<Exception>()
+                .WaitAndRetry(retryCount: RETRY_COUNT, sleepDurationProvider: _ => SLEEP_DURATION);
         }
 
-        [When(@"I publish a Clinical Review Event (.*)")]
-        public void GivenIPublishAClinicalReviewEvent(string name)
+        [Given(@"I have artifacts in minio (.*)")]
+        public async Task GivenIHaveArtifactsInMinio(List<string> paths)
+        {
+            foreach(var path in paths)
+            {
+                await MinioDataSeeding.SeedArtifacts("payload", path);
+            }
+        }
+
+        [When(@"I publish a Clinical Review Request Event (.*)")]
+        public void WhenIPublishAClinicalReviewRequestEvent(string name)
         {
             DataHelper.PublishClinicalReviewRequestEvent(name);
         }
 
-        [Then(@"I can see Clinical Review Task is saved in Mongo")]
-        public void ThenICanSeeClinicalReviewTaskIsSavedInMongo()
+        [Then(@"I can see ClinicalReviewRecord in Mongo")]
+        public void ThenICanSeeClinicalReviewRecordInMongo()
         {
-            var clinicalReviewTasks = DataHelper.GetClinicalReviewTasksFromEvent();
+            RetryPolicy.Execute(() =>
+            {
+                var actualClinicalReviewTasks = DataHelper.GetClinicalReviewTasksFromEvent();
 
-            Assertions.AssertClinicalReviewTaskFromEvent(clinicalReviewTasks, DataHelper.ClinicalReviewEvent);
+                if(actualClinicalReviewTasks.Count > 0)
+                {
+                    Assertions.AssertClinicalReviewTaskFromEvent(actualClinicalReviewTasks, DataHelper.ClinicalReviewEvent);
+                }
+                else
+                {
+                    throw new Exception($"Clinical Review record for ExecutionId:{DataHelper.ClinicalReviewEvent.ExecutionId} canot be found");
+                }
+            });
         }
 
-        [Then(@"I can see Clinical Review Study is saved in Mongo")]
-        public void ThenICanSeeClinicalReviewStudyIsSavedInMongo()
+        [Then(@"I can see StudyRecord in Mongo matches (.*)")]
+        public void ThenICanSeeStudyRecordInMongoMatches(string name)
         {
-            var clinicalReviewStudies = DataHelper.GetClinicalReviewStudiesFromEvent();
+            var expectedClinicalReviewStudy = DataHelper.GetClinicalReviewStudy(name);
 
-            Assertions.AssertClinicalReviewStudyFromEvent(clinicalReviewStudies, DataHelper.ClinicalReviewEvent);
+            var actualClinicalReviewStudies = new List<ClinicalReviewStudy>();
+
+            RetryPolicy.Execute(() =>
+            {
+               actualClinicalReviewStudies = DataHelper.GetClinicalReviewStudiesFromEvent();
+
+                if(actualClinicalReviewStudies.Count <= 0)
+                {
+                    throw new Exception($"Clinical Review studies for ExecutionId:{DataHelper.ClinicalReviewEvent.ExecutionId} canot be found");
+                }
+            });
+
+            Assertions.AssertClinicalReviewStudyFromEvent(actualClinicalReviewStudies, DataHelper.ClinicalReviewEvent, expectedClinicalReviewStudy);
+        }
+
+        [Then(@"I can see the correct roles are applied")]
+        public void ThenICanSeeTheCorrectRolesAreApplied()
+        {
+            var actualClinicalReviewTasks = new List<ClinicalReviewRecord>();
+            var actualClinicalReviewStudies = new List<ClinicalReviewStudy>();
+
+            RetryPolicy.Execute(() =>
+            {
+                actualClinicalReviewStudies = DataHelper.GetClinicalReviewStudiesFromEvent();
+
+                actualClinicalReviewTasks = DataHelper.GetClinicalReviewTasksFromEvent();
+
+                if (actualClinicalReviewStudies.Count <= 0 && actualClinicalReviewTasks.Count <= 0)
+                {
+                    throw new Exception($"Clinical Review tasks for ExecutionId:{DataHelper.ClinicalReviewEvent.ExecutionId} canot be found");
+                }
+            });
+
+            Assertions.AssertClinicalReviewRolesFromEvent(actualClinicalReviewTasks, actualClinicalReviewStudies, DataHelper.ClinicalReviewEvent);
+        }
+
+
+        [StepArgumentTransformation]
+        public List<string> TransformToListOfString(string list)
+        {
+            return list.Split(",").Select(x => x.Trim()).ToList();
         }
     }
 }

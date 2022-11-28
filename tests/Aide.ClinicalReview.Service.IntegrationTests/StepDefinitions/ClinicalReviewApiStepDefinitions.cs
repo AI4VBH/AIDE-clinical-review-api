@@ -15,7 +15,6 @@
 
 using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.Support;
-using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
