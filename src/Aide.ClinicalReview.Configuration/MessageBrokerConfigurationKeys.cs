@@ -25,5 +25,12 @@ namespace Aide.ClinicalReview.Configuration
         /// </summary>
         [ConfigurationKeyName("aideClinicalReviewRequest")]
         public string AideClinicalReviewRequest { get; set; } = "aide.clinical_review.request";
+
+        /// <summary>
+        /// Gets or sets the topic for publishing task callback events.
+        /// Defaults to `md.tasks.callback`.
+        /// </summary>
+        [ConfigurationKeyName("taskCallback")]
+        public string TaskCallbackRequest { get; set; } = "md.tasks.callback";
     }
 }

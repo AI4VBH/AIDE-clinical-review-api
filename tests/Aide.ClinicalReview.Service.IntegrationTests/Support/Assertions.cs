@@ -26,7 +26,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             actualClinicalReviewTasks?.Select(x => x.Id).ToArray().Should().BeEquivalentTo(expectedClinicalReviewTasks?.Select(x => x.Id).ToArray());
         }
 
-        public static void AssertClinicalReviewTaskStatusUpdated(List<ClinicalReviewRecord>? clinicalReviewTasks, string action)
+        public static void AssertClinicalReviewTaskStatusUpdated(List<ClinicalReviewRecord>? clinicalReviewTasks, bool action)
         {
             foreach (var clinicalReviewTask in clinicalReviewTasks)
             {

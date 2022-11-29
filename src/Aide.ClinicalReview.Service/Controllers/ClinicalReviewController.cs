@@ -25,6 +25,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Net;
 
 namespace Aide.ClinicalReview.Service.Controllers
 {
@@ -99,6 +100,52 @@ namespace Aide.ClinicalReview.Service.Controllers
             {
                 _logger.ClinicalReviewGetAllAsyncError(e);
                 return Problem($"Unexpected error occurred: {e.Message}", $"/clinical-review", InternalServerError);
+            }
+        }
+
+        /// <summary>
+        /// Approve or rejects a clinical review task.
+        /// </summary>
+        /// <param name="filter">Filters.</param>
+        /// <param name="patientId">Optional paient Id.</param>
+        /// <param name="patientName">Optional patient name.</param>
+        /// <param name="applicationName">Optional patient name.</param>
+        /// <returns>paged response of subset of all clinical review tasks.</returns>
+        [HttpPut]
+        [ProducesResponseType(typeof(PagedResponse<List<ClinicalReviewRecord>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> AcknowledgeClinicalReview([FromRoute] string executionId, [FromBody] AcknowledgeClinicalReview acknowledge)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(executionId) || Guid.TryParse(executionId, out var _) is false)
+                {
+                    return Problem($"Invalid execution id. Must not be null and must be a valid Guid", $"/clinical-review/{executionId}", BadRequest);
+                }
+
+                await _clinicalReviewService.AcknowledgeClinicalReview(executionId, acknowledge);
+
+                return new StatusCodeResult(204);
+            }
+            catch (PreviouslyReviewedException e)
+            {
+                _logger.ClinicalReviewGetAllAsyncError(e);
+                return Problem($"Clinical Review Task Previously Reviewed for executionID: {executionId}", $"/clinical-review/{executionId}", (int)HttpStatusCode.BadRequest);
+            }
+            catch (UnathorisedRoleException e)
+            {
+                _logger.ClinicalReviewGetAllAsyncError(e); 
+                return Problem($"Unauthorised Roles: {e.Message}", $"/clinical-review/{executionId}", (int)HttpStatusCode.Forbidden);
+            }
+            catch (MongoNotFoundException e)
+            {
+                _logger.ClinicalReviewGetAllAsyncError(e);
+                return Problem($"No task found for execution ID: {executionId}", $"/clinical-review/{executionId}", NotFound);
+            }
+            catch (Exception e)
+            {
+                _logger.ClinicalReviewGetAllAsyncError(e);
+                return Problem($"Unexpected error occurred: {e.Message}", $"/clinical-review/{executionId}", InternalServerError);
             }
         }
     }

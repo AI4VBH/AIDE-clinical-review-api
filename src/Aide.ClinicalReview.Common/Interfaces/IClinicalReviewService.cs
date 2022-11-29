@@ -25,10 +25,12 @@ namespace Aide.ClinicalReview.Common.Interfaces
     public interface IClinicalReviewService
     {
         Task<(IList<ClinicalReviewRecord> ClinicalReviews, long recordCount)> GetClinicalReviewListAsync(string[] roles,
-            int? skip = null,
-            int? limit = null,
-            string? patientId = "",
-            string? patientName = "",
-            string? applicationName = "");
+                                                      int? skip = null,
+                                                      int? limit = null,
+                                                      string? patientId = "",
+                                                      string? patientName = "",
+                                                      string? applicationName = "");
+
+        Task AcknowledgeClinicalReview(string executionId, AcknowledgeClinicalReview acknowledge);
     }
 }

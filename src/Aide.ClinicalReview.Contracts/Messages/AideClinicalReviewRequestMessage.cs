@@ -28,6 +28,9 @@ namespace Aide.ClinicalReview.Contracts.Messages
 
         [JsonProperty("execution_id")] public string ExecutionId { get; set; } = string.Empty;
 
+        [JsonProperty("workflow_instance_id")]
+        public string WorkflowInstanceId { get; set; } = string.Empty;
+
         [JsonProperty("reviewed_execution_id")]
         public string ReviewedExecutionId { get; set; } = string.Empty;
 

@@ -62,14 +62,11 @@ namespace Aide.ClinicalReview.Service.Handler
 
             message.Body.Validate();
 
-            var readyState = "false";
-            var reviewed = "false";
-
             var clinicalReviewRecord = new ClinicalReviewRecord()
             {
                 ClinicalReviewMessage = message.Body,
-                Ready = readyState,
-                Reviewed = reviewed
+                Ready = false,
+                Reviewed = false
             };
 
             await _clinicalReviewRepository.CreateAsync(clinicalReviewRecord);

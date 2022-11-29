@@ -55,7 +55,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             RetryTaskCallback = Policy<string>.Handle<Exception>().WaitAndRetry(retryCount: 10, sleepDurationProvider: _ => TimeSpan.FromMilliseconds(500));
         }
 
-        public async Task SendClinicalReviewRequest(string action)
+        public async Task SendClinicalReviewRequest(bool action)
         {
             ApiHelper.SetUrl($"{TestExecutionConfig.ApiConfig.BaseUrl}/endpoint");
             ApiHelper.SetRequestVerb("POST");
