@@ -65,8 +65,7 @@ namespace Aide.ClinicalReview.Service.Handler
             var clinicalReviewRecord = new ClinicalReviewRecord()
             {
                 ClinicalReviewMessage = message.Body,
-                Ready = false,
-                Reviewed = false
+                Ready = false
             };
 
             await _clinicalReviewRepository.CreateAsync(clinicalReviewRecord);

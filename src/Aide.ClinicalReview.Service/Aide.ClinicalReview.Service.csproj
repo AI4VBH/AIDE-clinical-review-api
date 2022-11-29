@@ -25,29 +25,29 @@ limitations under the License.
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="6.0.2"/>
-        <PackageReference Include="fo-dicom" Version="5.0.3"/>
-        <PackageReference Include="Monai.Deploy.Messaging" Version="0.1.15"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3"/>
-        <PackageReference Include="Monai.Deploy.Messaging.RabbitMQ" Version="0.1.15"/>
-        <PackageReference Include="NLog" Version="5.0.4"/>
-        <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.4"/>
-        <PackageReference Include="Monai.Deploy.Storage" Version="0.2.10"/>
-        <PackageReference Include="Monai.Deploy.Storage.MinIO" Version="0.2.10"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.10"/>
+        <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="6.0.2" />
+        <PackageReference Include="fo-dicom" Version="5.0.3" />
+        <PackageReference Include="Monai.Deploy.Messaging" Version="0.1.15" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+        <PackageReference Include="Monai.Deploy.Messaging.RabbitMQ" Version="0.1.15" />
+        <PackageReference Include="NLog" Version="5.0.4" />
+        <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.4" />
+        <PackageReference Include="Monai.Deploy.Storage" Version="0.2.10" />
+        <PackageReference Include="Monai.Deploy.Storage.MinIO" Version="0.2.10" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.10" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Aide.ClinicalReview.Common\Aide.ClinicalReview.Common.csproj"/>
-        <ProjectReference Include="..\Aide.ClinicalReview.Configuration\Aide.ClinicalReview.Configuration.csproj"/>
-        <ProjectReference Include="..\Aide.ClinicalReview.Contracts\Aide.ClinicalReview.Contracts.csproj"/>
-        <ProjectReference Include="..\Aide.ClinicalReview.Database\Aide.ClinicalReview.Database.csproj"/>
+      <ProjectReference Include="..\Aide.ClinicalReview.Common\Aide.ClinicalReview.Common.csproj" />
+      <ProjectReference Include="..\Aide.ClinicalReview.Configuration\Aide.ClinicalReview.Configuration.csproj" />
+      <ProjectReference Include="..\Aide.ClinicalReview.Contracts\Aide.ClinicalReview.Contracts.csproj" />
+      <ProjectReference Include="..\Aide.ClinicalReview.Database\Aide.ClinicalReview.Database.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -67,18 +67,18 @@ limitations under the License.
 
     <Target Name="CopyPlugins" AfterTargets="publish">
         <ItemGroup>
-            <PluginDlls Include="$(PublishDir)Monai.Deploy.Messaging.RabbitMQ.dll;$(PublishDir)Monai.Deploy.Storage.MinIO.dll"/>
+            <PluginDlls Include="$(PublishDir)Monai.Deploy.Messaging.RabbitMQ.dll;$(PublishDir)Monai.Deploy.Storage.MinIO.dll" />
         </ItemGroup>
-        <Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(PublishDir)\plug-ins\" SkipUnchangedFiles="true"/>
-        <Message Text="Files copied successfully to $(PublishDir)\plug-ins\." Importance="high"/>
+        <Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(PublishDir)\plug-ins\" SkipUnchangedFiles="true" />
+        <Message Text="Files copied successfully to $(PublishDir)\plug-ins\." Importance="high" />
     </Target>
 
     <Target Name="CopyPluginsBuild" AfterTargets="build">
         <ItemGroup>
-            <PluginDlls Include="$(OutDir)Monai.Deploy.Messaging.RabbitMQ.dll;$(OutDir)Monai.Deploy.Storage.MinIO.dll"/>
+            <PluginDlls Include="$(OutDir)Monai.Deploy.Messaging.RabbitMQ.dll;$(OutDir)Monai.Deploy.Storage.MinIO.dll" />
         </ItemGroup>
-        <Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(OutDir)\plug-ins\" SkipUnchangedFiles="true"/>
-        <Message Text="Files copied successfully to $(OutDir)\plug-ins\." Importance="high"/>
+        <Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(OutDir)\plug-ins\" SkipUnchangedFiles="true" />
+        <Message Text="Files copied successfully to $(OutDir)\plug-ins\." Importance="high" />
     </Target>
 
 </Project>
