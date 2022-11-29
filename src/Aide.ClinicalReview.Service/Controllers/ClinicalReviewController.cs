@@ -110,7 +110,11 @@ namespace Aide.ClinicalReview.Service.Controllers
         /// <param name="acknowledge">acknowledgement details.</param>
         /// <returns>204 when updated.</returns>
         [HttpPut]
-        [ProducesResponseType(typeof(PagedResponse<List<ClinicalReviewRecord>>), StatusCodes.Status200OK)]
+        [Route("{executionId}")]
+        [ProducesResponseType(typeof(StatusCodeResult), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> AcknowledgeClinicalReview([FromRoute] string executionId, [FromBody] AcknowledgeClinicalReview acknowledge)
         {
