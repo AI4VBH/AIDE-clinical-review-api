@@ -17,15 +17,6 @@
 <a name="readme-top"></a>
 
 <div align="center">
-
-[![Build](https://github.com/AI4VBH/AIDE-clinical-review-api/actions/workflows/build.yml/badge.svg)](https://github.com/AI4VBH/AIDE-clinical-review-api/actions/workflows/build.yml)
-[![Test](https://github.com/AI4VBH/AIDE-clinical-review-api/actions/workflows/test.yml/badge.svg)](https://github.com/AI4VBH/AIDE-clinical-review-api/actions/workflows/test.yml)
-[![Security Scanning](https://github.com/AI4VBH/AIDE-clinical-review-api/actions/workflows/security.yml/badge.svg)](https://github.com/AI4VBH/AIDE-clinical-review-api/actions/workflows/security.yml)
-
-</div>
-
-<br />
-<div align="center">
   <a href="https://github.com/AI4VBH/AIDE-clinical-review-api">
     <img src="aide-logo.png" alt="Logo" width="80" height="80">
   </a>
