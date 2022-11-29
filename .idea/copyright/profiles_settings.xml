@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="Crown Copyright Apache-2">
+  <settings default="Guy’s and St Thomas’ NHS Foundation Trust Apache-2">
     <module2copyright>
-      <element module="All" copyright="Crown Copyright Apache-2" />
+      <element module="All" copyright="Guy’s and St Thomas’ NHS Foundation Trust Apache-2" />
     </module2copyright>
   </settings>
 </component>
