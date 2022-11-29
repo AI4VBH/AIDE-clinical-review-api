@@ -25,6 +25,7 @@ using Monai.Deploy.Messaging.API;
 using Monai.Deploy.Messaging.Configuration;
 using Monai.Deploy.Messaging.Events;
 using Monai.Deploy.Messaging.Messages;
+using System.Data;
 
 namespace Aide.ClinicalReview.Common.Services
 {
@@ -71,6 +72,11 @@ namespace Aide.ClinicalReview.Common.Services
             if (clinicalReview is null)
             {
                 throw new MongoNotFoundException($"Clinical review for {executionId} not found.");
+            }
+
+            if (clinicalReview.ClinicalReviewMessage.ReviewerRoles.Any(r => acknowledge.Roles.Contains(r, StringComparer.InvariantCultureIgnoreCase)) is false)
+            {
+                throw new UnathorisedRoleException("Role is unathorised");
             }
 
             if (clinicalReview.Reviewed is not null)

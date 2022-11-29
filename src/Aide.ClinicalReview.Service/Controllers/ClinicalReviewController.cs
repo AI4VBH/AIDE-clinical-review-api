@@ -106,11 +106,9 @@ namespace Aide.ClinicalReview.Service.Controllers
         /// <summary>
         /// Approve or rejects a clinical review task.
         /// </summary>
-        /// <param name="filter">Filters.</param>
-        /// <param name="patientId">Optional paient Id.</param>
-        /// <param name="patientName">Optional patient name.</param>
-        /// <param name="applicationName">Optional patient name.</param>
-        /// <returns>paged response of subset of all clinical review tasks.</returns>
+        /// <param name="executionId">execution id of the review.</param>
+        /// <param name="acknowledge">acknowledgement details.</param>
+        /// <returns>204 when updated.</returns>
         [HttpPut]
         [ProducesResponseType(typeof(PagedResponse<List<ClinicalReviewRecord>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
