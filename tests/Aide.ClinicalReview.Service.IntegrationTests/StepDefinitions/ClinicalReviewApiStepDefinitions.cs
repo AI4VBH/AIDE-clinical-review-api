@@ -36,7 +36,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
         {
             Action = action;
             DataHelper.CreateClinicalReviewTask(clinicalReviewTask);
-            await DataHelper.SendClinicalReviewRequest(action);
+            await DataHelper.SendClinicalReviewRequest(true);
         }
 
         [Then(@"I can see Clinical Review Task is updated")]
@@ -46,7 +46,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
             var response = HttpResponse.Content.ReadAsStringAsync().Result;
             var ClinicalReviewTasks = JsonSerializer.Deserialize<List<ClinicalReviewRecord>>(response);
 
-            Assertions.AssertClinicalReviewTaskStatusUpdated(ClinicalReviewTasks, Action);
+            Assertions.AssertClinicalReviewTaskStatusUpdated(ClinicalReviewTasks, true);
         }
 
         [Then(@"I can see a Task Callback is generated")]

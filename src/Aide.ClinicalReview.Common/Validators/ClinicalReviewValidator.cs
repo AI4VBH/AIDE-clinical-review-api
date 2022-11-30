@@ -20,7 +20,7 @@ namespace Aide.ClinicalReview.Common.Validators
                 return errors;
             }
 
-            if(acknowledge.userId is null)
+            if(string.IsNullOrWhiteSpace(acknowledge.userId))
             {
                 errors.Add("userId is a required field.");
             }
@@ -30,7 +30,7 @@ namespace Aide.ClinicalReview.Common.Validators
                 errors.Add("Roles are required.");
             }
 
-            if (acknowledge.Acceptance is false && acknowledge.Reason is null)
+            if (acknowledge.Acceptance is false && string.IsNullOrWhiteSpace(acknowledge.Reason))
             {
                 errors.Add("Reason cannot be null when a clinical review is rejected.");
             }

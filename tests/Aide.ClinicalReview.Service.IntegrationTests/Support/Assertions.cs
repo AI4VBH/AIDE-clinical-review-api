@@ -30,7 +30,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         {
             foreach (var clinicalReviewTask in clinicalReviewTasks)
             {
-                clinicalReviewTask.Reviewed.Should().Be(action); // may need updating
+                clinicalReviewTask.Reviewed.Should().Be(DateTime.UtcNow); // may need updating
             }
         }
 
