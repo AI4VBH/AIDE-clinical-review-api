@@ -14,6 +14,7 @@
 // limitations under the License.
 
 using Aide.ClinicalReview.Common.Interfaces;
+using Aide.ClinicalReview.Common.Validators;
 using Aide.ClinicalReview.Configuration;
 using Aide.ClinicalReview.Contracts.Exceptions;
 using Aide.ClinicalReview.Contracts.Models;
@@ -125,6 +126,17 @@ namespace Aide.ClinicalReview.Service.Controllers
                     return Problem($"Invalid execution id. Must not be null and must be a valid Guid", $"/clinical-review/{executionId}", BadRequest);
                 }
 
+                var errors = ClinicalReviewValidator.ValidateAcknowledgeClinicalReview(acknowledge);
+
+                if (errors.Any())
+                {
+                    var validationErrors = string.Join(", ", errors);
+                    _logger.LogDebug($"{nameof(AcknowledgeClinicalReview)} - Failed to validate {nameof(acknowledge)}: {validationErrors}");
+
+                    return Problem($"Failed to validate {nameof(acknowledge)}: {string.Join(", ", validationErrors)}", $"/clinical-review/{executionId}", BadRequest);
+                }
+
+
                 await _clinicalReviewService.AcknowledgeClinicalReview(executionId, acknowledge);
 
                 return new StatusCodeResult(204);
@@ -132,7 +144,7 @@ namespace Aide.ClinicalReview.Service.Controllers
             catch (PreviouslyReviewedException e)
             {
                 _logger.ClinicalReviewGetAllAsyncError(e);
-                return Problem($"Clinical Review Task Previously Reviewed for executionID: {executionId}", $"/clinical-review/{executionId}", (int)HttpStatusCode.BadRequest);
+                return Problem($"Clinical Review Task Previously Reviewed for executionID: {executionId}", $"/clinical-review/{executionId}", BadRequest);
             }
             catch (UnathorisedRoleException e)
             {

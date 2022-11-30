@@ -6,9 +6,6 @@ namespace Aide.ClinicalReview.Contracts.Models
         [JsonProperty("acceptance")]
         public bool Acceptance { get; set; }
 
-        [JsonProperty("task_id")]
-        public string TaskId { get; set; } = string.Empty;
-
         [JsonProperty("reason")]
         public string Reason { get; set; } = string.Empty;
 

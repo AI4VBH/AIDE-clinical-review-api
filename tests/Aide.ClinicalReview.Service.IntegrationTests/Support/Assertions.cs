@@ -39,8 +39,8 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             foreach (var clinicalReviewTask in clinicalReviewTasks)
             {
                 clinicalReviewTask.ClinicalReviewMessage.Should().BeEquivalentTo(clinicalReviewEvent);
-                clinicalReviewTask.Ready.Should().Be("false");
-                clinicalReviewTask.Reviewed.Should().Be("false");
+                clinicalReviewTask.Ready.Should().Be(false);
+                clinicalReviewTask.Reviewed.Should().Be(null);
             }
         }
 
