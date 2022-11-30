@@ -18,7 +18,7 @@
 
 <div align="center">
   <a href="https://github.com/AI4VBH/AIDE-clinical-review-api">
-    <img src="aide-logo.png" alt="Logo" width="80" height="80">
+    <img src="aide-logo.png" alt="Logo" height="80">
   </a>
 
 <h3 align="center">AIDE Clinical Review API</h3>
