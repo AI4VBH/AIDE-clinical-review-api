@@ -29,7 +29,7 @@ RUN echo "Building AIDE Clinical Review Service..."
 RUN dotnet publish -c Release -o out --nologo src/Aide.ClinicalReview.Service/Aide.ClinicalReview.Service.csproj
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-jammy
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-jammy
 
 RUN echo "Copying AIDE Clinical Review Service Build artefacts to Runtime image..."
 
