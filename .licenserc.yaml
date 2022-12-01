@@ -20,6 +20,7 @@ header:
   paths-ignore:
     - 'LICENCE'
     - '.octopus/**/*.*'
+    - '.idea/**/*.*'
     - '.github/**/*.md'
     - '.github/containerscan/allowedlist.yaml'
     - 'dist'
