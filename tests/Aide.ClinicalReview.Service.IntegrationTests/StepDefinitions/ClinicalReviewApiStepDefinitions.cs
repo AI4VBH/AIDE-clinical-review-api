@@ -15,6 +15,9 @@
 
 using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.Support;
+using Aide.ClinicalReview.Service.Wrappers;
+using Newtonsoft.Json;
+using System.Net;
 using System.Text.Json;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
@@ -31,30 +34,26 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
             DataHelper = dataHelper;
         }
 
-        [When(@"I (.*) the Clinical Review Task (.*)")]
-        public async Task WhenIActionTheClinicalReviewTask(string action, string clinicalReviewTask)
+        [When(@"I send a request to edit clinical review task with '(.*)' and execution Id '(.*)'")] 
+        public async Task WhenIActionTheClinicalReviewTask(string body, string executionId)
         {
-            Action = action;
-            DataHelper.CreateClinicalReviewTask(clinicalReviewTask);
-            await DataHelper.SendClinicalReviewRequest(true);
+            var test = await DataHelper.EditClinicalReviewRequest(body, executionId);
         }
 
-        [Then(@"I can see Clinical Review Task is updated")]
-        public async Task ThenICanSeeClinicalReviewTaskIsUpdated()
+        [Then(@"clinical review task has been updated in Mongo '(.*)'")]
+        public void ThenClinicalReviewTaskHasBeenUpdatedInMongo(string executionId)
         {
-            HttpResponse = await DataHelper.GetClinicalReviewTasks();
-            var response = HttpResponse.Content.ReadAsStringAsync().Result;
-            var ClinicalReviewTasks = JsonSerializer.Deserialize<List<ClinicalReviewRecord>>(response);
-
-            Assertions.AssertClinicalReviewTaskStatusUpdated(ClinicalReviewTasks, true);
+            var result =  DataHelper.GetClinicalReviewTask(executionId);
         }
+
 
         [Then(@"I can see a Task Callback is generated")]
         public void ThenICanSeeATaskCallbackIsGenerated()
         {
-            var taskCallbackEvent = DataHelper.GetTaskCallbackEvent();
+            var actualTaskCallBack = DataHelper.GetTaskCallbackEvent();
 
-            Assertions.AssertTaskCallbackEvent();
+            Assertions.Equals(actualTaskCallBack, true);
+    
         }
     }
 }

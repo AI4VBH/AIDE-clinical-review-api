@@ -68,4 +68,58 @@ Feature: ClinicalReviewTaskApi
     Scenario: Clinical Review service returns bad request when roles are not added
         Given I have Clinical Review Tasks 'ClinicalReviewTask.json' in Mongo
         When I send a request to get Clinical Review Tasks with no role
-        Then I can Clinical Review Service Returns Bad request
+        Then Clinical Review Service Returns Bad request
+###################################################################################################################################
+
+    @ClinicalReview_TaskApi
+    Scenario: Clinical Review task can be approved and request generates a Task Callback
+        Given I have Clinical Review Tasks 'ClinicalReviewTask.json' in Mongo
+        When I send a request to edit clinical review task with 'ClinicalReviewTask_Accept.json' and execution Id '8facc52c-8b43-45ae-8399-8681c719ec2c'
+        Then clinical review task has been updated in Mongo '8facc52c-8b43-45ae-8399-8681c719ec2c'
+        And I can see a Task Callback is generated
+
+    @ClinicalReview_TaskApi @ignore
+    Scenario: Clinical Review task can be rejected and request generates a Task Callback
+        Given I have Clinical Review Tasks 'ClinicalReviewTask.json' in Mongo
+        When I send a request to edit clinical review task with 'ClinicalReviewTask_Reject.json' and execution Id '8facc52c-8b43-45ae-8399-8681c719ec2c'
+        Then clinical review task has been updated in Mongo '8facc52c-8b43-45ae-8399-8681c719ec2c'
+        And I can see a Task Callback is generated
+
+    @ClinicalReview_TaskApi @ignore
+    Scenario: Clinical Review task cannot be approved when execution Id is invalid 
+        Given I have Clinical Review Tasks 'ClinicalReviewTask.json' in Mongo
+        When I send a request to edit clinical review task with 'ClinicalReviewTask_Reject.json' and execution Id '8facc52c-8b43-45ae-8399-8681c719ec2c'
+        Then clinical review task has been updated in Mongo '8facc52c-8b43-45ae-8399-8681c719ec2c'
+        Then Clinical Review Service Returns Bad request
+       
+    @ClinicalReview_TaskApi @ignore
+    Scenario: Clinical Review task cannot be approved when request body is invalid
+        Given I have Clinical Review Tasks 'ClinicalReviewTask.json' in Mongo
+        When I send a request to edit clinical review task with 'ClinicalReviewTask_Reject.json' and execution Id '8facc52c-8b43-45ae-8399-8681c719ec2c'
+        Then clinical review task has been updated in Mongo '8facc52c-8b43-45ae-8399-8681c719ec2c'
+        Then Clinical Review Service Returns Bad request
+
+    @ClinicalReview_TaskApi @ignore
+    Scenario: Clinical Review task cannot be rejected when reject reason is missing
+        Given I have Clinical Review Tasks 'ClinicalReviewTask.json' in Mongo
+        When I send a request to edit clinical review task with 'ClinicalReviewTask_Reject.json' and execution Id '8facc52c-8b43-45ae-8399-8681c719ec2c'
+        Then Clinical Review Service Returns Bad request
+
+    @ClinicalReview_TaskApi @ignore
+    Scenario: Clinical Review task cannot be approved or rejected when review is not found
+        Given I have Clinical Review Tasks 'ClinicalReviewTask.json' in Mongo
+        When I accept the Clinical Review Task ClinicalReviewTask.json
+        Then Clinical Review service Returns Not found
+
+    @ClinicalReview_TaskApi @ignore
+    Scenario: Clinical Review task cannot be approved or rejected when already reviewed in the DB
+        Given I have no Clinical Review Tasks in Mongo
+        When I accept the Clinical Review Task ClinicalReviewTask.json
+        Then I can see no Clinical Review Tasks are returned
+
+    @ClinicalReview_TaskApi @ignore
+    Scenario: Clinical Review task cannot be approved when role does not match
+        Given I have Clinical Review Tasks 'ClinicalReviewTask.json' in Mongo
+
+
+

@@ -1,0 +1,7 @@
+﻿{
+  "acceptance": false,
+  "reason": "I am rejecting",
+  "message": "reviewed_task_id",
+  "roles": ["Clinician"],
+  "user_id": "Anand"
+}

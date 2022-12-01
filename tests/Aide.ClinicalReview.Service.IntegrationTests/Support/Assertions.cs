@@ -26,7 +26,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             actualClinicalReviewTasks?.Select(x => x.Id).ToArray().Should().BeEquivalentTo(expectedClinicalReviewTasks?.Select(x => x.Id).ToArray());
         }
 
-        public static void AssertClinicalReviewTaskStatusUpdated(List<ClinicalReviewRecord>? clinicalReviewTasks, bool action)
+        public static void AssertClinicalReviewTaskStatusUpdated(List<ClinicalReviewRecord>? clinicalReviewTasks)
         {
             foreach (var clinicalReviewTask in clinicalReviewTasks)
             {
@@ -60,9 +60,9 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             }
         }
 
-        public static void AssertTaskCallbackEvent()
+        public static void AssertTaskCallbackEvent(AcknowledgeClinicalReview actualTaskCallBack, AcknowledgeClinicalReview expectedTaskCallBack)
         {
-            // assertions
+           actualTaskCallBack.Should().BeEquivalentTo(expectedTaskCallBack);
         }
 
         internal static void AssertClinicalReviewStudies(ClinicalReviewStudy actualClinicalReviewStudies, ClinicalReviewStudy expectedClinicalReviewStudies)

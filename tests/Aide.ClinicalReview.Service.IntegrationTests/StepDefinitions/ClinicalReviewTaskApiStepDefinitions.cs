@@ -132,6 +132,18 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
             HttpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
+        [Then(@"Clinical Review Service Returns Bad request")]
+        public void ThenClinicalReviewServiceReturnsBadRequest()
+        {
+            HttpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Then(@"Clinical Review service Returns Not found")]
+        public void ThenClinicalReviewServiceReturnsNotFound()
+        {
+            HttpResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
         [StepArgumentTransformation]
         public List<string> TransformToListOfString(string list)
         {

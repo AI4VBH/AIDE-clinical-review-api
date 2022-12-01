@@ -15,7 +15,6 @@
 
 using Aide.ClinicalReview.Contracts.Messages;
 using Aide.ClinicalReview.Contracts.Models;
-using Aide.ClinicalReview.Service.IntegrationTests.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.POCO;
 using BoDi;
 using Monai.Deploy.Messaging.Messages;
@@ -63,6 +62,25 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             _ = await ApiHelper.GetResponseAsync();
         }
 
+        public async Task<HttpResponseMessage> EditClinicalReviewRequest(string body, string executionId)
+        {
+            using var reader = new StreamReader(Path.Combine(GetBinDir(), "TestData", "ClinicalReviewTask", body));
+            string json = reader.ReadToEnd();
+            var ClinicalReviewAcceptReject = JsonConvert.DeserializeObject<AcknowledgeClinicalReview>(json);
+           // json = JsonConvert.SerializeObject(ClinicalReviewAcceptReject);
+
+            ApiHelper.SetUrl($"{TestExecutionConfig.ApiConfig.BaseUrl}{TestExecutionConfig.ApiConfig.TasksEndpoint}/{executionId}");
+            ApiHelper.SetRequestVerb("PUT");
+            HttpRequestMessageExtensions.AddJsonBody(ApiHelper.Request, ClinicalReviewAcceptReject);
+            return await ApiHelper.GetResponseAsync();
+        }
+
+        public async Task<HttpResponseMessage> GetClinicalReviewRequest(string executionId)
+        {
+            ApiHelper.SetUrl($"{TestExecutionConfig.ApiConfig.BaseUrl}{TestExecutionConfig.ApiConfig.TasksEndpoint}/{executionId}");
+            ApiHelper.SetRequestVerb("GET");
+            return await ApiHelper.GetResponseAsync();
+    } 
         public async Task<HttpResponseMessage> GetClinicalReviewTasks(Dictionary<string, string> parameters = null)
         {
             var builder = new UriBuilder($"{TestExecutionConfig.ApiConfig.BaseUrl}{TestExecutionConfig.ApiConfig.TasksEndpoint}");
@@ -117,6 +135,11 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             MongoClient.CreateClinicalReviewTask(ClinicalReviewTask);
 
             OutputHelper.WriteLine($"ClinicalReviewTask with name={name} created!");
+        }
+
+        public List<ClinicalReviewRecord> GetClinicalReviewTask(string executionId)
+        {
+            return MongoClient.GetClinicalReviewTaskByExecutionId(executionId);
         }
 
         public void CreateClinicalReviewStudy(string name)

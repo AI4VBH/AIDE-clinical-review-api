@@ -110,8 +110,7 @@ namespace Aide.ClinicalReview.Service.Controllers
         /// <param name="executionId">execution id of the review.</param>
         /// <param name="acknowledge">acknowledgement details.</param>
         /// <returns>204 when updated.</returns>
-        [HttpPut]
-        [Route("{executionId}")]
+        [HttpPut("{executionId}")]
         [ProducesResponseType(typeof(StatusCodeResult), StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]

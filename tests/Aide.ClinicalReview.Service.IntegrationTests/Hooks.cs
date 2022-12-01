@@ -56,6 +56,7 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
             TestExecutionConfig.RabbitConfig.VirtualHost = config.GetValue<string>("AideClinicalReviewService:messaging:publisherSettings:virtualHost");
             TestExecutionConfig.RabbitConfig.Exchange = config.GetValue<string>("AideClinicalReviewService:messaging:publisherSettings:exchange");
             TestExecutionConfig.RabbitConfig.ClinicalReviewQueue = config.GetValue<string>("AideClinicalReviewService:messaging:topics:aideClinicalReviewRequest");
+            TestExecutionConfig.RabbitConfig.TaskCallbackQueue = config.GetValue<string>("AideClinicalReviewService:messaging:topics:taskCallback");
 
             TestExecutionConfig.MongoConfig.ConnectionString = config.GetValue<string>("AideClinicalReviewDatabase:ConnectionString");
             TestExecutionConfig.MongoConfig.Database = config.GetValue<string>("AideClinicalReviewDatabase:DatabaseName");
