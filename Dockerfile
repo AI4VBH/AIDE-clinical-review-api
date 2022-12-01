@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0-jammy as build
+FROM mcr.microsoft.com/dotnet/sdk:7.0-jammy as build
 
 RUN echo "Installing tools..."
 
