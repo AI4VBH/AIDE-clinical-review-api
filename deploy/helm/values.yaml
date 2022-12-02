@@ -27,8 +27,6 @@ enviromentVariables:
   AideClinicalReviewService__messaging__publisherSetting__endpoint: rabbitmq.rabbitmq
   AideClinicalReviewService__messaging__subscriberSettings__port: 5672
   AideClinicalReviewService__messaging__publisherSettings__port: 5672
-  AideClinicalReviewService__storage__settings__endpoint: minio-hl.minio.svc.cluster.local
-  AideClinicalReviewService__storage__settings__port: 9000
   AideClinicalReviewService__storage__settings__bucket: 'monaideploy'
   ClinicalReviewDatabase__ConnectionString: "mongodb://root:rootpassword@mongo-monai.monai:27017"
   Kestrel__EndPoints__Http__Url: "http://::5000"
@@ -51,6 +49,9 @@ enviromentVariablesFromSecrets:
     - name: AideClinicalReviewService__storage__settings__accessKey
       secretName: minio-admin-user
       secretKey: user
+    - name: AideClinicalReviewService__storage__settings__endpoint
+      secretName: minio-admin-user
+      secretKey: connectionstring
     - name: AideClinicalReviewService__storage__settings__accessToken
       secretName: minio-admin-user
       secretKey: password
