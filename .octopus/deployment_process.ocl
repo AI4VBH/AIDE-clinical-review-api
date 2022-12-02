@@ -75,7 +75,7 @@ step "deploy-the-clinical-review-api" {
                     - name: AideClinicalReviewService__storage__settings__accessToken
                       secretName: minio-admin-user
                       secretKey: password
-                    - name: AideClinicalReviewService__storage__settings__endpoint5
+                    - name: AideClinicalReviewService__storage__settings__endpoint
                       secretName: minio-admin-user
                       secretKey: connectionstring
                     - name: AideClinicalReviewDatabase__ConnectionString
