@@ -53,9 +53,7 @@ step "deploy-the-clinical-review-api" {
                   AideClinicalReviewService__messaging__subscriberSettings__endpoint: rabbitmq.rabbitmq
                   AideClinicalReviewService__messaging__publisherSetting__endpoint: rabbitmq.rabbitmq
                   AideClinicalReviewService__messaging__subscriberSettings__port: 5672
-                  AideClinicalReviewService__messaging__publisherSettings__port: 5672
-                  AideClinicalReviewService__storage__settings__endpoint: minio-hl.minio.svc.cluster.local
-                  AideClinicalReviewService__storage__settings__port: 9000
+                  AideClinicalReviewService__messaging__publisherSettings__port: 5672  
                   AideClinicalReviewService__storage__settings__bucket: 'monaideploy'
                 enviromentVariablesFromSecrets:
                   secrets:
@@ -71,6 +69,9 @@ step "deploy-the-clinical-review-api" {
                     - name: AideClinicalReviewService__messaging__publisherSettings__password
                       secretName: rabbit-secret-master
                       secretKey: password
+                    - name: AideClinicalReviewService__storage__settings__endpoint
+                      secretName: minio-admin-user
+                      secretKey: connectionstring
                     - name: AideClinicalReviewService__storage__settings__accessKey
                       secretName: minio-admin-user
                       secretKey: user
