@@ -81,8 +81,6 @@ step "deploy-the-clinical-review-api" {
                     - name: AideClinicalReviewDatabase__ConnectionString
                       secretName: #{MongoAideUserSecretName}
                       secretKey: connectionString.standard
-                      
-                      
             EOT
             Octopus.Action.Package.DownloadOnTentacle = "False"
             Octopus.Action.Package.FeedId = "octopus-server-built-in"
