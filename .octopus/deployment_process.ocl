@@ -69,9 +69,6 @@ step "deploy-the-clinical-review-api" {
                     - name: AideClinicalReviewService__messaging__publisherSettings__password
                       secretName: rabbit-secret-master
                       secretKey: password
-                    - name: AideClinicalReviewService__storage__settings__endpoint
-                      secretName: minio-admin-user
-                      secretKey: connectionstring
                     - name: AideClinicalReviewService__storage__settings__accessKey
                       secretName: minio-admin-user
                       secretKey: user
