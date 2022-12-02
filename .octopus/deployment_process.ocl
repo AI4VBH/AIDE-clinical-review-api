@@ -53,7 +53,7 @@ step "deploy-the-clinical-review-api" {
                   AideClinicalReviewService__messaging__subscriberSettings__endpoint: rabbitmq.rabbitmq
                   AideClinicalReviewService__messaging__publisherSetting__endpoint: rabbitmq.rabbitmq
                   AideClinicalReviewService__messaging__subscriberSettings__port: 5672
-                  AideClinicalReviewService__messaging__publisherSettings__port: 5672  
+                  AideClinicalReviewService__messaging__publisherSettings__port: 5672
                   AideClinicalReviewService__storage__settings__bucket: 'monaideploy'
                 enviromentVariablesFromSecrets:
                   secrets:
