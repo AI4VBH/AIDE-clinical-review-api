@@ -14,6 +14,7 @@
 // limitations under the License.
 
 using System.Text;
+using System.Threading.Channels;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 
@@ -25,7 +26,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         {
             Exchange = exchange;
             RoutingKey = routingKey;
-            GetChannel();
+            SetupQueue();
         }
 
         private QueueDeclareOk Queue { get; set; }
@@ -55,6 +56,13 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             }
 
             return default;
+        }
+        private void SetupQueue()
+        {
+            var Channel = RabbitConnectionFactory.GetRabbitConnection();
+            Queue = Channel.QueueDeclare(queue: RoutingKey, durable: true, exclusive: false, autoDelete: false);
+            Channel.QueueBind(Queue.QueueName, Exchange, RoutingKey);
+            Channel.ExchangeDeclare(Exchange, ExchangeType.Topic, durable: true);
         }
     }
 }
