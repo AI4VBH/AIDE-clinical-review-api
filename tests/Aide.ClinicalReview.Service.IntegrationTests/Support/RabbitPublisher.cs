@@ -30,41 +30,32 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
 
         private string RoutingKey { get; set; }
 
-        private IModel Channel { get; set; }
-
-        private IModel GetChannel()
-        {
-            Channel = RabbitConnectionFactory.GetRabbitConnection();
-            Channel.ExchangeDeclare(Exchange, ExchangeType.Topic, durable: true);
-            return Channel;
-        }
-
         public void PublishMessage(Message message)
         {
-            var propertiesDictionary = new Dictionary<string, object>
+            using (var channel = RabbitConnectionFactory.Connection?.CreateModel())
             {
-                { "CreationDateTime", message.CreationDateTime.ToString("o") }
-            };
+                channel.ExchangeDeclare(Exchange, ExchangeType.Topic, durable: true);
 
-            var properties = GetChannel().CreateBasicProperties();
-            properties.Persistent = true;
-            properties.ContentType = message.ContentType;
-            properties.MessageId = message.MessageId;
-            properties.AppId = message.ApplicationId;
-            properties.CorrelationId = message.CorrelationId;
-            properties.DeliveryMode = 2;
-            properties.Headers = propertiesDictionary;
-            properties.Type = message.MessageDescription;
+                var propertiesDictionary = new Dictionary<string, object>
+                {
+                    { "CreationDateTime", message.CreationDateTime.ToString("o") }
+                };
 
-            Channel.BasicPublish(exchange: Exchange,
-                routingKey: RoutingKey,
-                basicProperties: properties,
-                body: message.Body);
-        }
+                var properties = channel.CreateBasicProperties();
+                properties.Persistent = true;
+                properties.ContentType = message.ContentType;
+                properties.MessageId = message.MessageId;
+                properties.AppId = message.ApplicationId;
+                properties.CorrelationId = message.CorrelationId;
+                properties.DeliveryMode = 2;
+                properties.Headers = propertiesDictionary;
+                properties.Type = message.MessageDescription;
 
-        public void CloseConnection()
-        {
-            Channel.Close();
+                channel.BasicPublish(exchange: Exchange,
+                    routingKey: RoutingKey,
+                    basicProperties: properties,
+                    body: message.Body);
+            }
         }
     }
 }

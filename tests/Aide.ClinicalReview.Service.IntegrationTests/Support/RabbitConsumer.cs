@@ -33,36 +33,27 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
 
         private string RoutingKey { get; set; }
 
-        private IModel Channel { get; set; }
-
-        private IModel GetChannel()
-        {
-            Channel = RabbitConnectionFactory.GetRabbitConnection();
-            Queue = Channel.QueueDeclare(queue: RoutingKey, durable: true, exclusive: false, autoDelete: false);
-            Channel.QueueBind(Queue.QueueName, Exchange, RoutingKey);
-            Channel.ExchangeDeclare(Exchange, ExchangeType.Topic, durable: true);
-            return Channel;
-        }
-
         public T GetMessage<T>()
         {
-            var basicGetResult = GetChannel().BasicGet(Queue.QueueName, true);
-
-            if (basicGetResult != null)
+            using (var channel = RabbitConnectionFactory.Connection?.CreateModel())
             {
-                var byteArray = basicGetResult.Body.ToArray();
+                var queue = channel.QueueDeclare(queue: RoutingKey, durable: true, exclusive: false, autoDelete: false);
+                channel.QueueBind(queue.QueueName, Exchange, RoutingKey);
+                channel.ExchangeDeclare(Exchange, ExchangeType.Topic, durable: true);
 
-                var str = Encoding.Default.GetString(byteArray);
+                var basicGetResult = channel.BasicGet(Queue.QueueName, true);
 
-                return JsonConvert.DeserializeObject<T>(str);
+                if (basicGetResult != null)
+                {
+                    var byteArray = basicGetResult.Body.ToArray();
+
+                    var str = Encoding.Default.GetString(byteArray);
+
+                    return JsonConvert.DeserializeObject<T>(str);
+                }
             }
 
             return default;
-        }
-
-        public void CloseConnection()
-        {
-            Channel.Close();
         }
     }
 }

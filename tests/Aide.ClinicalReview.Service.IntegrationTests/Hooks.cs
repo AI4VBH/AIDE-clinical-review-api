@@ -81,6 +81,7 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
 
             MongoClient = new MongoClientUtil();
             MinioClient = new MinioClientUtil();
+            RabbitConnectionFactory.SetRabbitConnection();
             RetryPolicy = Policy.Handle<Exception>().WaitAndRetryAsync(retryCount: 20, sleepDurationProvider: _ => TimeSpan.FromMilliseconds(500));
             ClinicalReviewPublisher = new RabbitPublisher(TestExecutionConfig.RabbitConfig.Exchange, TestExecutionConfig.RabbitConfig.ClinicalReviewQueue);
             TaskCallbackConsumer = new RabbitConsumer(TestExecutionConfig.RabbitConfig.Exchange, TestExecutionConfig.RabbitConfig.TaskCallbackQueue);
@@ -118,7 +119,6 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
         [AfterTestRun(Order = 1)]
         public static void TearDown()
         {
-            ClinicalReviewPublisher?.CloseConnection();
             WebApplicationFactory?.Dispose();
         }
     }
