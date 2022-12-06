@@ -406,7 +406,8 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
                         "c2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 78
-        testRunner.And("I can see a Task Callback is generated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("I can see a Task Callback is generated and execution Id \'8facc52c-8b43-45ae-8399-" +
+                        "8681c719ec2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -414,13 +415,11 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Clinical Review task can be rejected and request generates a Task Callback")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReview_TaskApi")]
         public virtual void ClinicalReviewTaskCanBeRejectedAndRequestGeneratesATaskCallback()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReview_TaskApi",
-                    "ignore"};
+                    "ClinicalReview_TaskApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review task can be rejected and request generates a Task Callback", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 81
@@ -455,7 +454,8 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
                         "c2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 85
-        testRunner.And("I can see a Task Callback is generated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("I can see a Task Callback is generated and execution Id \'8facc52c-8b43-45ae-8399-" +
+                        "8681c719ec2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -463,13 +463,11 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Clinical Review task cannot be approved when execution Id is invalid")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReview_TaskApi")]
         public virtual void ClinicalReviewTaskCannotBeApprovedWhenExecutionIdIsInvalid()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReview_TaskApi",
-                    "ignore"};
+                    "ClinicalReview_TaskApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review task cannot be approved when execution Id is invalid", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 88
@@ -496,14 +494,10 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         testRunner.Given("I have Clinical Review Tasks \'ClinicalReviewTask.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 90
-        testRunner.When("I send a request to edit clinical review task with \'ClinicalReviewTask_Reject.jso" +
-                        "n\' and execution Id \'8facc52c-8b43-45ae-8399-8681c719ec2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When("I send a request to edit clinical review task with \'ClinicalReviewTask_Accept.jso" +
+                        "n\' and execution Id \'8facc52c-8b43-45ae-8399-8681c719\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 91
-        testRunner.Then("clinical review task has been updated in Mongo \'8facc52c-8b43-45ae-8399-8681c719e" +
-                        "c2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 92
         testRunner.Then("Clinical Review Service Returns Bad request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -512,16 +506,14 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Clinical Review task cannot be approved when request body is invalid")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReview_TaskApi")]
         public virtual void ClinicalReviewTaskCannotBeApprovedWhenRequestBodyIsInvalid()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReview_TaskApi",
-                    "ignore"};
+                    "ClinicalReview_TaskApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review task cannot be approved when request body is invalid", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 95
+#line 94
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -541,18 +533,18 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
             else
             {
                 this.ScenarioStart();
-#line 96
+#line 95
         testRunner.Given("I have Clinical Review Tasks \'ClinicalReviewTask.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 97
-        testRunner.When("I send a request to edit clinical review task with \'ClinicalReviewTask_Reject.jso" +
-                        "n\' and execution Id \'8facc52c-8b43-45ae-8399-8681c719ec2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 96
+        testRunner.When("I send a request to edit clinical review task with \'ClinicalReviewTask_InvalidFie" +
+                        "lds.json\' and execution Id \'8facc52c-8b43-45ae-8399-8681c719ec2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 98
+#line 97
         testRunner.Then("clinical review task has been updated in Mongo \'8facc52c-8b43-45ae-8399-8681c719e" +
                         "c2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 99
+#line 98
         testRunner.Then("Clinical Review Service Returns Bad request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -561,16 +553,14 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Clinical Review task cannot be rejected when reject reason is missing")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReview_TaskApi")]
         public virtual void ClinicalReviewTaskCannotBeRejectedWhenRejectReasonIsMissing()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReview_TaskApi",
-                    "ignore"};
+                    "ClinicalReview_TaskApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review task cannot be rejected when reject reason is missing", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 102
+#line 101
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -590,14 +580,14 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
             else
             {
                 this.ScenarioStart();
-#line 103
+#line 102
         testRunner.Given("I have Clinical Review Tasks \'ClinicalReviewTask.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 104
-        testRunner.When("I send a request to edit clinical review task with \'ClinicalReviewTask_Reject.jso" +
-                        "n\' and execution Id \'8facc52c-8b43-45ae-8399-8681c719ec2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 103
+        testRunner.When("I send a request to edit clinical review task with \'ClinicalReviewTask_RejectNoRe" +
+                        "ason.json\' and execution Id \'8facc52c-8b43-45ae-8399-8681c719ec2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 105
+#line 104
         testRunner.Then("Clinical Review Service Returns Bad request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -606,16 +596,14 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Clinical Review task cannot be approved or rejected when review is not found")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReview_TaskApi")]
         public virtual void ClinicalReviewTaskCannotBeApprovedOrRejectedWhenReviewIsNotFound()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReview_TaskApi",
-                    "ignore"};
+                    "ClinicalReview_TaskApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review task cannot be approved or rejected when review is not found", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 108
+#line 107
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -635,13 +623,14 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
             else
             {
                 this.ScenarioStart();
+#line 108
+        testRunner.Given("I have no Clinical Review Tasks in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
 #line 109
-        testRunner.Given("I have Clinical Review Tasks \'ClinicalReviewTask.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.When("I send a request to edit clinical review task with \'ClinicalReviewTask_Reject.jso" +
+                        "n\' and execution Id \'8facc52c-8b43-45ae-8399-8681c719ec2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 110
-        testRunner.When("I accept the Clinical Review Task ClinicalReviewTask.json", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 111
         testRunner.Then("Clinical Review service Returns Not found", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -651,17 +640,15 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Clinical Review task cannot be approved or rejected when already reviewed in the " +
             "DB")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReview_TaskApi")]
         public virtual void ClinicalReviewTaskCannotBeApprovedOrRejectedWhenAlreadyReviewedInTheDB()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReview_TaskApi",
-                    "ignore"};
+                    "ClinicalReview_TaskApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review task cannot be approved or rejected when already reviewed in the " +
                     "DB", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 114
+#line 113
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -681,14 +668,15 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
             else
             {
                 this.ScenarioStart();
+#line 114
+        testRunner.Given("I have Clinical Review Tasks \'ClinicalReviewTask_Reviewed.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
 #line 115
-        testRunner.Given("I have no Clinical Review Tasks in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.When("I send a request to edit clinical review task with \'ClinicalReviewTask_Reject.jso" +
+                        "n\' and execution Id \'8facc52c-8b43-45ae-8399-8681c719ec2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 116
-        testRunner.When("I accept the Clinical Review Task ClinicalReviewTask.json", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 117
-        testRunner.Then("I can see no Clinical Review Tasks are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("Clinical Review Service Returns Bad request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -696,16 +684,14 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Clinical Review task cannot be approved when role does not match")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         [NUnit.Framework.CategoryAttribute("ClinicalReview_TaskApi")]
         public virtual void ClinicalReviewTaskCannotBeApprovedWhenRoleDoesNotMatch()
         {
             string[] tagsOfScenario = new string[] {
-                    "ClinicalReview_TaskApi",
-                    "ignore"};
+                    "ClinicalReview_TaskApi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clinical Review task cannot be approved when role does not match", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 120
+#line 119
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -725,8 +711,15 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Features
             else
             {
                 this.ScenarioStart();
-#line 121
+#line 120
         testRunner.Given("I have Clinical Review Tasks \'ClinicalReviewTask.json\' in Mongo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 121
+        testRunner.When("I send a request to edit clinical review task with \'ClinicalReviewTask_IncorrectR" +
+                        "ole.json\' and execution Id \'8facc52c-8b43-45ae-8399-8681c719ec2c\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 122
+        testRunner.Then("Clinical Review service Returns forbidden", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

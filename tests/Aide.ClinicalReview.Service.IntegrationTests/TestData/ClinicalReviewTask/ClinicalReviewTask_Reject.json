@@ -1,7 +1,7 @@
 ﻿{
-  "acceptance": true,
+  "acceptance": false,
   "reason": "its good",
   "message": "reviewed_task_id",
-  "roles": ["Doctor"],
+  "Roles": [ "Clinician" ],
   "user_id": "Anand"
 }

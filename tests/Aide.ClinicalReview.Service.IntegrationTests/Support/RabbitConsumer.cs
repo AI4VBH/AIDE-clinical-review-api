@@ -25,6 +25,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         {
             Exchange = exchange;
             RoutingKey = routingKey;
+            GetChannel();
         }
 
         private QueueDeclareOk Queue { get; set; }

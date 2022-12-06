@@ -204,7 +204,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             }
         }
 
-        public TaskCallbackEvent GetTaskCallbackEvent()
+        public TaskCallbackEvent GetTaskCallbackEvent(string executionId)
         {
             OutputHelper.WriteLine($"Retreiving Task Callback Event for executionId");
 
@@ -212,9 +212,9 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             {
                 var message = TaskCallbackConsumer.GetMessage<TaskCallbackEvent>();
 
-                if (message != null) // this needs to check that the executionId is what you would expect
+                if (message != null & executionId== message.ExecutionId) // this needs to check that the executionId is what you would expect
                 {
-                    // check for rabbit message
+                    return message;
                 }
 
                 throw new Exception($"TaskCallbackEvent not published for executionId");

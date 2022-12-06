@@ -19,6 +19,7 @@ using Aide.ClinicalReview.Service.IntegrationTests.Support;
 using Aide.ClinicalReview.Service.Wrappers;
 using Monai.Deploy.Messaging.Events;
 using Newtonsoft.Json;
+using NUnit.Framework;
 using System.Net;
 using System.Text.Json;
 
@@ -35,24 +36,28 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
         {
             DataHelper = dataHelper;
         }
-
-        [When(@"I send a request to edit clinical review task with '(.*)' and execution Id '(.*)'")] 
-        public async Task WhenIActionTheClinicalReviewTask(string body, string executionId)
-        {
-            var test = await DataHelper.EditClinicalReviewRequest(body, executionId);
-        }
-
-        [Then(@"clinical review task has been updated in Mongo '(.*)'")]
-        public void ThenClinicalReviewTaskHasBeenUpdatedInMongo(string executionId)
-        {
-            var result =  DataHelper.GetClinicalReviewTask(executionId);
-        }
-
-
-        [Then(@"I can see a Task Callback is generated")]
-        public void ThenICanSeeATaskCallbackIsGenerated()
-        {
-            var message = DataHelper.GetTaskCallbackEvent();
-        }
     }
 }
+
+//        [When(@"I send a request to edit clinical review task with '(.*)' and execution Id '(.*)'")] 
+//        public async Task WhenIActionTheClinicalReviewTask(string body, string executionId)
+//        {
+//            HttpResponse = await DataHelper.EditClinicalReviewRequest(body, executionId);
+//        }
+
+//        [Then(@"clinical review task has been updated in Mongo '(.*)'")]
+//        public void ThenClinicalReviewTaskHasBeenUpdatedInMongo(string executionId)
+//        {
+//            var result =  DataHelper.GetClinicalReviewTask(executionId);
+//        }
+
+
+//        [Then(@"I can see a Task Callback is generated and execution Id '(.*)'")]
+//        public void ThenICanSeeATaskCallbackIsGenerated(string executionId)
+//        {
+//            var message = DataHelper.GetTaskCallbackEvent(executionId);
+
+//            Assert.NotNull(message);
+//        }
+//    }
+//}

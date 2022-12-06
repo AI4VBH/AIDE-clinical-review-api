@@ -2,6 +2,6 @@
   "acceptance": true,
   "reason": "",
   "message": "reviewed_task_id",
-  "roles": ["Clinician"],
+  "roles": ["Doctor"],
   "user_id": "AnandMistry"
 }

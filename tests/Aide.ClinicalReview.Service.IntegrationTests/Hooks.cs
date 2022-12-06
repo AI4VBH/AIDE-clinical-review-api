@@ -83,17 +83,22 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
             MinioClient = new MinioClientUtil();
             RabbitConnectionFactory.SetRabbitConnection();
             RetryPolicy = Policy.Handle<Exception>().WaitAndRetryAsync(retryCount: 20, sleepDurationProvider: _ => TimeSpan.FromMilliseconds(500));
+
+        }
+        [BeforeTestRun(Order = 1)]
+        public static void StartConsumers()
+        {
             ClinicalReviewPublisher = new RabbitPublisher(TestExecutionConfig.RabbitConfig.Exchange, TestExecutionConfig.RabbitConfig.ClinicalReviewQueue);
             TaskCallbackConsumer = new RabbitConsumer(TestExecutionConfig.RabbitConfig.Exchange, TestExecutionConfig.RabbitConfig.TaskCallbackQueue);
         }
 
-        [BeforeTestRun(Order = 2)]
+        [BeforeTestRun(Order = 3)]
         public static async Task CreateBucket()
         {
             await MinioClient.CreateBucket(TestExecutionConfig.MinioConfig.Bucket);
         }
 
-        [BeforeTestRun(Order = 1)]
+        [BeforeTestRun(Order = 2)]
         [AfterTestRun(Order = 0)]
         [AfterScenario]
         public static void ClearTestData()
