@@ -24,6 +24,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         {
             Exchange = exchange;
             RoutingKey = routingKey;
+            SetupExchange();
         }
 
         private string Exchange { get; set; }
@@ -56,6 +57,12 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
                     basicProperties: properties,
                     body: message.Body);
             }
+        }
+
+        private void SetupExchange()
+        {
+            var Channel = RabbitConnectionFactory.GetRabbitConnection();
+            Channel.ExchangeDeclare(Exchange, ExchangeType.Topic, durable: true);
         }
     }
 }
