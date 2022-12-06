@@ -69,7 +69,6 @@ Feature: ClinicalReviewTaskApi
         Given I have Clinical Review Tasks 'ClinicalReviewTask.json' in Mongo
         When I send a request to get Clinical Review Tasks with no role
         Then Clinical Review Service Returns Bad request
-###################################################################################################################################
 
     @ClinicalReview_TaskApi
     Scenario: Clinical Review task can be approved and request generates a Task Callback

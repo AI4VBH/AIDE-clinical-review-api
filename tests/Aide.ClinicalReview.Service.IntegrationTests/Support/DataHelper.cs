@@ -17,6 +17,7 @@ using Aide.ClinicalReview.Contracts.Messages;
 using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.POCO;
 using BoDi;
+using Monai.Deploy.Messaging.Events;
 using Monai.Deploy.Messaging.Messages;
 using Newtonsoft.Json;
 using Polly;
@@ -34,7 +35,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         private RabbitPublisher ClinicalReviewPublisher { get; set; }
         private ISpecFlowOutputHelper OutputHelper { get; set; }
         private ApiHelper ApiHelper { get; }
-        private RetryPolicy<string> RetryTaskCallback { get; set; }
+        private RetryPolicy<TaskCallbackEvent> RetryTaskCallback { get; set; }
         private string ExecutionId { get; set; }
 
 
@@ -51,7 +52,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             ClinicalReviewPublisher = objectContainer.Resolve<RabbitPublisher>() ?? throw new ArgumentNullException(nameof(RabbitPublisher));
             ApiHelper = objectContainer.Resolve<ApiHelper>() ?? throw new ArgumentNullException(nameof(ApiHelper));
             OutputHelper = objectContainer.Resolve<ISpecFlowOutputHelper>();
-            RetryTaskCallback = Policy<string>.Handle<Exception>().WaitAndRetry(retryCount: 10, sleepDurationProvider: _ => TimeSpan.FromMilliseconds(500));
+            RetryTaskCallback = Policy<TaskCallbackEvent>.Handle<Exception>().WaitAndRetry(retryCount: 10, sleepDurationProvider: _ => TimeSpan.FromMilliseconds(500));
         }
 
         public async Task SendClinicalReviewRequest(bool action)
@@ -203,15 +204,15 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             }
         }
 
-        public object GetTaskCallbackEvent()
+        public TaskCallbackEvent GetTaskCallbackEvent()
         {
             OutputHelper.WriteLine($"Retreiving Task Callback Event for executionId");
 
             var res = RetryTaskCallback.Execute(() =>
             {
-                var message = TaskCallbackConsumer.GetMessage<string>();
+                var message = TaskCallbackConsumer.GetMessage<TaskCallbackEvent>();
 
-                if (message != null)
+                if (message != null) // this needs to check that the executionId is what you would expect
                 {
                     // check for rabbit message
                 }

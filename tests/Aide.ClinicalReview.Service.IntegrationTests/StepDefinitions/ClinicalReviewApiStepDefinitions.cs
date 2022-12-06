@@ -14,8 +14,10 @@
 // limitations under the License.
 
 using Aide.ClinicalReview.Contracts.Models;
+using Aide.ClinicalReview.Service.IntegrationTests.POCO;
 using Aide.ClinicalReview.Service.IntegrationTests.Support;
 using Aide.ClinicalReview.Service.Wrappers;
+using Monai.Deploy.Messaging.Events;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text.Json;
@@ -50,10 +52,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
         [Then(@"I can see a Task Callback is generated")]
         public void ThenICanSeeATaskCallbackIsGenerated()
         {
-            var actualTaskCallBack = DataHelper.GetTaskCallbackEvent();
-
-            Assertions.Equals(actualTaskCallBack, true);
-    
+            var message = DataHelper.GetTaskCallbackEvent();
         }
     }
 }

@@ -21,14 +21,10 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
 {
     public sealed class RabbitConsumer
     {
-        public RabbitConsumer(IModel channel, string exchange, string routingKey)
+        public RabbitConsumer(string exchange, string routingKey)
         {
             Exchange = exchange;
             RoutingKey = routingKey;
-            Channel = channel;
-            Queue = Channel.QueueDeclare(queue: routingKey, durable: true, exclusive: false, autoDelete: false);
-            Channel.QueueBind(Queue.QueueName, Exchange, RoutingKey);
-            Channel.ExchangeDeclare(Exchange, ExchangeType.Topic, durable: true);
         }
 
         private QueueDeclareOk Queue { get; set; }
@@ -39,9 +35,18 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
 
         private IModel Channel { get; set; }
 
+        private IModel GetChannel()
+        {
+            Channel = RabbitConnectionFactory.GetRabbitConnection();
+            Queue = Channel.QueueDeclare(queue: RoutingKey, durable: true, exclusive: false, autoDelete: false);
+            Channel.QueueBind(Queue.QueueName, Exchange, RoutingKey);
+            Channel.ExchangeDeclare(Exchange, ExchangeType.Topic, durable: true);
+            return Channel;
+        }
+
         public T GetMessage<T>()
         {
-            var basicGetResult = Channel.BasicGet(Queue.QueueName, true);
+            var basicGetResult = GetChannel().BasicGet(Queue.QueueName, true);
 
             if (basicGetResult != null)
             {

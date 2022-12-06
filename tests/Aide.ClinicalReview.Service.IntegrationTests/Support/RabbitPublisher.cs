@@ -20,12 +20,10 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
 {
     public sealed class RabbitPublisher
     {
-        public RabbitPublisher(IModel channel, string exchange, string routingKey)
+        public RabbitPublisher(string exchange, string routingKey)
         {
             Exchange = exchange;
             RoutingKey = routingKey;
-            Channel = channel;
-            Channel.ExchangeDeclare(Exchange, ExchangeType.Topic, durable: true);
         }
 
         private string Exchange { get; set; }
@@ -34,6 +32,13 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
 
         private IModel Channel { get; set; }
 
+        private IModel GetChannel()
+        {
+            Channel = RabbitConnectionFactory.GetRabbitConnection();
+            Channel.ExchangeDeclare(Exchange, ExchangeType.Topic, durable: true);
+            return Channel;
+        }
+
         public void PublishMessage(Message message)
         {
             var propertiesDictionary = new Dictionary<string, object>
@@ -41,7 +46,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
                 { "CreationDateTime", message.CreationDateTime.ToString("o") }
             };
 
-            var properties = Channel.CreateBasicProperties();
+            var properties = GetChannel().CreateBasicProperties();
             properties.Persistent = true;
             properties.ContentType = message.ContentType;
             properties.MessageId = message.MessageId;
