@@ -13,8 +13,8 @@
     "patient_gender": "Male"
   },
   "application_metadata": {
-    "name": "Stroke",
-    "version": "v1.0",
+    "application_name": "Stroke",
+    "application_version": "v1.0",
     "mode": "QA"
   },
   "files": [
