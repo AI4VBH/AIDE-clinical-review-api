@@ -39,7 +39,14 @@ namespace Aide.ClinicalReview.Database.Interfaces
         /// <summary>
         /// Creates a ClinicalReviewRecord object.
         /// </summary>
-        /// <param name="workflow">Workflow object to create.</param>
+        /// <param name="clinicalReview">Clinical review.</param>
         Task<string> CreateAsync(ClinicalReviewRecord clinicalReview);
+
+        /// <summary>
+        /// Acknowledge clinical review.
+        /// </summary>
+        /// <param name="executionId">executionId of the task.</param>
+        /// <param name="workflow">Workflow object to create.</param>
+        Task<string> AcknowledgeAsync(string executionId, AcknowledgeClinicalReview acknowledge);
     }
 }

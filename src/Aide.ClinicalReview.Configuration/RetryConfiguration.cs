@@ -19,6 +19,8 @@ namespace Aide.ClinicalReview.Configuration
 {
     public partial class MessageBrokerConfiguration
     {
+        public static readonly string ClinicalReviewServiceApplicationId = "b1a66c3e-c85a-4297-87d2-ac8ff2497e14";
+
         public sealed class RetryConfiguration
         {
             /// <summary>

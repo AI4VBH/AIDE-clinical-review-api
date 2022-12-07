@@ -31,7 +31,7 @@
       "application_mode": "Clinical"
     }
   },
-  "reviewed": "false",
-  "ready": "Yes",
+  "reviewed":null,
+  "ready": true,
   "received": "2022-11-16T12:25:43.511Z"
 }

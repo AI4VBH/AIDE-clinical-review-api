@@ -17,6 +17,7 @@ using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.Support;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using System.Net;
 
 namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
@@ -132,7 +133,47 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.StepDefinitions
             HttpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
-        [StepArgumentTransformation]
+        [Then(@"Clinical Review Service Returns Bad request")]
+        public void ThenClinicalReviewServiceReturnsBadRequest()
+        {
+            HttpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Then(@"Clinical Review service Returns Not found")]
+        public void ThenClinicalReviewServiceReturnsNotFound()
+        {
+            HttpResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Then(@"Clinical Review service Returns forbidden")]
+        public void ThenClinicalReviewServiceReturnsForbidden()
+        {
+            HttpResponse.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        }
+
+
+        [When(@"I send a request to edit clinical review task with '(.*)' and execution Id '(.*)'")]
+        public async Task WhenIActionTheClinicalReviewTask(string body, string executionId)
+        {
+            HttpResponse = await DataHelper.EditClinicalReviewRequest(body, executionId);
+        }
+
+        [Then(@"clinical review task has been updated in Mongo '(.*)'")]
+        public void ThenClinicalReviewTaskHasBeenUpdatedInMongo(string executionId)
+        {
+            var result = DataHelper.GetClinicalReviewTask(executionId);
+        }
+
+
+        [Then(@"I can see a Task Callback is generated and execution Id '(.*)'")]
+        public void ThenICanSeeATaskCallbackIsGenerated(string executionId)
+        {
+            var message = DataHelper.GetTaskCallbackEvent(executionId);
+
+            Assert.NotNull(message);
+        }
+
+[StepArgumentTransformation]
         public List<string> TransformToListOfString(string list)
         {
             return list.Split(",").Select(x => x.Trim()).ToList();

@@ -1,12 +1,12 @@
 ---
 - - :permit
-  - https://licenses.nuget.org/MIT
+  - MIT
   - :who: woodheadio
     :why: MIT Licence
     :versions: []
     :when: 2022-11-14 16:00:00.103707888 Z
 - - :permit
-  - https://licenses.nuget.org/Apache-2.0
+  - Apache 2.0
   - :who: woodheadio
     :why: Apache-2.0 Licence
     :versions: []
