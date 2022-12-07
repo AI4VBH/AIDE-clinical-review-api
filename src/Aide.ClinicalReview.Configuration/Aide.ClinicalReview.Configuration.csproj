@@ -23,7 +23,7 @@ limitations under the License.
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
         <PackageReference Include="Monai.Deploy.Messaging.RabbitMQ" Version="0.1.15"/>
         <PackageReference Include="Monai.Deploy.Messaging" Version="0.1.15"/>
         <PackageReference Include="Monai.Deploy.Storage" Version="0.2.10"/>
