@@ -58,16 +58,16 @@ step "deploy-the-clinical-review-api" {
                 enviromentVariablesFromSecrets:
                   secrets:
                     - name: AideClinicalReviewService__messaging__subscriberSettings__username
-                      secretName: rabbit-secret-master
+                      secretName: #{RabbitSecretName}
                       secretKey: username
                     - name: AideClinicalReviewService__messaging__subscriberSettings__password
-                      secretName: rabbit-secret-master
+                      secretName: #{RabbitSecretName}
                       secretKey: password
                     - name: AideClinicalReviewService__messaging__publisherSettings__username
-                      secretName: rabbit-secret-master
+                      secretName: #{RabbitSecretName}
                       secretKey: username
                     - name: AideClinicalReviewService__messaging__publisherSettings__password
-                      secretName: rabbit-secret-master
+                      secretName: #{RabbitSecretName}
                       secretKey: password
                     - name: AideClinicalReviewService__storage__settings__accessKey
                       secretName: minio-admin-user
