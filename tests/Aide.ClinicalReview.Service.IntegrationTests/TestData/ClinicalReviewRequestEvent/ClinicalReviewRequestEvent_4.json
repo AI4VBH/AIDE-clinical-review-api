@@ -10,7 +10,7 @@
     "patient_name": "John Doe",
     "patient_id": "100001",
     "patient_dob": "01/01/1990",
-    "patient_gender": "Male"
+    "patient_sex": "Male"
   },
   "application_metadata": {
     "name": "Stroke",
