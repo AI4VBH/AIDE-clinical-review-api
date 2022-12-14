@@ -13,24 +13,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Aide.ClinicalReview.Contracts.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aide.ClinicalReview.Common.Interfaces
+namespace Aide.ClinicalReview.Contracts.Exceptions
 {
-    public interface IClinicalReviewService
+    public class PreviouslyReviewedException : Exception
     {
-        Task<(IList<ClinicalReviewRecord> ClinicalReviews, long recordCount)> GetClinicalReviewListAsync(string[] roles,
-                                                      int? skip = null,
-                                                      int? limit = null,
-                                                      string? patientId = "",
-                                                      string? patientName = "",
-                                                      string? applicationName = "");
+        public PreviouslyReviewedException()
+        {
+        }
 
-        Task AcknowledgeClinicalReview(string executionId, AcknowledgeClinicalReview acknowledge);
+        public PreviouslyReviewedException(string message)
+            : base(message)
+        {
+        }
+
+        public PreviouslyReviewedException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
     }
 }

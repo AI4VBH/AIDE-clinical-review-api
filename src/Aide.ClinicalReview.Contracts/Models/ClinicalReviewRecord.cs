@@ -29,10 +29,16 @@ namespace Aide.ClinicalReview.Contracts.Models
         [JsonProperty("clinical_review_message")]
         public AideClinicalReviewRequestMessage? ClinicalReviewMessage { get; set; }
 
-        [JsonProperty("ready")] public string Ready { get; set; } = string.Empty;
+        [JsonProperty("ready")]
+        public bool Ready { get; set; } = false;
 
-        [JsonProperty("reviewed")] public string Reviewed { get; set; } = string.Empty;
+        [JsonProperty("reviewed")]
+        public DateTime? Reviewed { get; set; }
 
-        [JsonProperty("received")] public DateTime Received { get; set; }
+        [JsonProperty("clinical_review_acknowledge")]
+        public AcknowledgeClinicalReview ClinicalReviewAcknowledge { get; set; }
+
+        [JsonProperty("received")]
+        public DateTime Received { get; set; }
     }
 }

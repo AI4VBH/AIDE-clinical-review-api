@@ -21,9 +21,11 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
 {
     public static class RabbitConnectionFactory
     {
+        public static IConnection? Connection { get; set; }
         private static IModel? Channel { get; set; }
 
-        public static IModel GetRabbitConnection()
+
+        public static void SetRabbitConnection()
         {
             var connectionFactory = new ConnectionFactory
             {
@@ -33,6 +35,22 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
                 VirtualHost = TestExecutionConfig.RabbitConfig.VirtualHost
             };
 
+            Connection = connectionFactory.CreateConnection();
+        }
+
+        public static IModel GetRabbitConnection()
+        {
+            var connectionFactory = new ConnectionFactory
+            {
+
+                HostName = TestExecutionConfig.RabbitConfig.Host,
+                UserName = TestExecutionConfig.RabbitConfig.User,
+                Password = TestExecutionConfig.RabbitConfig.Password,
+                VirtualHost = TestExecutionConfig.RabbitConfig.VirtualHost
+
+            };
+
+
             Channel = connectionFactory.CreateConnection().CreateModel();
 
             return Channel;
@@ -40,22 +58,18 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
 
         public static void DeleteQueue(string queueName)
         {
-            if (Channel is null)
+            using (var channel = Connection?.CreateModel())
             {
-                GetRabbitConnection();
+                channel?.QueueDelete(queueName);
             }
-
-            Channel?.QueueDelete(queueName);
         }
 
         public static void PurgeQueue(string queueName)
         {
-            if (Channel is null)
+            using (var channel = Connection?.CreateModel())
             {
-                GetRabbitConnection();
+                channel?.QueuePurge(queueName);
             }
-
-            Channel?.QueuePurge(queueName);
         }
 
         public static void DeleteAllQueues()

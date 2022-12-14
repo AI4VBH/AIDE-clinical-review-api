@@ -1,0 +1,16 @@
+{
+  "workflow_instance_id": string,
+  "task_id": string,
+  "execution_id": string,
+  "correlation_id": string,
+  "identity": string,
+  "metadata": Dictionary<string, object> {
+    "acceptance": false,
+    "reason": "not correct",
+    "message": "generic message",
+    "roles": string[],
+    "user_id": string
+  },
+  "outputs": Storage
+  []
+}

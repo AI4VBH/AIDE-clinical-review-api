@@ -15,6 +15,7 @@
 
 using Aide.ClinicalReview.Common.Interfaces;
 using Aide.ClinicalReview.Configuration;
+using Aide.ClinicalReview.Contracts.Exceptions;
 using Aide.ClinicalReview.Contracts.Messages;
 using Aide.ClinicalReview.Contracts.Models;
 using Aide.ClinicalReview.Service.Controllers;
@@ -48,6 +49,8 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
 
             ClinicalReviewController = new ClinicalReviewController(_clinicalReviewService.Object, _options, _uriService.Object, _logger.Object);
         }
+
+        #region GetAllAsync
 
         [Fact]
         public async Task GetListAsync_PayloadsExist_ReturnsList()
@@ -134,5 +137,159 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
 
             objectResult.StatusCode.Should().Be(500);
         }
+
+        #endregion
+
+        #region AcknowledgeClinicalReview
+
+        [Fact]
+        public async Task AcknowledgeClinicalReview_ValidAcknowledge_Returns204()
+        {
+            var executionId = Guid.NewGuid().ToString();
+
+            var acknowledge = new AcknowledgeClinicalReview
+            {
+                Acceptance = true,
+                Message = "message",
+                Roles = new string[] { "clinician" },
+                userId = "jack"
+            };
+
+            var result = await ClinicalReviewController.AcknowledgeClinicalReview(executionId, acknowledge);
+
+            var objectResult = Assert.IsType<StatusCodeResult>(result);
+
+            objectResult.StatusCode.Should().Be(204);
+        }
+
+        [Fact]
+        public async Task AcknowledgeClinicalReview_InvalidExecutionId_ReturnsBadRequest()
+        {
+            var executionId = "";
+
+            var acknowledge = new AcknowledgeClinicalReview
+            {
+                Acceptance = true,
+                Message = "message",
+                Roles = new string[] { "clinician" },
+                userId = "jack"
+            };
+
+            var result = await ClinicalReviewController.AcknowledgeClinicalReview(executionId, acknowledge);
+
+            var objectResult = Assert.IsType<ObjectResult>(result);
+
+            objectResult.StatusCode.Should().Be(400);
+        }
+
+        [Fact]
+        public async Task AcknowledgeClinicalReview_InvalidBody_ReturnsBadRequest()
+        {
+            var executionId = Guid.NewGuid().ToString();
+
+            var acknowledge = new AcknowledgeClinicalReview
+            {
+                Acceptance = false,
+                Message = "message",
+                Roles = new string[] { "clinician" },
+                userId = "jack"
+            };
+
+            var result = await ClinicalReviewController.AcknowledgeClinicalReview(executionId, acknowledge);
+
+            var objectResult = Assert.IsType<ObjectResult>(result);
+
+            objectResult.StatusCode.Should().Be(400);
+        }
+
+        [Fact]
+        public async Task AcknowledgeClinicalReview_PreviouslyReviewed_ReturnsBadRequest()
+        {
+            var executionId = Guid.NewGuid().ToString();
+
+            var acknowledge = new AcknowledgeClinicalReview
+            {
+                Acceptance = true,
+                Message = "message",
+                Roles = new string[] { "clinician" },
+                userId = "jack"
+            };
+
+            _clinicalReviewService.Setup(w => w.AcknowledgeClinicalReview(executionId, acknowledge)).Throws(() => new PreviouslyReviewedException("unexpected error"));
+
+            var result = await ClinicalReviewController.AcknowledgeClinicalReview(executionId, acknowledge);
+
+            var objectResult = Assert.IsType<ObjectResult>(result);
+
+            objectResult.StatusCode.Should().Be(400);
+        }
+
+        [Fact]
+        public async Task AcknowledgeClinicalReview_UnauthorisedRoles_ReturnsForbidden()
+        {
+            var executionId = Guid.NewGuid().ToString();
+
+            var acknowledge = new AcknowledgeClinicalReview
+            {
+                Acceptance = true,
+                Message = "message",
+                Roles = new string[] { "clinician" },
+                userId = "jack"
+            };
+
+            _clinicalReviewService.Setup(w => w.AcknowledgeClinicalReview(executionId, acknowledge)).Throws(() => new UnathorisedRoleException("unexpected error"));
+
+            var result = await ClinicalReviewController.AcknowledgeClinicalReview(executionId, acknowledge);
+
+            var objectResult = Assert.IsType<ObjectResult>(result);
+
+            objectResult.StatusCode.Should().Be(403);
+        }
+
+        [Fact]
+        public async Task AcknowledgeClinicalReview_NotFound_ReturnsNotFound()
+        {
+            var executionId = Guid.NewGuid().ToString();
+
+            var acknowledge = new AcknowledgeClinicalReview
+            {
+                Acceptance = true,
+                Message = "message",
+                Roles = new string[] { "clinician" },
+                userId = "jack"
+            };
+
+            _clinicalReviewService.Setup(w => w.AcknowledgeClinicalReview(executionId, acknowledge)).Throws(() => new MongoNotFoundException("unexpected error"));
+
+            var result = await ClinicalReviewController.AcknowledgeClinicalReview(executionId, acknowledge);
+
+            var objectResult = Assert.IsType<ObjectResult>(result);
+
+            objectResult.StatusCode.Should().Be(404);
+        }
+
+        [Fact]
+        public async Task AcknowledgeClinicalReview_UnexpectedError_Returns500()
+        {
+            var executionId = Guid.NewGuid().ToString();
+
+            var acknowledge = new AcknowledgeClinicalReview
+            {
+                Acceptance = true,
+                Message = "message",
+                Roles = new string[] { "clinician" },
+                userId = "jack"
+            };
+
+            _clinicalReviewService.Setup(w => w.AcknowledgeClinicalReview(executionId, acknowledge)).Throws(() => new Exception("unexpected error"));
+
+            var result = await ClinicalReviewController.AcknowledgeClinicalReview(executionId, acknowledge);
+
+            var objectResult = Assert.IsType<ObjectResult>(result);
+
+            objectResult.StatusCode.Should().Be(500);
+        }
+
+        #endregion
     }
 }

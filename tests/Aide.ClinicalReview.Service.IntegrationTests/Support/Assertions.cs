@@ -26,11 +26,11 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             actualClinicalReviewTasks?.Select(x => x.Id).ToArray().Should().BeEquivalentTo(expectedClinicalReviewTasks?.Select(x => x.Id).ToArray());
         }
 
-        public static void AssertClinicalReviewTaskStatusUpdated(List<ClinicalReviewRecord>? clinicalReviewTasks, string action)
+        public static void AssertClinicalReviewTaskStatusUpdated(List<ClinicalReviewRecord>? clinicalReviewTasks)
         {
             foreach (var clinicalReviewTask in clinicalReviewTasks)
             {
-                clinicalReviewTask.Reviewed.Should().Be(action); // may need updating
+                clinicalReviewTask.Reviewed.Should().Be(DateTime.UtcNow); // may need updating
             }
         }
 
@@ -39,8 +39,8 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             foreach (var clinicalReviewTask in clinicalReviewTasks)
             {
                 clinicalReviewTask.ClinicalReviewMessage.Should().BeEquivalentTo(clinicalReviewEvent);
-                clinicalReviewTask.Ready.Should().Be("false");
-                clinicalReviewTask.Reviewed.Should().Be("false");
+                clinicalReviewTask.Ready.Should().Be(false);
+                clinicalReviewTask.Reviewed.Should().Be(null);
             }
         }
 
@@ -60,9 +60,9 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             }
         }
 
-        public static void AssertTaskCallbackEvent()
+        public static void AssertTaskCallbackEvent(AcknowledgeClinicalReview actualTaskCallBack, AcknowledgeClinicalReview expectedTaskCallBack)
         {
-            // assertions
+           actualTaskCallBack.Should().BeEquivalentTo(expectedTaskCallBack);
         }
 
         internal static void AssertClinicalReviewStudies(ClinicalReviewStudy actualClinicalReviewStudies, ClinicalReviewStudy expectedClinicalReviewStudies)

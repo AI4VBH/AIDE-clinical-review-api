@@ -49,15 +49,25 @@ namespace Aide.ClinicalReview.Database.Repository
             return clinicalReview.Id;
         }
 
+        public async Task<string> AcknowledgeAsync(string executionId, AcknowledgeClinicalReview acknowledge)
+        {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            var clinicalReview = await GetByClinicalReviewIdAsync(executionId);
+
+            await _clinicalReviewCollection.FindOneAndUpdateAsync(i => i.Id == clinicalReview.Id, Builders<ClinicalReviewRecord>.Update
+                .Set(w => w.Reviewed, DateTime.UtcNow)
+                .Set(w => w.ClinicalReviewAcknowledge, acknowledge));
+
+            return clinicalReview.Id;
+        }
+
         public async Task<ClinicalReviewRecord> GetByClinicalReviewIdAsync(string clinicalReviewId)
         {
             Guard.Against.NullOrEmpty(clinicalReviewId);
 
-            var workflow = await _clinicalReviewCollection
+            return await _clinicalReviewCollection
                 .Find(x => x.Id == clinicalReviewId)
                 .FirstOrDefaultAsync();
-
-            return workflow;
         }
 
         public async Task<(IList<ClinicalReviewRecord> ClinicalReviews, long recordCount)> GetClinicalReviewListAsync(
@@ -72,6 +82,7 @@ namespace Aide.ClinicalReview.Database.Repository
             var filter = builder.Empty;
 
             filter &= builder.AnyIn(p => p.ClinicalReviewMessage!.ReviewerRoles, roles);
+            filter &= builder.Where(p => p.Reviewed == null);
             if (!string.IsNullOrEmpty(patientId))
             {
                 filter &= builder.Regex(p => p.ClinicalReviewMessage!.PatientMetadata!.PatientId, new BsonRegularExpression($"/{patientId}/i"));

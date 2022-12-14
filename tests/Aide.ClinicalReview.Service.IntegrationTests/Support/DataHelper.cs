@@ -15,9 +15,9 @@
 
 using Aide.ClinicalReview.Contracts.Messages;
 using Aide.ClinicalReview.Contracts.Models;
-using Aide.ClinicalReview.Service.IntegrationTests.Models;
 using Aide.ClinicalReview.Service.IntegrationTests.POCO;
 using BoDi;
+using Monai.Deploy.Messaging.Events;
 using Monai.Deploy.Messaging.Messages;
 using Newtonsoft.Json;
 using Polly;
@@ -35,7 +35,7 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
         private RabbitPublisher ClinicalReviewPublisher { get; set; }
         private ISpecFlowOutputHelper OutputHelper { get; set; }
         private ApiHelper ApiHelper { get; }
-        private RetryPolicy<string> RetryTaskCallback { get; set; }
+        private RetryPolicy<TaskCallbackEvent> RetryTaskCallback { get; set; }
         private string ExecutionId { get; set; }
 
 
@@ -52,10 +52,10 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             ClinicalReviewPublisher = objectContainer.Resolve<RabbitPublisher>() ?? throw new ArgumentNullException(nameof(RabbitPublisher));
             ApiHelper = objectContainer.Resolve<ApiHelper>() ?? throw new ArgumentNullException(nameof(ApiHelper));
             OutputHelper = objectContainer.Resolve<ISpecFlowOutputHelper>();
-            RetryTaskCallback = Policy<string>.Handle<Exception>().WaitAndRetry(retryCount: 10, sleepDurationProvider: _ => TimeSpan.FromMilliseconds(500));
+            RetryTaskCallback = Policy<TaskCallbackEvent>.Handle<Exception>().WaitAndRetry(retryCount: 10, sleepDurationProvider: _ => TimeSpan.FromMilliseconds(500));
         }
 
-        public async Task SendClinicalReviewRequest(string action)
+        public async Task SendClinicalReviewRequest(bool action)
         {
             ApiHelper.SetUrl($"{TestExecutionConfig.ApiConfig.BaseUrl}/endpoint");
             ApiHelper.SetRequestVerb("POST");
@@ -63,6 +63,25 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             _ = await ApiHelper.GetResponseAsync();
         }
 
+        public async Task<HttpResponseMessage> EditClinicalReviewRequest(string body, string executionId)
+        {
+            using var reader = new StreamReader(Path.Combine(GetBinDir(), "TestData", "ClinicalReviewTask", body));
+            string json = reader.ReadToEnd();
+            var ClinicalReviewAcceptReject = JsonConvert.DeserializeObject<AcknowledgeClinicalReview>(json);
+           // json = JsonConvert.SerializeObject(ClinicalReviewAcceptReject);
+
+            ApiHelper.SetUrl($"{TestExecutionConfig.ApiConfig.BaseUrl}{TestExecutionConfig.ApiConfig.TasksEndpoint}/{executionId}");
+            ApiHelper.SetRequestVerb("PUT");
+            HttpRequestMessageExtensions.AddJsonBody(ApiHelper.Request, ClinicalReviewAcceptReject);
+            return await ApiHelper.GetResponseAsync();
+        }
+
+        public async Task<HttpResponseMessage> GetClinicalReviewRequest(string executionId)
+        {
+            ApiHelper.SetUrl($"{TestExecutionConfig.ApiConfig.BaseUrl}{TestExecutionConfig.ApiConfig.TasksEndpoint}/{executionId}");
+            ApiHelper.SetRequestVerb("GET");
+            return await ApiHelper.GetResponseAsync();
+    } 
         public async Task<HttpResponseMessage> GetClinicalReviewTasks(Dictionary<string, string> parameters = null)
         {
             var builder = new UriBuilder($"{TestExecutionConfig.ApiConfig.BaseUrl}{TestExecutionConfig.ApiConfig.TasksEndpoint}");
@@ -117,6 +136,11 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             MongoClient.CreateClinicalReviewTask(ClinicalReviewTask);
 
             OutputHelper.WriteLine($"ClinicalReviewTask with name={name} created!");
+        }
+
+        public List<ClinicalReviewRecord> GetClinicalReviewTask(string executionId)
+        {
+            return MongoClient.GetClinicalReviewTaskByExecutionId(executionId);
         }
 
         public void CreateClinicalReviewStudy(string name)
@@ -180,17 +204,17 @@ namespace Aide.ClinicalReview.Service.IntegrationTests.Support
             }
         }
 
-        public object GetTaskCallbackEvent()
+        public TaskCallbackEvent GetTaskCallbackEvent(string executionId)
         {
             OutputHelper.WriteLine($"Retreiving Task Callback Event for executionId");
 
             var res = RetryTaskCallback.Execute(() =>
             {
-                var message = TaskCallbackConsumer.GetMessage<string>();
+                var message = TaskCallbackConsumer.GetMessage<TaskCallbackEvent>();
 
-                if (message != null)
+                if (message != null & executionId== message.ExecutionId) // this needs to check that the executionId is what you would expect
                 {
-                    // check for rabbit message
+                    return message;
                 }
 
                 throw new Exception($"TaskCallbackEvent not published for executionId");

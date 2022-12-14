@@ -56,6 +56,7 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
             TestExecutionConfig.RabbitConfig.VirtualHost = config.GetValue<string>("AideClinicalReviewService:messaging:publisherSettings:virtualHost");
             TestExecutionConfig.RabbitConfig.Exchange = config.GetValue<string>("AideClinicalReviewService:messaging:publisherSettings:exchange");
             TestExecutionConfig.RabbitConfig.ClinicalReviewQueue = config.GetValue<string>("AideClinicalReviewService:messaging:topics:aideClinicalReviewRequest");
+            TestExecutionConfig.RabbitConfig.TaskCallbackQueue = config.GetValue<string>("AideClinicalReviewService:messaging:topics:taskCallback");
 
             TestExecutionConfig.MongoConfig.ConnectionString = config.GetValue<string>("AideClinicalReviewDatabase:ConnectionString");
             TestExecutionConfig.MongoConfig.Database = config.GetValue<string>("AideClinicalReviewDatabase:DatabaseName");
@@ -80,18 +81,24 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
 
             MongoClient = new MongoClientUtil();
             MinioClient = new MinioClientUtil();
+            RabbitConnectionFactory.SetRabbitConnection();
             RetryPolicy = Policy.Handle<Exception>().WaitAndRetryAsync(retryCount: 20, sleepDurationProvider: _ => TimeSpan.FromMilliseconds(500));
-            ClinicalReviewPublisher = new RabbitPublisher(RabbitConnectionFactory.GetRabbitConnection(), TestExecutionConfig.RabbitConfig.Exchange, TestExecutionConfig.RabbitConfig.ClinicalReviewQueue);
-            TaskCallbackConsumer = new RabbitConsumer(RabbitConnectionFactory.GetRabbitConnection(), TestExecutionConfig.RabbitConfig.Exchange, TestExecutionConfig.RabbitConfig.TaskCallbackQueue);
+
+        }
+        [BeforeTestRun(Order = 1)]
+        public static void StartConsumers()
+        {
+            ClinicalReviewPublisher = new RabbitPublisher(TestExecutionConfig.RabbitConfig.Exchange, TestExecutionConfig.RabbitConfig.ClinicalReviewQueue);
+            TaskCallbackConsumer = new RabbitConsumer(TestExecutionConfig.RabbitConfig.Exchange, TestExecutionConfig.RabbitConfig.TaskCallbackQueue);
         }
 
-        [BeforeTestRun(Order = 2)]
+        [BeforeTestRun(Order = 3)]
         public static async Task CreateBucket()
         {
             await MinioClient.CreateBucket(TestExecutionConfig.MinioConfig.Bucket);
         }
 
-        [BeforeTestRun(Order = 1)]
+        [BeforeTestRun(Order = 2)]
         [AfterTestRun(Order = 0)]
         [AfterScenario]
         public static void ClearTestData()
@@ -117,7 +124,6 @@ namespace Monai.Deploy.WorkflowManager.TaskManager.IntegrationTests
         [AfterTestRun(Order = 1)]
         public static void TearDown()
         {
-            ClinicalReviewPublisher?.CloseConnection();
             WebApplicationFactory?.Dispose();
         }
     }
