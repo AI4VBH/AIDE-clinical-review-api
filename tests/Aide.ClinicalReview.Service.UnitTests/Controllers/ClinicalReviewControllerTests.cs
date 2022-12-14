@@ -85,7 +85,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
                             PatientMetadata = new PatientMetadata()
                             {
                                 PatientDob = "this is dob",
-                                PatientGender = "F",
+                                PatientSex = "F",
                                 PatientId = "id",
                                 PatientName = "pizza"
                             },
