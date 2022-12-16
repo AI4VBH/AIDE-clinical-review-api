@@ -67,7 +67,7 @@ namespace Aide.ClinicalReview.Common.UnitTests.Services
                 Acceptance = true,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                userId = "jack"
+                UserId = "jack"
             };
 
             await Assert.ThrowsAsync<MongoNotFoundException>(() => ClinicalReviewService.AcknowledgeClinicalReview(executionId, acknowledge));
@@ -83,7 +83,7 @@ namespace Aide.ClinicalReview.Common.UnitTests.Services
                 Acceptance = true,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                userId = "jack"
+                UserId = "jack"
             };
 
             var clinicalReview = new ClinicalReviewRecord
@@ -113,7 +113,7 @@ namespace Aide.ClinicalReview.Common.UnitTests.Services
                 Acceptance = true,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                userId = "jack"
+                UserId = "jack"
             };
 
             var clinicalReview = new ClinicalReviewRecord
@@ -144,7 +144,7 @@ namespace Aide.ClinicalReview.Common.UnitTests.Services
                 Acceptance = true,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                userId = "jack"
+                UserId = "jack"
             };
 
             var clinicalReview = new ClinicalReviewRecord

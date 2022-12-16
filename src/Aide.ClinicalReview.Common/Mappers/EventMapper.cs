@@ -36,24 +36,24 @@ namespace Aide.ClinicalReview.Common.Mappers
         public static TaskCallbackEvent ToTaskCallbackEvent(ClinicalReviewRecord clinicalReview,
             AcknowledgeClinicalReview acknowledge)
         {
-            Guard.Against.Null(clinicalReview, nameof(clinicalReview));
-            Guard.Against.Null(acknowledge, nameof(acknowledge));
+            Guard.Against.Null(clinicalReview);
+            Guard.Against.Null(acknowledge);
 
             var message = clinicalReview.ClinicalReviewMessage;
 
             var metadata = new Dictionary<string, object>
             {
                 { "acceptance", acknowledge.Acceptance },
-                { "user_id", acknowledge.userId },
+                { "user_id", acknowledge.UserId },
                 { "roles", acknowledge.Roles }
             };
 
-            if (acknowledge.Reason is not null)
+            if (string.IsNullOrWhiteSpace(acknowledge.Reason) is false)
             {
                 metadata.Add("reason", acknowledge.Reason);
             }
 
-            if (acknowledge.Message is not null)
+            if (string.IsNullOrWhiteSpace(acknowledge.Message) is false)
             {
                 metadata.Add("message", acknowledge.Message);
             }

@@ -25,12 +25,12 @@ namespace Aide.ClinicalReview.Contracts.Models
         public string Reason { get; set; } = string.Empty;
 
         [JsonProperty("message")]
-        public string Message { get; set; } = string.Empty;
+        public string? Message { get; set; }
 
         [JsonProperty("roles")]
         public string[] Roles { get; set; } = Array.Empty<string>();
 
         [JsonProperty("user_id")]
-        public string userId { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
     }
 }

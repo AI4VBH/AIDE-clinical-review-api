@@ -14,11 +14,6 @@
 // limitations under the License.
 
 using Aide.ClinicalReview.Contracts.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aide.ClinicalReview.Common.Validators
 {
@@ -35,7 +30,7 @@ namespace Aide.ClinicalReview.Common.Validators
                 return errors;
             }
 
-            if(string.IsNullOrWhiteSpace(acknowledge.userId))
+            if(string.IsNullOrWhiteSpace(acknowledge.UserId))
             {
                 errors.Add("userId is a required field.");
             }
