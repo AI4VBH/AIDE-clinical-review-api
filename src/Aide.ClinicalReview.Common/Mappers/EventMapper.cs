@@ -36,8 +36,8 @@ namespace Aide.ClinicalReview.Common.Mappers
         public static TaskCallbackEvent ToTaskCallbackEvent(ClinicalReviewRecord clinicalReview,
             AcknowledgeClinicalReview acknowledge)
         {
-            Guard.Against.Null(clinicalReview, nameof(clinicalReview));
-            Guard.Against.Null(acknowledge, nameof(acknowledge));
+            Guard.Against.Null(clinicalReview);
+            Guard.Against.Null(acknowledge);
 
             var message = clinicalReview.ClinicalReviewMessage;
 
@@ -48,14 +48,14 @@ namespace Aide.ClinicalReview.Common.Mappers
                 { "roles", acknowledge.Roles }
             };
 
-            if (acknowledge.Reason is not null)
+            if (string.IsNullOrWhiteSpace(acknowledge.Reason))
             {
                 metadata.Add("reason", acknowledge.Reason);
             }
 
-            if (acknowledge.Message is not null)
+            if (string.IsNullOrWhiteSpace(acknowledge.Message))
             {
-                metadata.Add("message", acknowledge.Message);
+                metadata.Add("message", acknowledge.Message!);
             }
 
             return new TaskCallbackEvent

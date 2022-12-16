@@ -192,7 +192,6 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
                 Acceptance = false,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                UserId = "jack"
             };
 
             var result = await ClinicalReviewController.AcknowledgeClinicalReview(executionId, acknowledge);

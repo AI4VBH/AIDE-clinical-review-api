@@ -69,7 +69,7 @@ namespace Aide.ClinicalReview.Common.Services
         {
             var clinicalReview = await _clinicalReviewRepository.GetByClinicalReviewIdAsync(executionId);
 
-            if (clinicalReview is null)
+            if (clinicalReview is null || clinicalReview.ClinicalReviewMessage is null)
             {
                 throw new MongoNotFoundException($"Clinical review for {executionId} not found.");
             }
