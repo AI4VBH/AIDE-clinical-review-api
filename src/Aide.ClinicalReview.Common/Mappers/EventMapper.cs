@@ -48,12 +48,12 @@ namespace Aide.ClinicalReview.Common.Mappers
                 { "roles", acknowledge.Roles }
             };
 
-            if (!string.IsNullOrWhiteSpace(acknowledge.Reason))
+            if (string.IsNullOrWhiteSpace(acknowledge.Reason) is false)
             {
                 metadata.Add("reason", acknowledge.Reason);
             }
 
-            if (!string.IsNullOrWhiteSpace(acknowledge.Message))
+            if (string.IsNullOrWhiteSpace(acknowledge.Message) is false)
             {
                 metadata.Add("message", acknowledge.Message);
             }
