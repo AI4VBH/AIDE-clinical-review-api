@@ -44,7 +44,7 @@ namespace Aide.ClinicalReview.Common.Mappers
             var metadata = new Dictionary<string, object>
             {
                 { "acceptance", acknowledge.Acceptance },
-                { "user_id", acknowledge.userId },
+                { "user_id", acknowledge.UserId },
                 { "roles", acknowledge.Roles }
             };
 

@@ -152,7 +152,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
                 Acceptance = true,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                userId = "jack"
+                UserId = "jack"
             };
 
             var result = await ClinicalReviewController.AcknowledgeClinicalReview(executionId, acknowledge);
@@ -172,7 +172,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
                 Acceptance = true,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                userId = "jack"
+                UserId = "jack"
             };
 
             var result = await ClinicalReviewController.AcknowledgeClinicalReview(executionId, acknowledge);
@@ -192,7 +192,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
                 Acceptance = false,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                userId = "jack"
+                UserId = "jack"
             };
 
             var result = await ClinicalReviewController.AcknowledgeClinicalReview(executionId, acknowledge);
@@ -212,7 +212,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
                 Acceptance = true,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                userId = "jack"
+                UserId = "jack"
             };
 
             _clinicalReviewService.Setup(w => w.AcknowledgeClinicalReview(executionId, acknowledge)).Throws(() => new PreviouslyReviewedException("unexpected error"));
@@ -234,7 +234,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
                 Acceptance = true,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                userId = "jack"
+                UserId = "jack"
             };
 
             _clinicalReviewService.Setup(w => w.AcknowledgeClinicalReview(executionId, acknowledge)).Throws(() => new UnathorisedRoleException("unexpected error"));
@@ -256,7 +256,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
                 Acceptance = true,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                userId = "jack"
+                UserId = "jack"
             };
 
             _clinicalReviewService.Setup(w => w.AcknowledgeClinicalReview(executionId, acknowledge)).Throws(() => new MongoNotFoundException("unexpected error"));
@@ -278,7 +278,7 @@ namespace Aide.ClinicalReview.Service.UnitTests.Controllers
                 Acceptance = true,
                 Message = "message",
                 Roles = new string[] { "clinician" },
-                userId = "jack"
+                UserId = "jack"
             };
 
             _clinicalReviewService.Setup(w => w.AcknowledgeClinicalReview(executionId, acknowledge)).Throws(() => new Exception("unexpected error"));
