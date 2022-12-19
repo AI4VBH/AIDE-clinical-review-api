@@ -51,7 +51,7 @@ step "deploy-the-clinical-review-api" {
                   DOTNET_ENVIRONMENT: #{DOTNET_ENVIRONMENT}
                   LOGSTASH_URL: http://logstash.shared:5011
                   AideClinicalReviewService__messaging__subscriberSettings__endpoint: rabbitmq.rabbitmq
-                  AideClinicalReviewService__messaging__publisherSetting__endpoint: rabbitmq.rabbitmq
+                  AideClinicalReviewService__messaging__publisherSettings__endpoint: rabbitmq.rabbitmq
                   AideClinicalReviewService__messaging__subscriberSettings__port: 5672
                   AideClinicalReviewService__messaging__publisherSettings__port: 5672
                   AideClinicalReviewService__storage__settings__bucket: 'monaideploy'
