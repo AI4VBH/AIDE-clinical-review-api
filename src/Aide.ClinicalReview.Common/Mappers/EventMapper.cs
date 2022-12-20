@@ -17,12 +17,6 @@ using Aide.ClinicalReview.Contracts.Models;
 using Ardalis.GuardClauses;
 using Monai.Deploy.Messaging.Events;
 using Monai.Deploy.Messaging.Messages;
-using Monai.Deploy.Storage.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aide.ClinicalReview.Common.Mappers
 {
@@ -64,6 +58,7 @@ namespace Aide.ClinicalReview.Common.Mappers
                 TaskId = message.TaskId,
                 ExecutionId = message.ExecutionId,
                 CorrelationId = message.CorrelationId,
+                Identity = message.ExecutionId,
                 Metadata = metadata
             };
         }
