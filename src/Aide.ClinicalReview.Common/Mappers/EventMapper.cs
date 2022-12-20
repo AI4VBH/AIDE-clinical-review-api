@@ -39,7 +39,7 @@ namespace Aide.ClinicalReview.Common.Mappers
             {
                 { "acceptance", acknowledge.Acceptance },
                 { "user_id", acknowledge.UserId },
-                { "roles", acknowledge.Roles }
+                { "roles", string.Join(",", acknowledge.Roles) }
             };
 
             if (string.IsNullOrWhiteSpace(acknowledge.Reason) is false)
