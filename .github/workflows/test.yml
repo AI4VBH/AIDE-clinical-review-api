@@ -59,7 +59,7 @@ jobs:
       working-directory: ./tests
 
     - name: Archive code coverage results
-      uses: actions/upload-artifact@v3.1.1
+      uses: actions/upload-artifact@v3.1.2
       with:
         name: code-coverage-reports
         path: ./tests/**/coverage.opencover.xml
@@ -136,7 +136,7 @@ jobs:
 
     - name: Publish report
       if: always()
-      uses: actions/upload-artifact@v3.1.1
+      uses: actions/upload-artifact@v3.1.2
       with:
         name: ClinicalReviewIntegrationTestReport
         path: ./tests/Aide.ClinicalReview.Service.IntegrationTests/bin/Debug/net6.0/LivingDoc.html
